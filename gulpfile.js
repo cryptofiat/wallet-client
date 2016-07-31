@@ -14,7 +14,7 @@ gulp.task('server', function () {
 
 gulp.task('ts', function () {
     return gulp.src(['src/ts/**/*.ts','src/ts/Kryproeuro.ts']).pipe(typescript({
-        target: 'ES6',
+        target: 'ES5',
         experimentalDecorators: true,
         removeComments: true,
         preserveConstEnums: true

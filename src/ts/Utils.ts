@@ -81,6 +81,6 @@ class Utils {
 
 
     static log(...strs) {
-        document.querySelector('#log').innerHTML += strs.join(' ') + '\n';
+        document.querySelector('#log').innerHTML += strs.join(' ') + '<br>';
     }
 }

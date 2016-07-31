@@ -1,0 +1,4 @@
+- npm install
+- ln -s node_modules build/node_modules
+- gulp
+- http://localhost:9000
