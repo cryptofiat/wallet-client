@@ -5,6 +5,9 @@
     "type": "???",
     "url": "???"
   },
+  "scripts": {
+    "gulp": "gulp"
+  },
   "dependencies": {
     "bignumber": "^1.1.0",
     "eth-lightwallet": "^2.4.3",
