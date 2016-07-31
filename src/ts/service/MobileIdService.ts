@@ -10,7 +10,6 @@ class MobileIdService {
             accountAddress: address,
             phoneNumber: phoneNumber
         }), (res)=> {
-            console.log(res);
             var data = JSON.parse(res);
             var code = data.challengeCode;
             Utils.log(`Received mobileId confirmation code <b>${code}</b>`);
@@ -18,9 +17,8 @@ class MobileIdService {
         }, 'POST')
     }
 
-    private pollStatus(id, cb) {
+    private pollStatus(id, cb) {1
         this.poll(id, (res)=> {
-            console.log(res);
             var status = JSON.parse(res).status;
 
             Utils.log(`Check mobileId auth status ${status}`);
@@ -34,7 +32,7 @@ class MobileIdService {
                     Utils.log(`MobileId auth process broken, need to restart process`); //additioanl action required to prevent loops
                     break;
                 default:
-                    setTimeout(this.pollStatus.bind(this, id, cb), 3000);
+                    setTimeout(()=>this.pollStatus(id, cb), 3000);
                     break;
             }
         });

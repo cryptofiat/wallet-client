@@ -25,7 +25,7 @@ class EtheriumService {
             Utils.log('Address:', address);
             Utils.log('Private exported key:', this.ks.exportPrivateKey(address, pwDerivedKey));
             cb(address);
-            this.watchBalanceGateway(address);
+            //this.watchBalanceGateway(address);
         });
     }
 

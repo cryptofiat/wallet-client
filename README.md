@@ -1,5 +1,5 @@
 - npm install
 - mkdir build
-- ln -s node_modules build/node_modules
+- ln -s build/node_modules node_modules
 - npm run gulp
 - http://localhost:9000
