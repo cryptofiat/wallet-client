@@ -1,0 +1,21 @@
+{
+  "name": "kryptoeuro-client-light",
+  "version": "0.1.0",
+  "repository": {
+    "type": "???",
+    "url": "???"
+  },
+  "dependencies": {
+    "bignumber": "^1.1.0",
+    "eth-lightwallet": "^2.4.3",
+    "framework7": "^1.4.2",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-connect": "^5.0.0",
+    "gulp-typescript": "^2.13.6",
+    "hooked-web3-provider": "^1.0.0",
+    "js-sha3": "^0.5.2",
+    "sjcl": "^1.0.3",
+    "web3": "^0.16.0"
+  }
+}
