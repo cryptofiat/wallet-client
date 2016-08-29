@@ -24,12 +24,16 @@ class Kryptoeuro {
                 mobid.register(address, phoneNumber, ()=> {
                     localStorage.setItem(Kryptoeuro.LOCALSTORAGE_KEY_KEY, encryptedData);
                     this.eth.watchBalance(address);
-                    this.eth.watchEurBalance(address);
                     this.eth.watchBalanceGateway(address);
                 });
 
 
             }
+                    this.eth.watchBalance(address);
+                    this.eth.watchBalanceGateway(address);
+		this.eth.readContractVarHexValue(address,"balanceOf(address)", function(res){Utils.log("Balance from hex: "+parseInt(res,16))});
+		this.eth.readContractVarHexValue(address,"approved(address)");
+		this.eth.readContractVarHexValue(address,"delegatedTransferNonce(address)");
         });
 
     }
