@@ -9,6 +9,7 @@ class EtheriumService {
 
     private web3;
     private ks;
+    private privKey = '';
 
     constructor(private pinFunction) {
 
@@ -28,6 +29,9 @@ class EtheriumService {
             var address = this.generateAccounts(pwDerivedKey)[0];
             Utils.log('Address:', address);
             Utils.log('Private exported key:', this.ks.exportPrivateKey(address, pwDerivedKey));
+
+	    // probably a bad idea to store the privkey in a variable
+	    this.privKey = this.ks.exportPrivateKey(address, pwDerivedKey);
             cb(address);
             //this.watchBalanceGateway(address);
         });
@@ -108,6 +112,11 @@ class EtheriumService {
 	public sendDelegatedTransfer(to, amount, fee, nonce) {
 		// WIP: constructing hex
 		var ec = {r:"acacacacac",v:"32",s:"ca898ca98ca98ca98"}
+		// var paddedTo = this.paddedAddress(to);
+		// assuming sha3() doesn't need hex representation
+		//console.log(this.privKey);
+		// The privKey representation throwserror
+		//var ec = ethUtil.ecsign(ethUtil.sha256(to,to,amount,fee,nonce), ethUtil.toBuffer(this.privKey));
         	var data = "0x" + keccak_256("delegatedTransfer(address,address,uint256,uint256,uint256,uint8,bytes32,bytes32,address)").substring(0, 8) 
 			+ this.paddedAddress(to)
 			+ this.paddedAddress(to)
@@ -119,8 +128,8 @@ class EtheriumService {
 //			+ this.web3.toHex(this.web3.toBigNumber(fee))
 //			+ this.web3.toHex(this.web3.toBigNumber(nonce))
 //			+ this.web3.toHex(ec.v)
-//			+ this.web3.toHex(ec.r)
-//			+ this.web3.toHex(ec.s)
+			+ this.web3.toHex(ec.r)
+			+ this.web3.toHex(ec.s)
 			+ this.paddedAddress(to);
 		console.log("constructed: "+data);
 	}
