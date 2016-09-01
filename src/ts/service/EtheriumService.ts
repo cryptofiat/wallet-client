@@ -91,8 +91,8 @@ class EtheriumService {
             Utils.log('Balance gateway update:', data.amount, data.currency);
         });
 
-	//trying a call
-	this.sendDelegatedTransfer(address,69,2,1);
+	//trying to construct a delegate Transfer call
+	this.sendDelegatedTransfer(address,"ce8a7f7c35a2829c6554fd38b96a7ff43b0a76d6",5,2,2);
     }
 
 	private uint256Hex(_number){
@@ -100,8 +100,6 @@ class EtheriumService {
 		var zeros32="0000000000000000000000000000000000000000000000000000000000000000"
 		var hex = ""+this.web3.toHex(_number).slice(2)
 		var padded = zeros32.substring(0, zeros32.length - hex.length) + hex
-		//Utils.log("hexConvert: "+this.web3.toHex(_number).slice(2))
-		//Utils.log("hexConvert: "+padded)
 		return padded;
 	};
 
@@ -109,29 +107,35 @@ class EtheriumService {
 		return "000000000000000000000000" + address;
 	};
 
-	public sendDelegatedTransfer(to, amount, fee, nonce) {
-		// WIP: constructing hex
-		var ec = {r:"acacacacac",v:"32",s:"ca898ca98ca98ca98"}
-		// var paddedTo = this.paddedAddress(to);
-		// assuming sha3() doesn't need hex representation
-		//console.log(this.privKey);
-		// The privKey representation throwserror
-		//var ec = ethUtil.ecsign(ethUtil.sha256(to,to,amount,fee,nonce), ethUtil.toBuffer(this.privKey));
+	public sendDelegatedTransfer(_from, to, amount, fee, nonce) {
+
+
+		// create a signed transfer
+		var ec2 = ethUtil.ecsign(ethUtil.sha3("0x"
+				+ _from
+				+ to
+				+ this.uint256Hex(amount)
+				+ this.uint256Hex(fee)
+				+ this.uint256Hex(nonce)
+			), ethUtil.toBuffer("0x"+this.privKey);
+
+		// signature can be copied from here to the mist browser and executed from there
+		console.log("ec.v: " + ec2.v);
+		console.log("ec.r: " + ethUtil.bufferToHex(ec2.r));
+		console.log("ec.s: " + ethUtil.bufferToHex(ec2.s));
+
+		// or copy the whole data and send to the contract
         	var data = "0x" + keccak_256("delegatedTransfer(address,address,uint256,uint256,uint256,uint8,bytes32,bytes32,address)").substring(0, 8) 
-			+ this.paddedAddress(to)
+			+ this.paddedAddress(_from)
 			+ this.paddedAddress(to)
 			+ this.uint256Hex(amount)
 			+ this.uint256Hex(fee)
 			+ this.uint256Hex(nonce)
-			+ this.uint256Hex(ec.v)
-//			+ this.web3.toHex(this.web3.toBigNumber(amount))
-//			+ this.web3.toHex(this.web3.toBigNumber(fee))
-//			+ this.web3.toHex(this.web3.toBigNumber(nonce))
-//			+ this.web3.toHex(ec.v)
-			+ this.web3.toHex(ec.r)
-			+ this.web3.toHex(ec.s)
-			+ this.paddedAddress(to);
-		console.log("constructed: "+data);
+			+ this.uint256Hex(ec2.v)
+			+ ethUtil.stripHexPrefix(ethUtil.bufferToHex(ec2.r))
+			+ ethUtil.stripHexPrefix(ethUtil.bufferToHex(ec2.s))
+			+ this.paddedAddress(_from);
+		console.log("Constructed data for delegateTransfer call: "+data);
 	}
 
 }
