@@ -11,6 +11,7 @@
   "dependencies": {
     "bignumber": "^1.1.0",
     "eth-lightwallet": "^2.4.3",
+    "ethereumjs-util": "^4.5.0",
     "framework7": "^1.4.2",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.0",
@@ -20,5 +21,8 @@
     "js-sha3": "^0.5.2",
     "sjcl": "^1.0.3",
     "web3": "^0.16.0"
+  },
+  "devDependencies": {
+    "gulp-browserify": "^0.5.1"
   }
 }

@@ -11,11 +11,11 @@ class Utils {
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4 && (xhr.status >= 200 && xhr.status < 300 || xhr.status === 304)) {
                     cb(xhr.response);
-                }
+                } else if (ecb) {
+		    console.log("Error: "+xhr.status);
+                    ecb(xhr.response);
+		}
             };
-        }
-        if (ecb) {
-            xhr.onerror = ecb;
         }
         return xhr;
     }

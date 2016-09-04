@@ -1,5 +1,6 @@
 var gulp = require('gulp');
 var typescript = require('gulp-typescript');
+var browserify = require('gulp-browserify');
 var connect = require('gulp-connect');
 var concat = require('gulp-concat');
 
@@ -25,7 +26,12 @@ gulp.task('assets', function () {
     return gulp.src(['index.html', 'icon.png']).pipe(gulp.dest("build/"));
 });
 
-gulp.task('default', ['ts', 'assets', 'server'], function () {
+gulp.task('default', ['browserify','ts', 'assets', 'server'], function () {
     gulp.watch(['src/**/*.ts'], ['ts']);
     gulp.watch(['index.html'], ['assets']);
+});
+
+gulp.task('browserify', function() {
+
+    return  gulp.src('src/js/ethutil-loader.js').pipe(browserify()).pipe(gulp.dest('build/js'))
 });
