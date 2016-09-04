@@ -1,7 +1,9 @@
 class Kryptoeuro {
     private static LOCALSTORAGE_KEY_KEY = 'kryptoeuro_client_private_key';
 
-    private eth;
+    public eth;
+    public ethAddress;
+    public ethNonce;
 
     constructor() {
         var phoneNumber;
@@ -29,11 +31,19 @@ class Kryptoeuro {
 
 
             }
+		this.ethAddress = address;
                     this.eth.watchBalance(address);
                     this.eth.watchBalanceGateway(address);
-		this.eth.readContractVarHexValue(address,"balanceOf(address)", function(res){Utils.log("Balance from hex: "+parseInt(res,16))});
+		this.eth.readContractVarHexValue(address,"balanceOf(address)", function(res){
+			document.querySelector("#balance-data").innerHTML = String(parseInt(res,16)/100); 
+			Utils.log("Balance from hex: "+parseInt(res,16))
+		});
 		this.eth.readContractVarHexValue(address,"approved(address)");
-		this.eth.readContractVarHexValue(address,"delegatedTransferNonce(address)");
+		this.eth.readContractVarHexValue(address,"delegatedTransferNonce(address)", function(res){
+			this.ethNonce = parseInt(res,16);
+			document.querySelector("#nonce-data").innerHTML = String(this.ethNonce); 
+		});
+		this.eth.watchGatewayFees();
         });
 
     }

@@ -4,12 +4,14 @@ declare var ethUtil;
 class EtheriumService {
     private static ETH_NODE_URL = 'http://54.194.239.231:8545';
     private static GATEWAY_URL = 'http://54.194.234.190:8080';
+    //private static GATEWAY_URL = 'http://localhost:8080';
     //private static CONTRACT = "0x640Da14959D6A6244f35471080BEBd960F15FDAe";
     private static CONTRACT = "0x2FdAB8f12fA9Ad9Ad91fc55d52569AFc98Be9831"; //0.41
 
     private web3;
     private ks;
     private privKey = '';
+    public gatewayFees;
 
     constructor(private pinFunction) {
 
@@ -92,7 +94,20 @@ class EtheriumService {
         });
 
 	//trying to construct a delegate Transfer call
-	this.sendDelegatedTransfer(address,"ce8a7f7c35a2829c6554fd38b96a7ff43b0a76d6",5,2,2);
+	//this.sendDelegatedTransfer(address,"ce8a7f7c35a2829c6554fd38b96a7ff43b0a76d6",5,2,2);
+    }
+
+    public watchGatewayFees() {
+        Utils.xhr(EtheriumService.GATEWAY_URL + '/v1/fees', null, (res)=> {
+            var data = JSON.parse(res);
+            console.log('Gateway fees:', data.amount);
+	    this.gatewayFees = data.amount;
+		document.querySelector("#gateway-data").innerHTML = EtheriumService.GATEWAY_URL; 
+		document.querySelector("#fee-data").innerHTML = String(this.gatewayFees/100); 
+        });
+
+	//trying to construct a delegate Transfer call
+	//this.sendDelegatedTransfer(address,"ce8a7f7c35a2829c6554fd38b96a7ff43b0a76d6",5,2,2);
     }
 
 	private uint256Hex(_number){
@@ -117,7 +132,7 @@ class EtheriumService {
 				+ this.uint256Hex(amount)
 				+ this.uint256Hex(fee)
 				+ this.uint256Hex(nonce)
-			), ethUtil.toBuffer("0x"+this.privKey);
+			), ethUtil.toBuffer("0x"+this.privKey));
 
 		// signature can be copied from here to the mist browser and executed from there
 		console.log("ec.v: " + ec2.v);
@@ -136,6 +151,34 @@ class EtheriumService {
 			+ ethUtil.stripHexPrefix(ethUtil.bufferToHex(ec2.s))
 			+ this.paddedAddress(_from);
 		console.log("Constructed data for delegateTransfer call: "+data);
+
+		var postData = {
+			'amount': amount, 
+			"fee": fee, 
+			"nonce": nonce,
+			"reference": "",
+			"sourceAccount": "0x"+_from,
+			"targetAccount": "0x"+to,
+			"sigV": ec2.v,
+			"sigR": ethUtil.bufferToHex(ec2.r),
+			"sigS": ethUtil.bufferToHex(ec2.s)
+			};
+		console.log(postData);
+		console.log(JSON.stringify(postData));
+
+		Utils.xhr(EtheriumService.GATEWAY_URL + '/v1/transfers', JSON.stringify(postData), (res)=> {
+		    var data = JSON.parse(res);
+		    console.log('Transfer hash:', data.id);
+		    if (parseInt(data.id,16) == 0) {
+			console.log("Submit failed by wallet-server. Check if account unlocked and sufficient eth.");
+			document.querySelector("#status-data").innerHTML = "Submit failed on server."; 
+		    } else {
+			document.querySelector("#status-data").innerHTML = 'Submitted <a href=https://etherscan.io/tx/"'+data.id+'">tx</a>'; 
+		    }
+		},'POST', (err) => {
+			document.querySelector("#status-data").innerHTML = "Server rejected submit."; 
+			console.log(err);
+		});
 	}
 
 }
