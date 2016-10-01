@@ -1,31 +1,70 @@
-<ion-view title="CreateVerifyUse" hide-nav-bar="true" id="page3">
-    <ion-content padding="true" class="manual-ios-statusbar-padding">
+<ion-view title="CreateVerifyUse" hide-nav-bar="true" id="createVerifyUsePage">
+    <div padding="true" class="manual-ios-statusbar-padding">
         <div id="createVerifyUse-button-bar1" class="button-bar">
+            <!--TODO: highlight these guys depending on the tab variable-->
             <button id="createVerifyUse-button3" class="button button-positive  button-block">Create</button>
             <button id="createVerifyUse-button4" class="button button-positive  button-block">Verify</button>
             <button id="createVerifyUse-button5" class="button button-positive  button-block">Use</button>
         </div>
-        <form id="createVerifyUse-form2" class="list">
+        <div ng-if="tab == 'CREATE'">
+            <div>
+                Account created!!!
+                <br><br>
+                Your new address is:
+                <b>{{pubAddress}}</b>
+                <br><br>
+                Your 15 word recovery phrase is:
+                <br>
+                <b>{{recoveryPhrase}}</b>
+            </div>
+            <form name="setPasswordForm" ng-submit="setPassword()">
+                <label class="item item-input" id="setPasswordForm-password">
+                    <span class="input-label">Password:</span>
+                    <input type="password" name="passwordEnter" ng-model="password.enter" placeholder="********">
+                </label>
+                <label class="item item-input" id="setPasswordForm-confirmPassword">
+                    <span class="input-label">Confirm:    </span>
+                    <input type="password" name="passwordConfirm" ng-model="password.confirm" placeholder="********">
+                </label>
+                <button id="setPasswordButton"
+                        type="submit"
+                        class="button button-positive  button-block">Set Password</button>
+            </form>
+        </div>
+        <div ng-if="tab == 'VERIFY'">
             <div id="createVerifyUse-container1">
-                <form id="createVerifyUse-form3" class="list">
+                <form id="createVerifyUse-verifyMobile" class="list" ng-submit="verifyMobileId()">
+                    <div>
+                        Verify with Mobile ID
+                    </div>
                     <label class="item item-input" id="createVerifyUse-input3">
                         <span class="input-label">Phone</span>
-                        <input type="tel" placeholder="+37256792696">
+                        <input type="tel" ng-model="mobileId.phoneNumber" placeholder="+372 123 4567">
                     </label>
+                    <button id="createVerifyUse-button6" class="button button-positive  button-block">Verify</button>
                 </form>
-                <button id="createVerifyUse-button6" class="button button-positive  button-block">Mobile ID</button>
             </div>
-        </form>
-        <div class="spacer" style="width: 300px; height: 113px;"></div>
-        <div id="createVerifyUse-markdown3" style="color:#000000;">
-            <p>Slower option:</p>
-
-            <p>Make a bank transfer</p>
-
-            <p>EE087700771001615943</p>
-
-            <p>amount: 0.43 EUR</p>
+            <!--<div class="spacer" style="width: 300px; height: 50px;"></div>-->
+            <div id="createVerifyUse-markdown3" style="color:#000000;">
+                <div>Verify by bank transfer (slower)</div>
+                <br>
+                <div>Name: Euro 2.0 Guys</div>
+                <div>Account: EE087700771001615943</div>
+                <div>Amount: 0.43 EUR</div>
+                <div>Reference: P12345</div>
+                <form id="createVerifyUse-verifyBank" class="list" ng-submit="verifyBank()">
+                    <button id="createVerifyUse-button7" class="button button-positive  button-block">I made a bank Transfer</button>
+                </form>
+            </div>
         </div>
-        <button id="createVerifyUse-button7" class="button button-positive  button-block">I made a bank Transfer</button>
-    </ion-content>
+        <div ng-if="tab == 'USE'">
+            <div>Everything is good!</div>
+            <br>
+            <div ng-if="idNumber">You're Estonian id number is {{idNumber}}<br></div>
+            <div>You are ready to send Euro 2.0!</div>
+            <form id="createVerifyUse-finish" class="list" ng-submit="finish()">
+                <button id="createVerifyUse-finishButton" class="button button-positive  button-block">Finish</button>
+            </form>
+        </div>
+    </div>
 </ion-view>

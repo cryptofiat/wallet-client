@@ -1,16 +1,29 @@
-<ion-view title="EURO 2.0" id="page2">
+<ion-view title="EURO 2.0" id="mainPage">
     <ion-content padding="true" class="has-header">
-        <div style="position:relative;overflow:hidden;padding-bottom:56.25%;height:0;" id="eURO2-video1">
-            <iframe src="https://www.youtube.com/embed/F9kNnTD6ndw?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen="" width="560" height="315" style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+        <div>
+            EURO 2.0 is BOMB!
         </div>
-        <form id="eURO2-form1" class="list">
-            <div class="spacer" style="width: 300px; height: 100px;"></div>
+        <br>
+        <div>
+            Enter your email address to join!
+        </div>
+        <br>
+        <form name="createForm" class="list" novalidate>
             <label class="item item-input" id="eURO2-input1">
                 <span class="input-label">Email:</span>
-                <input type="email" placeholder="foo@bar.com">
+                <input type="email"
+                       name="email"
+                       ng-model="email"
+                       placeholder="foo@bar.com"
+                       required>
             </label>
+            <br />
+            <div ng-show="createForm.$submitted || createForm.email.$touched">
+                <span ng-show="createForm.email.$error.required">Email is required</span>
+                <span ng-show="createForm.email.$error.email">This is not a valid email</span>
+            </div>
+            <button id="createButton" class="button button-positive  button-block" ng-click="createNew(email)">New account</button>
         </form>
-        <button id="eURO2-button1" class="button button-positive  button-block" ng-click="createNew()">New account</button>
-        <button id="eURO2-button2" class="button button-positive  button-block button-clear">Import</button>
+        <!--<button id="eURO2-button2" class="button button-positive  button-block button-clear" ng-click="import()">Import</button>-->
     </ion-content>
 </ion-view>

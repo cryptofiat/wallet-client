@@ -1,12 +1,18 @@
 import MainController from './controllers/MainController';
 import CreateVerifyController from './controllers/CreateVerifyController';
 import MenuController from './controllers/MenuController';
+import TopUpController from './controllers/TopUpController';
+import SendController from './controllers/SendController';
+import TransactionsController from './controllers/TransactionsController';
 
 angular
     .module('app', ['ionic'])
     .controller('menuCtrl', MenuController)
     .controller('mainCtrl', MainController)
     .controller('createVerifyUseCtrl', CreateVerifyController)
+    .controller('topUpCtrl', TopUpController)
+    .controller('sendCtrl', SendController)
+    .controller('transactionsCtrl', TransactionsController)
 
     .run(['$ionicPlatform', ($ionicPlatform) => {
         $ionicPlatform.ready(function () {
@@ -24,24 +30,47 @@ angular
             .state('main', {
                 url: '/',
                 templateUrl: 'templates/main.html',
-                controller: 'mainCtrl',
+                controller: 'mainCtrl'
             })
-            .state('tabsController.createVerifyUse', {
-                url: '/verify',
+            .state('createVerifyUse', {
+                url: '/verify?email',
+                templateUrl: 'templates/createVerifyUse.html',
+                controller: 'createVerifyUseCtrl'
+            })
+            .state('navBar.topUp', {
+                url: '/home/topUp',
                 views: {
-                    'tab2': {
-                        templateUrl: 'templates/createVerifyUse.html',
-                        controller: 'createVerifyUseCtrl'
+                    'topUpTab': {
+                        templateUrl: 'templates/topUp.html',
+                        controller: 'topUpCtrl'
                     }
                 }
             })
-            .state('tabsController', {
+            .state('navBar.sendTab', {
+                url: '/home/send',
+                views: {
+                    'sendTab': {
+                        templateUrl: 'templates/send.html',
+                        controller: 'sendCtrl'
+                    }
+                }
+            })
+            .state('navBar.transactions', {
+                url: '/home/transactions',
+                views: {
+                    'transactionsTab': {
+                        templateUrl: 'templates/transactions.html',
+                        controller: 'transactionsCtrl'
+                    }
+                }
+            })
+            .state('navBar', {
                 url: '',
-                templateUrl: 'templates/tabsController.html',
+                templateUrl: 'templates/navBar.html',
                 abstract: true
             });
 
         $urlRouterProvider.otherwise('/')
-    }])
+    }]);
 
 

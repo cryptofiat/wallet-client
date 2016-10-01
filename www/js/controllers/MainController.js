@@ -1,13 +1,22 @@
 export default class MainController {
 
-    constructor($scope, $stateParams) {
+    constructor($scope, $state) {
 
-        $scope.createNew = ()=> {
-            console.log(1234);
-        }
+        $scope.createNew = (email) => {
+            if(email) {
+                console.log('create new account with email: ' + email);
+                $state.go('createVerifyUse', {email: email});
+            } else {
+                console.log('email undefined')
+            }
+        };
+
+        $scope.import = () => {
+            console.log('import');
+        };
     }
 
 
 }
 
-MainController.$inject = ['$scope', '$stateParams'];
+MainController.$inject = ['$scope', '$state'];
