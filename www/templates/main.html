@@ -1,10 +1,18 @@
 <ion-view title="EURO 2.0" id="mainPage">
     <ion-content padding="true" class="has-header">
-        <div ng-if="isUnlocked()">
-            <p>Already unlocked!</p>
-            <!--TODO: render balances-->
+        <div ng-if="isPasswordSet()">
+            <p>Please unlock your wallet!</p>
+            <form name="enterPasswordForm" ng-submit="enterPassword()">
+                <label class="item item-input" id="enterPasswordForm-password">
+                    <span class="input-label">Password:</span>
+                    <input type="password" name="passwordEnter" ng-model="password.password" placeholder="********">
+                </label>
+                <button id="enterPasswordButton" type="submit" class="button button-positive  button-block">
+                    Enter Password
+                </button>
+            </form>
         </div>
-        <div ng-if="!isUnlocked()">
+        <div ng-if="!isPasswordSet()">
             <div>
                 EURO 2.0 is BOMB!
             </div>
@@ -30,6 +38,5 @@
                 <button id="createButton" class="button button-positive  button-block" ng-click="createNew(email)">New account</button>
             </form>
         </div>
-        <!--<button id="eURO2-button2" class="button button-positive  button-block button-clear" ng-click="import()">Import</button>-->
     </ion-content>
 </ion-view>

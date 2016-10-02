@@ -6,7 +6,7 @@
             <!--<button id="createVerifyUse-button4" class="button button-positive  button-block">Verify</button>-->
             <!--<button id="createVerifyUse-button5" class="button button-positive  button-block">Use</button>-->
         <!--</div>-->
-        <div ng-if="tab == 'ENTER_PASSWORD'">
+        <div ng-if="tab == 'CREATE_PASSWORD'">
             Please enter a secure password to create your account!
             <form name="setPasswordForm" ng-submit="setPassword()">
                 <label class="item item-input" id="setPasswordForm-password">
@@ -30,7 +30,7 @@
                 <p>Your new address is:</p>
                 <p><b>{{publicAddress}}</b></p>
                 <p>Your 15 word recovery phrase is:</p>
-                <p>{{recoveryPhrase}}</p>
+                <p><b>{{recoveryPhrase}}</b></p>
                 <p><b>KEEP THIS INFORMATION IN A SAFE PLACE!!!</b></p>
             </div>
             <form name="confirmDetailsForm">

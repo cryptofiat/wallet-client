@@ -10,13 +10,13 @@ export default class CreateVerifyController {
             'mammal pulp inside cloud nurse ' +
             'absorb aspect elephant tornado';
 
-        $scope.tab = 'ENTER_PASSWORD';
+        $scope.tab = 'CREATE_PASSWORD';
         $scope.password = {};
         $scope.setPassword = () => {
             console.log('password: ' , $scope.password.enter);
             console.log('confirm : ' , $scope.password.confirm);
 
-            if($scope.password.enter.length > 0 && $scope.password.enter == $scope.password.confirm) {
+            if($scope.password.enter && $scope.password.enter == $scope.password.confirm) {
                 sdk.initLocalStorage($scope.password.enter);
                 $scope.publicAddress = '0x'+sdk.storeNewKey().toString('hex');
                 $scope.tab = 'ACCOUNT_CREATED';
@@ -50,7 +50,8 @@ export default class CreateVerifyController {
 
         $scope.finish = () => {
             console.log('finish');
-            $state.go('navBar.topUp');
+            $state.go('main');
+            $scope.tab = 'CREATE_PASSWORD';
         };
     }
 
