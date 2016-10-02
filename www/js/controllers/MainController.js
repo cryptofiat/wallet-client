@@ -1,6 +1,14 @@
+import * as wallet from 'cryptofiat-wallet';
+
 export default class MainController {
 
     constructor($scope, $state) {
+        let sdk =  new wallet.Application();
+        sdk.attachStorage(window.localStorage);
+
+        $scope.isUnlocked = () => {
+            return sdk.isUnlocked();
+        };
 
         $scope.createNew = (email) => {
             if(email) {

@@ -5,23 +5,27 @@ export default class CreateVerifyController {
         let sdk =  new wallet.Application();
         sdk.attachStorage(window.localStorage);
 
-        $scope.publicAddress = '0x'+sdk.storeNewKey().toString('hex');
         $scope.recoveryPhrase =
             'six cause school board office tattoo ' +
             'mammal pulp inside cloud nurse ' +
             'absorb aspect elephant tornado';
-        console.log($state.params.email);
 
-        $scope.tab = 'CREATE';
+        $scope.tab = 'ENTER_PASSWORD';
         $scope.password = {};
         $scope.setPassword = () => {
             console.log('password: ' , $scope.password.enter);
             console.log('confirm : ' , $scope.password.confirm);
 
-            if($scope.password.enter == $scope.password.confirm) {
+            if($scope.password.enter.length > 0 && $scope.password.enter == $scope.password.confirm) {
                 sdk.initLocalStorage($scope.password.enter);
-                $scope.tab = 'VERIFY';
+                $scope.publicAddress = '0x'+sdk.storeNewKey().toString('hex');
+                $scope.tab = 'ACCOUNT_CREATED';
             }
+        };
+
+        $scope.confirmDetails = () => {
+            console.log('details confirmed');
+            $scope.tab = 'VERIFY'
         };
 
         $scope.mobileId = { phoneNumber: null };

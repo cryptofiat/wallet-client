@@ -1,22 +1,13 @@
 <ion-view title="CreateVerifyUse" hide-nav-bar="true" id="createVerifyUsePage">
     <div padding="true" class="manual-ios-statusbar-padding">
-        <div id="createVerifyUse-button-bar1" class="button-bar">
-            <!--TODO: highlight these guys depending on the tab variable-->
-            <button id="createVerifyUse-button3" class="button button-positive  button-block">Create</button>
-            <button id="createVerifyUse-button4" class="button button-positive  button-block">Verify</button>
-            <button id="createVerifyUse-button5" class="button button-positive  button-block">Use</button>
-        </div>
-        <div ng-if="tab == 'CREATE'">
-            <div>
-                Account created!!!
-                <br><br>
-                Your new address is:
-                <b>{{pubAddress}}</b>
-                <br><br>
-                Your 15 word recovery phrase is:
-                <br>
-                <b>{{recoveryPhrase}}</b>
-            </div>
+        <!--&lt;!&ndash;TODO: highlight these guys depending on the tab variable or delete them&ndash;&gt;-->
+        <!--<div id="createVerifyUse-button-bar1" class="button-bar">-->
+            <!--<button id="createVerifyUse-button3" class="button button-positive  button-block">Create</button>-->
+            <!--<button id="createVerifyUse-button4" class="button button-positive  button-block">Verify</button>-->
+            <!--<button id="createVerifyUse-button5" class="button button-positive  button-block">Use</button>-->
+        <!--</div>-->
+        <div ng-if="tab == 'ENTER_PASSWORD'">
+            Please enter a secure password to create your account!
             <form name="setPasswordForm" ng-submit="setPassword()">
                 <label class="item item-input" id="setPasswordForm-password">
                     <span class="input-label">Password:</span>
@@ -28,7 +19,27 @@
                 </label>
                 <button id="setPasswordButton"
                         type="submit"
-                        class="button button-positive  button-block">Set Password</button>
+                        class="button button-positive  button-block">
+                    Set Password
+                </button>
+            </form>
+        </div>
+        <div ng-if="tab == 'ACCOUNT_CREATED'">
+            <div>
+                <p>Account created!!!</p>
+                <p>Your new address is:</p>
+                <p><b>{{publicAddress}}</b></p>
+                <p>Your 15 word recovery phrase is:</p>
+                <p>{{recoveryPhrase}}</p>
+                <p><b>KEEP THIS INFORMATION IN A SAFE PLACE!!!</b></p>
+            </div>
+            <form name="confirmDetailsForm">
+                <button id="confirmDetailsButton"
+                        type="submit"
+                        class="button button-positive button-block"
+                        ng-click="confirmDetails()">
+                    Confirm Details
+                </button>
             </form>
         </div>
         <div ng-if="tab == 'VERIFY'">
@@ -44,7 +55,6 @@
                     <button id="createVerifyUse-button6" class="button button-positive  button-block">Verify</button>
                 </form>
             </div>
-            <!--<div class="spacer" style="width: 300px; height: 50px;"></div>-->
             <div id="createVerifyUse-markdown3" style="color:#000000;">
                 <div>Verify by bank transfer (slower)</div>
                 <br>
@@ -58,12 +68,11 @@
             </div>
         </div>
         <div ng-if="tab == 'USE'">
-            <div>Everything is good!</div>
-            <br>
-            <div ng-if="idNumber">You're Estonian id number is {{idNumber}}<br></div>
-            <div>You are ready to send Euro 2.0!</div>
+            <p>Everything is good!</p>
+            <p ng-if="idNumber">You're Estonian id number is {{idNumber}}<br></p>
+            <p>You are ready to send Euro 2.0!</p>
             <form id="createVerifyUse-finish" class="list" ng-submit="finish()">
-                <button id="createVerifyUse-finishButton" class="button button-positive  button-block">Finish</button>
+                <button id="createVerifyUse-finishButton" class="button button-positive  button-block">Start!</button>
             </form>
         </div>
     </div>
