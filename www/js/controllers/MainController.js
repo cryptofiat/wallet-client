@@ -5,15 +5,14 @@ export default class MainController {
     constructor($scope, $state) {
         let sdk =  new wallet.Application();
         sdk.attachStorage(window.localStorage);
-        $scope.password = {};
 
         $scope.isPasswordSet = () => {
             return sdk.initiated();
         };
 
+        $scope.password = {};
         $scope.enterPassword = () => {
-            if($scope.password.password) {
-                sdk.unlock($scope.password.password);
+            if($scope.password.password && sdk.unlock($scope.password.password)) {
                 $state.go('navBar.topUp');
             }
         };
