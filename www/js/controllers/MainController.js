@@ -1,11 +1,6 @@
-import * as wallet from 'cryptofiat-wallet';
 
 export default class MainController {
-
-    constructor($scope, $state) {
-        let sdk =  new wallet.Application();
-        sdk.attachStorage(window.localStorage);
-
+    constructor($scope, $state, sdk) {
         $scope.isPasswordSet = () => {
             return sdk.initiated();
         };
@@ -30,8 +25,6 @@ export default class MainController {
             console.log('import');
         };
     }
-
-
 }
 
-MainController.$inject = ['$scope', '$state'];
+MainController.$inject = ['$scope', '$state', 'sdk'];

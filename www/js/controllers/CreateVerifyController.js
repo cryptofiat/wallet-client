@@ -1,10 +1,6 @@
-import * as wallet from 'cryptofiat-wallet';
 
 export default class CreateVerifyController {
-    constructor($scope, $state) {
-        let sdk =  new wallet.Application();
-        sdk.attachStorage(window.localStorage);
-
+    constructor($scope, $state, sdk) {
         $scope.recoveryPhrase =
             'six cause school board office tattoo ' +
             'mammal pulp inside cloud nurse ' +
@@ -18,7 +14,7 @@ export default class CreateVerifyController {
 
             if($scope.password.enter && $scope.password.enter == $scope.password.confirm) {
                 sdk.initLocalStorage($scope.password.enter);
-                $scope.publicAddress = '0x'+sdk.storeNewKey().toString('hex');
+                $scope.publicAddress = sdk.storeNewKey();
                 $scope.tab = 'ACCOUNT_CREATED';
             }
         };
@@ -54,7 +50,6 @@ export default class CreateVerifyController {
             $scope.tab = 'CREATE_PASSWORD';
         };
     }
-
 }
 
-CreateVerifyController.$inject = ['$scope', '$state'];
+CreateVerifyController.$inject = ['$scope', '$state', 'sdk'];

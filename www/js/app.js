@@ -4,6 +4,7 @@ import MenuController from './controllers/MenuController';
 import TopUpController from './controllers/TopUpController';
 import SendController from './controllers/SendController';
 import TransactionsController from './controllers/TransactionsController';
+import SdkService from './services/SdkService'
 
 angular
     .module('app', ['ionic'])
@@ -13,6 +14,7 @@ angular
     .controller('topUpCtrl', TopUpController)
     .controller('sendCtrl', SendController)
     .controller('transactionsCtrl', TransactionsController)
+    .service('sdk', SdkService)
 
     .run(['$ionicPlatform', ($ionicPlatform) => {
         $ionicPlatform.ready(function () {
