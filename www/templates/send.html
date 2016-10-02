@@ -3,9 +3,33 @@
         <p>Current Balance: ???</p>
         <div>
             <form name="sendEuroForm" ng-submit="sendEuro()">
-                <label class="item item-input" id="sendEuroForm-recipientAddress">
-                    <span class="input-label">Recipient Address:</span>
-                    <input type="text" name="recipientAddress" ng-model="send.recipientAddress" placeholder="0x123456789">
+                <table>
+                    <td>
+                        <label>
+                            Send To: &nbsp;
+                        </label>
+                    </td>
+                    <td class="radio">
+                        <label>
+                            <input type="radio" name="sendToAccountType" value="eId" ng-model="send.accountType">
+                            Estonian Id &nbsp;
+                        </label>
+                    </td>
+                    <td class="radio">
+                        <label>
+                            <input type="radio" name="sendToAccountType" value="ethereum" ng-model="send.accountType">
+                            Ethereum Address
+                        </label>
+                    </td>
+                </table>
+                <br>
+                <label class="item item-input" id="sendEuroForm-eId" ng-if="send.accountType == 'eId'">
+                    <span class="input-label">E-ID:</span>
+                    <input type="text" name="recipientAddress" ng-model="send.eId" placeholder="2000553535">
+                </label>
+                <label class="item item-input" id="sendEuroForm-ethereumAddress" ng-if="send.accountType == 'ethereum'">
+                    <span class="input-label">Ethereum Address:</span>
+                    <input type="text" name="ethereumAddress" ng-model="send.ethereumAddress" placeholder="0x123456789">
                 </label>
                 <label class="item item-input" id="sendEuroForm-euroAmount">
                     <span class="input-label">Amount EUR:</span>

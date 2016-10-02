@@ -7,7 +7,7 @@ export default class SendController {
             }
         });
 
-        $scope.send = {};
+        $scope.send = { accountType: 'eId' };
         $scope.sendEuro = () => {
             console.log('send: ', $scope.send);
         }
