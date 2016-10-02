@@ -1,6 +1,8 @@
 
 export default class CreateVerifyController {
     constructor($scope, $state, sdk) {
+        let publicKey;
+
         $scope.recoveryPhrase =
             'six cause school board office tattoo ' +
             'mammal pulp inside cloud nurse ' +
@@ -14,7 +16,8 @@ export default class CreateVerifyController {
 
             if($scope.password.enter && $scope.password.enter == $scope.password.confirm) {
                 sdk.initLocalStorage($scope.password.enter);
-                $scope.publicAddress = sdk.storeNewKey();
+                publicKey = sdk.storeNewKey();
+                $scope.publicAddress = '0x'+sdk.pubToAddress(publicKey).toString('hex');
                 $scope.tab = 'ACCOUNT_CREATED';
             }
         };
@@ -29,9 +32,12 @@ export default class CreateVerifyController {
         $scope.verifyMobileId = () => {
             if($scope.mobileId.phoneNumber){
                 console.log('phoneNumber: ' + $scope.mobileId.phoneNumber);
-                $scope.idNumber = sdk.approveWithEstonianMobileId($scope.publicAddress, $scope.mobileId.phoneNumber,
+
+                //00000766 - test phone number
+                sdk.approveWithEstonianMobileId(publicKey.toString('hex') ,$scope.mobileId.phoneNumber,
                     (data) => console.log('mobileIdChallengeCode', data.mobileIdChallengeCode)
-                ).then(()=>{
+                ).then((data) => {
+                    $scope.idNumber = data;
                     console.log("approve estonia mobile id had a response");
                     $scope.tab = 'USE';
                 })

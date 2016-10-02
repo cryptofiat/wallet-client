@@ -18,8 +18,12 @@ export default class SdkService {
         return this.sdk.initLocalStorage(secret);
     }
 
-    storeNewKey() {
-        return '0x' + this.sdk.storeNewKey().toString('hex');
+    storeNewKey() { //returns public key
+        return this.sdk.storeNewKey();
+    }
+
+    pubToAddress(publicKey) {
+        return this.sdk.pubToAddress(publicKey)
     }
 
     approveWithEstonianMobileId(address, phoneNumber, callback) {
