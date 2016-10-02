@@ -29,4 +29,8 @@ export default class SdkService {
     approveWithEstonianBankTransfer(publicAddress) {
         return this.sdk.approveWithEstonianBankTransfer(publicAddress);
     }
+
+    isUnlocked() {
+        return this.sdk.isUnlocked();
+    }
 }
