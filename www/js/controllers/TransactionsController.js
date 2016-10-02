@@ -1,6 +1,6 @@
 export default class TransactionsController {
 
-    constructor($scope, $stateParams, sdk) {
+    constructor($scope, $state, sdk) {
         $scope.$watch(function () {
             if (!sdk.isUnlocked() && $state.current.name != 'main') {
                 $state.go('main');
@@ -11,4 +11,4 @@ export default class TransactionsController {
     }
 }
 
-TransactionsController.$inject = ['$scope', '$stateParams', 'sdk'];
+TransactionsController.$inject = ['$scope', '$state', 'sdk'];
