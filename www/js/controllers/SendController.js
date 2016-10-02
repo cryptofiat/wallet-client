@@ -6,6 +6,11 @@ export default class SendController {
                 $state.go('main');
             }
         });
+
+        $scope.send = {};
+        $scope.sendEuro = () => {
+            console.log('send: ', $scope.send);
+        }
     }
 }
 

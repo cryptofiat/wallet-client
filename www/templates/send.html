@@ -1,7 +1,27 @@
 <ion-view title="EURO 2.0" id="sendPage">
     <ion-content padding="true" class="has-header">
+        <p>Current Balance: ???</p>
         <div>
-            Send!
+            <form name="sendEuroForm" ng-submit="sendEuro()">
+                <label class="item item-input" id="sendEuroForm-recipientAddress">
+                    <span class="input-label">Recipient Address:</span>
+                    <input type="text" name="recipientAddress" ng-model="send.recipientAddress" placeholder="0x123456789">
+                </label>
+                <label class="item item-input" id="sendEuroForm-euroAmount">
+                    <span class="input-label">Amount EUR:</span>
+                    <input type="number" name="euroAmount" ng-model="send.euroAmount" placeholder="5.50">
+                </label>
+                <label class="item item-input" id="sendEuroForm-reference">
+                    <span class="input-label">Reference:</span>
+                    <input type="text" name="reference" ng-model="send.reference" placeholder="Reference">
+                </label>
+                <br>
+                <p> Transaction Fee: XXXX </p>
+                <p> Arrives in 40 seconds </p>
+                <button id="sendEuroButton" type="submit" class="button button-positive button-block">
+                    Send
+                </button>
+            </form>
         </div>
     </ion-content>
 </ion-view>

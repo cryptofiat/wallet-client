@@ -24,7 +24,7 @@ export default class CreateVerifyController {
             $scope.tab = 'VERIFY'
         };
 
-        $scope.mobileId = { phoneNumber: null };
+        $scope.mobileId = {};
         $scope.idNumber = null;
         $scope.verifyMobileId = () => {
             if($scope.mobileId.phoneNumber){
