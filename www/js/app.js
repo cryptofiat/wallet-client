@@ -41,7 +41,7 @@ angular
                 url: '/home/topUp',
                 views: {
                     'topUpTab': {
-                        templateUrl: 'templates/topUp.html',
+                        templateUrl: 'templates/topup.html',
                         controller: 'topUpCtrl'
                     }
                 }
