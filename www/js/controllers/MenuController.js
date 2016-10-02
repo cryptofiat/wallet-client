@@ -1,6 +1,9 @@
 export default class MenuController {
 
-    constructor($scope, $stateParams) {
+    constructor($scope, $state) {
+        $scope.importKey = () => {
+            //$state.go('eee');
+        };
     }
 }
 

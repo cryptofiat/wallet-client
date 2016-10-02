@@ -69,7 +69,12 @@
             <ion-content ng-controller="menuCtrl" padding="false" class="side-menu-left has-header ">
 
                 <ion-list id="menu-list1" data-componentid="list1">
-                    <ion-item id="menu-list-item1" data-componentid="list-item1">Import key</ion-item>
+                    <ion-item id="menu-list-item1"
+                              data-componentid="list-item1"
+                              ng-controller="menuCtrl"
+                              ng-click="importKey()">
+                        Import key
+                    </ion-item>
                     <ion-item id="menu-list-item2" data-componentid="list-item2">Export key</ion-item>
                 </ion-list>
 

@@ -39,6 +39,11 @@ angular
                 templateUrl: 'templates/createVerifyUse.html',
                 controller: 'createVerifyUseCtrl'
             })
+            //.state('importKey', {
+            //    url: '/importKey',
+            //    templateUrl: 'templates/yourTemplate.html',
+            //    controller: 'yourCtrl'
+            //})
             .state('navBar.topUp', {
                 url: '/topUp',
                 views: {

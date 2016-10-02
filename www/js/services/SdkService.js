@@ -41,4 +41,12 @@ export default class SdkService {
     isUnlocked() {
         return this.sdk.isUnlocked();
     }
+
+    sendToEstonianIdCode(idCode, amount, ref) {
+        return this.sdk.sendToEstonianIdCode(idCode, amount, ref)
+    }
+
+    sendAsync(toAddress, amount, ref) {
+        return this.sdk.sendAsync(toAddress, amount, ref, {})
+    }
 }
