@@ -30,6 +30,10 @@ export default class SdkService {
         return this.sdk.approveWithEstonianBankTransfer(publicAddress);
     }
 
+    balanceTotalAsync() {
+        return this.sdk.balanceTotalAsync();
+    }
+
     isUnlocked() {
         return this.sdk.isUnlocked();
     }
