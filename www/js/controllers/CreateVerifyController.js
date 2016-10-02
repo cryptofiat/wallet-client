@@ -30,9 +30,12 @@ export default class CreateVerifyController {
             if($scope.mobileId.phoneNumber){
                 console.log('phoneNumber: ' + $scope.mobileId.phoneNumber);
                 $scope.idNumber = sdk.approveWithEstonianMobileId($scope.publicAddress, $scope.mobileId.phoneNumber,
-                    () =>  { console.log("approve estonia mobile id had a response"); }
-                );
-                $scope.tab = 'USE';
+                    (data) => console.log('mobileIdChallengeCode', data.mobileIdChallengeCode)
+                ).then(()=>{
+                    console.log("approve estonia mobile id had a response");
+                    $scope.tab = 'USE';
+                })
+
             } else {
                 console.log('no phone number given...');
             }
