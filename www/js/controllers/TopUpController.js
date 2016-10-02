@@ -1,7 +1,12 @@
 export default class TopUpController {
 
-    constructor($scope, $stateParams) {
+    constructor($scope, $state, sdk) {
+        $scope.$watch(function () {
+            if (!sdk.isUnlocked() && $state.current.name != 'main') {
+                $state.go('main');
+            }
+        });
     }
 }
 
-TopUpController.$inject = ['$scope', '$stateParams'];
+TopUpController.$inject = ['$scope', '$state', 'sdk'];

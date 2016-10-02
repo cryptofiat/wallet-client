@@ -33,4 +33,8 @@ export default class SdkService {
     balanceTotalAsync() {
         return this.sdk.balanceTotalAsync();
     }
+
+    isUnlocked() {
+        return this.sdk.isUnlocked();
+    }
 }

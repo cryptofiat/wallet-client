@@ -40,7 +40,7 @@ angular
                 controller: 'createVerifyUseCtrl'
             })
             .state('navBar.topUp', {
-                url: '/home/topUp',
+                url: '/topUp',
                 views: {
                     'topUpTab': {
                         templateUrl: 'templates/topup.html',
@@ -49,7 +49,7 @@ angular
                 }
             })
             .state('navBar.sendTab', {
-                url: '/home/send',
+                url: '/send',
                 views: {
                     'sendTab': {
                         templateUrl: 'templates/send.html',
@@ -58,7 +58,7 @@ angular
                 }
             })
             .state('navBar.transactions', {
-                url: '/home/transactions',
+                url: '/transactions',
                 views: {
                     'transactionsTab': {
                         templateUrl: 'templates/transactions.html',
