@@ -49,4 +49,12 @@ export default class SdkService {
     sendAsync(toAddress, amount, ref) {
         return this.sdk.sendAsync(toAddress, amount, ref, {})
     }
+
+    storeEstonianIdCode(idCode) {
+        return this.sdk.storeEstonianIdCode(idCode)
+    }
+    getEstonianIdCode() {
+        return this.sdk.getEstonianIdCode()
+    }
+
 }

@@ -2,6 +2,7 @@
 export default class CreateVerifyController {
     constructor($scope, $state, sdk) {
         let publicKey;
+        let publicAddress;
 
         $scope.recoveryPhrase =
             'six cause school board office tattoo ' +
@@ -27,6 +28,16 @@ export default class CreateVerifyController {
             $scope.tab = 'VERIFY'
         };
 
+        $scope.showVerifyCard = () => {
+            console.log('Opening card tab');
+            $scope.tab = 'VERIFY_CARD'
+        };
+
+        $scope.showVerifyBank = () => {
+            console.log('Opening bank tab');
+            $scope.tab = 'VERIFY_BANK'
+        };
+
         $scope.mobileId = {};
         $scope.idNumber = null;
         $scope.verifyMobileId = () => {
@@ -34,17 +45,33 @@ export default class CreateVerifyController {
                 console.log('phoneNumber: ' + $scope.mobileId.phoneNumber);
 
                 //00000766 - test phone number
-                sdk.approveWithEstonianMobileId(publicKey.toString('hex') ,$scope.mobileId.phoneNumber,
-                    (data) => console.log('mobileIdChallengeCode', data.mobileIdChallengeCode)
-                ).then((data) => {
-                    $scope.idNumber = data;
-                    console.log("approve estonia mobile id had a response");
+		console.log('submitting addr: ' + sdk.pubToAddress(publicKey).toString('hex'));
+                sdk.approveWithEstonianMobileId(sdk.pubToAddress(publicKey).toString('hex') ,$scope.mobileId.phoneNumber,
+                    (data) => {
+                       $scope.mobileIdChallengeCode = data.mobileIdChallengeCode;
+                       $scope.processing = true;
+                       console.log('mobileIdChallengeCode', data.mobileIdChallengeCode)
+                       $scope.$apply();
+                    }
+                ).then((ownerId) => {
+                    $scope.processing = false;
+                    $scope.idNumber = ownerId;
+                    console.log("approve estonia mobile id had a response: " + ownerId);
+		    sdk.storeEstonianIdCode(ownerId);
                     $scope.tab = 'USE';
+                    console.log("tab: "+$scope.tab);
+                    $scope.$apply();
                 })
 
             } else {
                 console.log('no phone number given...');
             }
+        };
+
+        $scope.verifyCard = () => {
+            console.log('verify by card');
+            //sdk.approveWithEstonianIdCard($scope.publicAddress);
+            $scope.tab = 'USE';
         };
 
         $scope.verifyBank = () => {
