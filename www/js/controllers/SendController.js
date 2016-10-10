@@ -9,14 +9,14 @@ export default class SendController {
 
         $scope.send = { accountType: 'eId' };
         $scope.sendEuro = () => {
+            console.log('send: ', $scope.send);
             if ($scope.send.accountType == 'eId') {
                 //TODO
-                //sdk.sendToEstonianIdCode(idCode, amount, ref)
+                sdk.sendToEstonianIdCode($scope.send.eId, $scope.send.euroAmount, $scope.send.reference)
             } else {
                 //TODO
                 //sdk.sendAsync(toaddr, amount, ref, _data)
             }
-            console.log('send: ', $scope.send);
         }
     }
 }

@@ -75,7 +75,12 @@
                               ng-click="importKey()">
                         Import key
                     </ion-item>
-                    <ion-item id="menu-list-item2" data-componentid="list-item2">Export key</ion-item>
+                    <ion-item id="menu-list-item2" 
+				data-componentid="list-item2"
+                              ng-controller="menuCtrl"
+                              ng-click="exportKeys()">
+			Export keys
+		     </ion-item>
                 </ion-list>
 
             </ion-content>

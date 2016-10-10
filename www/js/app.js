@@ -4,6 +4,7 @@ import MenuController from './controllers/MenuController';
 import TopUpController from './controllers/TopUpController';
 import SendController from './controllers/SendController';
 import TransactionsController from './controllers/TransactionsController';
+import ExportKeyController from './controllers/ExportKeyController';
 import SdkService from './services/SdkService'
 
 angular
@@ -13,6 +14,7 @@ angular
     .controller('createVerifyUseCtrl', CreateVerifyController)
     .controller('topUpCtrl', TopUpController)
     .controller('sendCtrl', SendController)
+    .controller('exportKeyCtrl', ExportKeyController)
     .controller('transactionsCtrl', TransactionsController)
     .service('sdk', SdkService)
 
@@ -38,6 +40,11 @@ angular
                 url: '/verify?email',
                 templateUrl: 'templates/createVerifyUse.html',
                 controller: 'createVerifyUseCtrl'
+            })
+            .state('exportKeys', {
+                url: '/exportKeys',
+                templateUrl: 'templates/exportKey.html',
+                controller: 'exportKeyCtrl'
             })
             //.state('importKey', {
             //    url: '/importKey',

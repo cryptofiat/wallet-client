@@ -18,8 +18,8 @@ export default class SdkService {
         return this.sdk.initLocalStorage(secret);
     }
 
-    storeNewKey() { //returns public key
-        return this.sdk.storeNewKey();
+    storeNewKey(newKeyHex) { //returns public key
+        return this.sdk.storeNewKey(newKeyHex);
     }
 
     pubToAddress(publicKey) {
@@ -55,6 +55,10 @@ export default class SdkService {
     }
     getEstonianIdCode() {
         return this.sdk.getEstonianIdCode()
+    }
+
+    addresses() {
+        return this.sdk.addresses()
     }
 
 }

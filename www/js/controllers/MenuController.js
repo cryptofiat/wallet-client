@@ -4,7 +4,10 @@ export default class MenuController {
         $scope.importKey = () => {
             //$state.go('eee');
         };
+        $scope.exportKeys = () => {
+            $state.go('exportKeys');
+        };
     }
 }
 
-MenuController.$inject = ['$scope', '$stateParams'];
+MenuController.$inject = ['$scope', '$state'];

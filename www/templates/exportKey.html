@@ -1,22 +1,16 @@
-<ion-view title="Transactions" id="transactionsPage">
+<ion-view title="Export Keys" id="exportKeysPage">
     <ion-content padding="true" class="has-header">
         <div>
 <div class="card">
   <div class="item item-text-wrap">
    <p>
-   Estonian ID: <span>{{idCode}}</span>
-   </p>
-   <p>
-   Balance: <span>{{totalBalance}}</span> EUR 
+   Click on address to expose the key.
    </p>
   </div>
 </div>
 <ul class="list">
     <li class="item" ng-repeat="addr in addresses">
     {{ addr }}
-    </li>
-    <li class="item">
-      ...
     </li>
     <li class="item">
       ...
