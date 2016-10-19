@@ -7,24 +7,17 @@
    Estonian ID: <span>{{idCode}}</span>
    </p>
    <p>
-   Balance: <span>{{totalBalance}}</span> EUR 
+   Balance: <span>{{ (totalBalance / 100).toFixed(2)}}</span> EUR 
    </p>
   </div>
 </div>
 <ul class="list">
-    <li class="item" ng-repeat="addr in addresses">
-    {{ addr }}
-    </li>
-    <li class="item">
-      ...
-    </li>
-    <li class="item">
-      ...
-    </li>
+    <a class="item" ng-repeat="tx in transfers" href="http://etherscan.io/tx/{{tx.id}}">
+    <span class="{{ (tx.signedAmount > 0) ? 'balanced' : 'assertive'}}">{{ (tx.signedAmount / 100).toFixed(2) }}</span> <span class="item-note">20 days ago</span>
+    <p>{{ tx.otherAddress }}</p>
+    </a>
 </ul>
-<form name="transactions-v1" ng-submit="storeId()">
-  <button type="submit" id="transactions-v3" class="button button-positive"></button>
-</form>
+<h6>{{transfers.length.toFixed(0)}} transfers</h6>
         </div>
     </ion-content>
 </ion-view>

@@ -7,12 +7,22 @@ export default class SendController {
             }
         });
 
+	$scope.txState = "";
+        $scope.txHash = "";
         $scope.send = { accountType: 'eId' };
         $scope.sendEuro = () => {
             console.log('send: ', $scope.send);
             if ($scope.send.accountType == 'eId') {
                 //TODO
-                sdk.sendToEstonianIdCode($scope.send.eId, $scope.send.euroAmount, $scope.send.reference)
+		//make button disabled
+                $scope.txState = "submitting";
+                $scope.$apply();
+                sdk.sendToEstonianIdCode($scope.send.eId, 100 * $scope.send.euroAmount, $scope.send.reference)
+                 .then( (response) => {
+                  $scope.txHash = response.id;
+                  $scope.txState = "submitted";
+                  $scope.$apply();
+                 } );
             } else {
                 //TODO
                 //sdk.sendAsync(toaddr, amount, ref, _data)

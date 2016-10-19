@@ -10,15 +10,23 @@
 </div>
 <ul class="list">
     <li class="item" ng-repeat="addr in addresses">
-    {{ addr }}
-    </li>
-    <li class="item">
-      ...
+    <div  ng-click="addr.showKey = !(addr.showKey)">
+    <span class="">{{ (addr.balance / 100).toFixed(2) }} EUR</span> 
+      <span class="item-note" ng-if="addr.approved">Approved</span>
+      <span class="item-note" ng-if="!(addr.approved)">Pending</span>
+    <p>{{ addr.address }}</p>
+    </div>
+    <div class="" ng-show="addr.showKey">
+      <br>
+      <p>
+       <span class="input-label">Plaintext key in hex</span>
+      </p>
+     <label class="item item-input item-stacked-label">
+      <textarea style="width:100%;">{{addr.privKeyHex}}</textarea>
+     </label>
+    </div>
     </li>
 </ul>
-<form name="transactions-v1" ng-submit="storeId()">
-  <button type="submit" id="transactions-v3" class="button button-positive"></button>
-</form>
         </div>
     </ion-content>
 </ion-view>

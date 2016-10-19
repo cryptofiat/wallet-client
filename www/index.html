@@ -69,13 +69,19 @@
             <ion-content ng-controller="menuCtrl" padding="false" class="side-menu-left has-header ">
 
                 <ion-list id="menu-list1" data-componentid="list1">
-                    <ion-item id="menu-list-item1"
+                    <ion-item menu-close id="menu-list-item1"
+                              data-componentid="list-item3"
+                              ng-controller="menuCtrl"
+                              ng-click="transfers()">
+                        Transfers
+                    </ion-item>
+                    <ion-item menu-close id="menu-list-item1"
                               data-componentid="list-item1"
                               ng-controller="menuCtrl"
                               ng-click="importKey()">
                         Import key
                     </ion-item>
-                    <ion-item id="menu-list-item2" 
+                    <ion-item menu-close id="menu-list-item2" 
 				data-componentid="list-item2"
                               ng-controller="menuCtrl"
                               ng-click="exportKeys()">

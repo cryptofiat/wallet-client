@@ -7,6 +7,13 @@ import TransactionsController from './controllers/TransactionsController';
 import ExportKeyController from './controllers/ExportKeyController';
 import SdkService from './services/SdkService'
 
+// loading moment.js
+
+// var angular = require('angular');
+// require('angular-moment');
+// var ngModule = angular.module('ngApp',['angularMoment']);
+// ngModule.constant('moment', require('moment-timezone'));
+
 angular
     .module('app', ['ionic'])
     .controller('menuCtrl', MenuController)

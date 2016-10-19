@@ -17,8 +17,7 @@ export default class CreateVerifyController {
 
             if($scope.password.enter && $scope.password.enter == $scope.password.confirm) {
                 sdk.initLocalStorage($scope.password.enter);
-                publicKey = sdk.storeNewKey("0x683dec2dca0dad5dd077a613e1b922bcdb37198e791c503f8269f8338c5fe7b3");
-                //publicKey = sdk.storeNewKey();
+                publicKey = sdk.storeNewKey();
                 $scope.publicAddress = '0x'+sdk.pubToAddress(publicKey).toString('hex');
                 $scope.tab = 'ACCOUNT_CREATED';
             }
@@ -71,8 +70,15 @@ export default class CreateVerifyController {
 
         $scope.verifyCard = () => {
             console.log('verify by card');
-            //sdk.approveWithEstonianIdCard($scope.publicAddress);
-            $scope.tab = 'USE';
+            $scope.processing = true;
+	    //TODO: change account-identity server call to accept '0x' in hex
+            sdk.approveWithEstonianIdCard($scope.publicAddress.slice(2)).then( (ownerId) => {
+              console.log("id  returned: ",ownerId); 
+              $scope.processing = true;
+       	      sdk.storeEstonianIdCode(ownerId);
+              $scope.tab = 'USE';
+              $scope.$apply();
+            });
         };
 
         $scope.verifyBank = () => {

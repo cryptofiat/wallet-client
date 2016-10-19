@@ -6,7 +6,10 @@ export default class ExportKeyController {
                 $state.go('main');
             }
         });
-        $scope.addresses = sdk.addresses()
+        sdk.contractDataAsync().then( (response) => {
+          $scope.addresses = response;
+          $scope.$apply();
+        })
 
         $scope.showKeyForAddress = () => {
         }

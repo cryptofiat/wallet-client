@@ -7,7 +7,9 @@
     "start": "webpack-dev-server --hot --inline --colors --content-base www/ --port 8082"
   },
   "dependencies": {
-    "cryptofiat-wallet": "github:cryptofiat/wallet"
+    "angular-moment": "^1.0.0",
+    "cryptofiat-wallet": "github:cryptofiat/wallet",
+    "moment": "^2.15.1"
   },
   "devDependencies": {
     "babel-core": "^6.16.0",

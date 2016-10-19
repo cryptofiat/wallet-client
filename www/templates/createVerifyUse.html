@@ -82,8 +82,14 @@
                         <span class="input-label">Phone (optional)</span>
                         <input type="tel" ng-model="mobileId.phoneNumber" placeholder="+372 123 4567">
                     </label>
-                    <button id="createVerifyUse-button" class="button button-positive  button-block">Verify</button>
+                    <button id="createVerifyUse-button" ng-disabled="processing" class="button button-positive  button-block">Verify</button>
                 </form>
+                <div class="card" ng-if="processing">
+                   <div class="item item-icon-left item-text-wrap">
+                   <i class="icon ion-clock"></i>
+                    Sent request, waiting for response ...
+                   </div>
+                </div>
             </div>
         </div>
         <div ng-if="tab == 'VERIFY_BANK'">

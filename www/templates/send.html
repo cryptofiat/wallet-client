@@ -33,7 +33,7 @@
                 </label>
                 <label class="item item-input" id="sendEuroForm-euroAmount">
                     <span class="input-label">Amount EUR:</span>
-                    <input type="number" name="euroAmount" ng-model="send.euroAmount" placeholder="5.50">
+                    <input type="text" name="euroAmount" ng-model="send.euroAmount" placeholder="5.50">
                 </label>
                 <label class="item item-input" id="sendEuroForm-reference">
                     <span class="input-label">Reference:</span>
@@ -42,10 +42,20 @@
                 <br>
                 <p> Transaction Fee: XXXX </p>
                 <p> Arrives in 40 seconds </p>
-                <button id="sendEuroButton" type="submit" class="button button-positive button-block">
+                <button id="sendEuroButton" ng-disabled="txState == 'submitting'" type="submit" class="button button-positive button-block">
                     Send
                 </button>
             </form>
         </div>
+       <div class="list">
+          <div  ng-if="txState == 'submitting'" class="item item-icon-left">
+          <i class="icon ion-upload positive"></i>
+          Sending
+          </div>
+          <a  ng-if="txState == 'submitted'" class="item item-icon-left item-text-wrap" href="https://etherscan.io/tx/{{txHash}}">
+          <i class="icon ion-checkmark balanced"></i>
+	  Submitted {{txHash}}
+          </a>
+       </div>
     </ion-content>
 </ion-view>

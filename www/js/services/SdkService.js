@@ -30,6 +30,10 @@ export default class SdkService {
         return this.sdk.approveWithEstonianMobileId(address, phoneNumber, callback);
     }
 
+    approveWithEstonianIdCard(address) {
+        return this.sdk.approveWithEstonianIdCard(address);
+    }
+
     approveWithEstonianBankTransfer(publicAddress) {
         return this.sdk.approveWithEstonianBankTransfer(publicAddress);
     }
@@ -59,6 +63,14 @@ export default class SdkService {
 
     addresses() {
         return this.sdk.addresses()
+    }
+
+    transfersCleanedAsync() {
+        return this.sdk.transfersCleanedAsync()
+    }
+
+    contractDataAsync() {
+        return this.sdk.contractDataAsync()
     }
 
 }

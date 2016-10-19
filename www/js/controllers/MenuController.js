@@ -4,6 +4,9 @@ export default class MenuController {
         $scope.importKey = () => {
             //$state.go('eee');
         };
+        $scope.transfers = () => {
+            $state.go('navBar.transactions');
+        };
         $scope.exportKeys = () => {
             $state.go('exportKeys');
         };
