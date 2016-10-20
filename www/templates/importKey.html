@@ -1,0 +1,26 @@
+<ion-view title="Import" id="importKeysPage">
+    <ion-content padding="true" class="has-header">
+<div class="card">
+  <div class="item item-text-wrap">
+   <p>
+   Enter plaintext private key and wallet password.    
+   </p>
+</div>
+</div>
+            <form name="importKeyForm" ng-submit="importKey()">
+	<div class="list">
+                <label class="item item-input item-stacked-label" id="import-key">
+                    <span class="input-label">Private key (hex)</span>
+                    <textarea rows="6" name="privKey" ng-model="key.privKey" placeholder="0x123456789"></textarea>
+                </label>
+                <label class="item item-input item-stacked-label" id="import-pass">
+                    <span class="input-label">Password</span>
+                    <input type="password" name="password" ng-model="key.password" placeholder="****">
+                </label>
+        </div>
+                <button id="importButton" ng-disabled="false" type="submit" class="button button-positive button-block">
+			Import - NOT working
+		</a>
+            </form>
+    </ion-content>
+</ion-view>
