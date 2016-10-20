@@ -58,6 +58,7 @@ angular
             //    templateUrl: 'templates/yourTemplate.html',
             //    controller: 'yourCtrl'
             //})
+/*
             .state('navBar.topUp', {
                 url: '/topUp',
                 views: {
@@ -67,6 +68,7 @@ angular
                     }
                 }
             })
+*/
             .state('navBar.sendTab', {
                 url: '/send',
                 views: {

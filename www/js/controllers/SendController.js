@@ -7,6 +7,8 @@ export default class SendController {
             }
         });
 
+        $scope.fee = "0.01";
+
 	$scope.txState = "";
         $scope.txHash = "";
         $scope.send = { accountType: 'eId' };
@@ -27,6 +29,20 @@ export default class SendController {
                 //TODO
                 //sdk.sendAsync(toaddr, amount, ref, _data)
             }
+        }
+        $scope.idCodeCheck = "";
+        $scope.idCodeChecker = () => {
+          if ($scope.send.eId.length != 11) {$scope.idCodeCheck=""; $scope.$apply(); return}
+          $scope.idCodeCheck = "loading" 
+          sdk.getAddressForEstonianIdCode($scope.send.eId).then( (addr) => {
+            if (addr) {
+              $scope.idCodeCheck = "yes" 
+	      $scope.$apply();
+            } else {
+              $scope.idCodeCheck = "no" 
+	      $scope.$apply();
+            }
+          })
         }
     }
 }

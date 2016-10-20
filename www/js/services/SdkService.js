@@ -73,4 +73,8 @@ export default class SdkService {
         return this.sdk.contractDataAsync()
     }
 
+    getAddressForEstonianIdCode(idCode) {
+        return this.sdk.getAddressForEstonianIdCode(idCode)
+    }
+
 }
