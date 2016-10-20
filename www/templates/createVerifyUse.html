@@ -8,29 +8,32 @@
             <!--<button id="createVerifyUse-button5" class="button button-positive  button-block">Use</button>-->
         <!--</div>-->
         <div ng-if="tab == 'CREATE_PASSWORD'">
-            Please enter a secure password to create your account!
-            <form name="setPasswordForm" ng-submit="setPassword()">
-                <label class="item item-input" id="setPasswordForm-password">
-                    <span class="input-label">Password:</span>
+           <p>
+            Please enter a secure password to create your account.
+           </p>
+           <div class="list">
+           <form name="setPasswordForm" ng-submit="setPassword()">
+                <label class="item item-input item-stacked-label" id="setPasswordForm-password">
+                    <span class="input-label">Password</span>
                     <input type="password" name="passwordEnter" ng-model="password.enter" placeholder="********">
                 </label>
-                <label class="item item-input" id="setPasswordForm-confirmPassword">
-                    <span class="input-label">Confirm:    </span>
+                <label class="item item-input item-stacked-label" id="setPasswordForm-confirmPassword">
+                    <span class="input-label">Confirm </span>
                     <input type="password" name="passwordConfirm" ng-model="password.confirm" placeholder="********">
                 </label>
                 <button id="setPasswordButton" type="submit" class="button button-positive button-block">
                     Set Password
                 </button>
             </form>
+            </div>
         </div>
         <div ng-if="tab == 'ACCOUNT_CREATED'">
             <div>
-                <p>Account created!!!</p>
-                <p>Your new address is:</p>
+                <p>Account created. Your new address is:</p>
                 <p><b>{{publicAddress}}</b></p>
                 <p>Your 15 word recovery phrase is:</p>
-                <p><b>{{recoveryPhrase}}</b></p>
-                <p><b>KEEP THIS INFORMATION IN A SAFE PLACE!!!</b></p>
+                <h6>{{recoveryPhrase}}</h6>
+                <p>You need to verify your ID to start sending money.</p>
            </div>
             <form name="confirmDetailsForm">
                 <button id="confirmDetailsButton"
@@ -56,9 +59,9 @@
         <div ng-if="tab == 'VERIFY'">
             <div id="createVerifyUse-container1">
                 <form id="createVerifyUse-verifyMobile" class="list" ng-submit="verifyMobileId()">
-                    <div>
+                    <p>
                         Verify with Mobile ID
-                    </div>
+                    </p>
                     <label class="item item-input" id="createVerifyUse-input3">
                         <span class="input-label">Phone</span>
                         <input type="tel" ng-model="mobileId.phoneNumber" placeholder="+372 123 4567">
@@ -75,9 +78,9 @@
         <div ng-if="tab == 'VERIFY_CARD'">
             <div id="createVerifyUse-container1">
                 <form id="createVerifyUse-verifyCard" class="list" ng-submit="verifyCard();">
-                    <div>
-                        Verify with Estonian ID Card. Enter card in reader.
-                    </div>
+                    <p>
+                        Verify with Estonian ID Card. Have the card ready in the reader.
+                    </p>
                     <label class="item item-input" id="createVerifyUse-input3">
                         <span class="input-label">Phone (optional)</span>
                         <input type="tel" ng-model="mobileId.phoneNumber" placeholder="+372 123 4567">
@@ -94,12 +97,18 @@
         </div>
         <div ng-if="tab == 'VERIFY_BANK'">
             <div id="createVerifyUse-markdown3" style="color:#000000;">
-                <div>Verify by bank transfer (slower)</div>
+                <div class="card">
+                   <div class="item item-text-wrap">
+			Verify by bank transfer from an Estonian bank account. Only personal bank accounts work.
+                   </div>
+                </div>
                 <br>
-                <div>Name: Euro 2.0 Guys</div>
+                NOT IMPLEMENTED!
+                <br>
+                <br>
+                <div>Name: Euro 2.0 Reserve</div>
                 <div>Account: EE087700771001615943</div>
-                <div>Amount: 0.43 EUR</div>
-                <div>Reference: P12345</div>
+                <div>Reference: {{}} TBC</div>
                 <form id="createVerifyUse-verifyBank" class="list" ng-submit="verifyBank()">
                     <button id="createVerifyUse-button7" class="button button-positive  button-block">I made a bank Transfer</button>
                 </form>

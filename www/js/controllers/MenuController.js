@@ -10,6 +10,12 @@ export default class MenuController {
         $scope.exportKeys = () => {
             $state.go('exportKeys');
         };
+        $scope.importKey = () => {
+            $state.go('importKey');
+        };
+        $scope.about = () => {
+            $state.go('about');
+        };
     }
 }
 
