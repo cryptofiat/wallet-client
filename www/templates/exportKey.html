@@ -24,6 +24,7 @@
      <label class="item item-input item-stacked-label">
       <textarea rows="4" style="width:100%;">{{addr.privKeyHex}}</textarea>
      </label>
+	<button ng-if="!(addr.approved)" class="button button-positive button-block button-outline" ng-click="verify(addr.privKeyHex)">Verify again</button>
     </div>
     </li>
 </ul>

@@ -1,32 +1,32 @@
 
 export default class CreateVerifyController {
-    constructor($scope, $state, sdk) {
+    constructor($scope, $state, sdk, $ionicHistory, $stateParams) {
         let publicKey;
         let publicAddress;
 
+        if (!sdk.isUnlocked()) {
+                console.log('not initiated. heading back to set password.');
+		$state.go('initStorage');
+		return;
+        }
+
+	if ($stateParams.privKey) {
+	   publicKey = sdk.privateToPublic($stateParams.privKey);
+	} else {
+           publicKey = sdk.storeNewKey();
+        }
+        $scope.publicAddress = '0x'+sdk.pubToAddress(publicKey).toString('hex');
+        
+        $scope.tab = 'ACCOUNT_CREATED'
         $scope.recoveryPhrase =
             'six cause school board office tattoo ' +
             'mammal pulp inside cloud nurse ' +
             'absorb aspect elephant tornado';
 
-        $scope.tab = 'CREATE_PASSWORD';
-        $scope.password = {};
-        $scope.setPassword = () => {
-            console.log('password: ' , $scope.password.enter);
-            console.log('confirm : ' , $scope.password.confirm);
 
-            if($scope.password.enter && $scope.password.enter == $scope.password.confirm) {
-                sdk.initLocalStorage($scope.password.enter);
-                sdk.unlock($scope.password.enter);
-                publicKey = sdk.storeNewKey();
-                $scope.publicAddress = '0x'+sdk.pubToAddress(publicKey).toString('hex');
-                $scope.tab = 'ACCOUNT_CREATED';
-            }
-        };
-
-        $scope.confirmDetails = () => {
-            console.log('details confirmed');
-            $scope.tab = 'VERIFY'
+        $scope.showVerifyMobile = () => {
+            console.log('Open mobile ID');
+            $scope.tab = 'VERIFY_MOBILE'
         };
 
         $scope.showVerifyCard = () => {
@@ -87,13 +87,17 @@ export default class CreateVerifyController {
             sdk.approveWithEstonianBankTransfer($scope.publicAddress);
             $scope.tab = 'USE';
         };
+        $scope.showStart = () => {
+            console.log('heading back');
+            $scope.tab = 'ACCOUNT_CREATED';
+        }
 
         $scope.finish = () => {
             console.log('finish');
-            $state.go('main');
-            $scope.tab = 'CREATE_PASSWORD';
+            $state.go('navBar.transactions');
+            $scope.tab = 'ACCOUNT_CREATED';
         };
     }
 }
 
-CreateVerifyController.$inject = ['$scope', '$state', 'sdk'];
+CreateVerifyController.$inject = ['$scope', '$state', 'sdk','$ionicHistory','$stateParams'];

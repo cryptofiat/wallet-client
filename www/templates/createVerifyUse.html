@@ -1,4 +1,4 @@
-<ion-view title="Sign up" id="createVerifyUsePage">
+<ion-view title="Verify" id="createVerifyUsePage">
     <ion-content padding="true" class="has-header">
    <div padding="true" class="manual-ios-statusbar-padding">
         <!--&lt;!&ndash;TODO: highlight these guys depending on the tab variable or delete them&ndash;&gt;-->
@@ -7,39 +7,17 @@
             <!--<button id="createVerifyUse-button4" class="button button-positive  button-block">Verify</button>-->
             <!--<button id="createVerifyUse-button5" class="button button-positive  button-block">Use</button>-->
         <!--</div>-->
-        <div ng-if="tab == 'CREATE_PASSWORD'">
-           <p>
-            Please enter a secure password to create your account.
-           </p>
-           <div class="list">
-           <form name="setPasswordForm" ng-submit="setPassword()">
-                <label class="item item-input item-stacked-label" id="setPasswordForm-password">
-                    <span class="input-label">Password</span>
-                    <input type="password" name="passwordEnter" ng-model="password.enter" placeholder="********">
-                </label>
-                <label class="item item-input item-stacked-label" id="setPasswordForm-confirmPassword">
-                    <span class="input-label">Confirm </span>
-                    <input type="password" name="passwordConfirm" ng-model="password.confirm" placeholder="********">
-                </label>
-                <button id="setPasswordButton" type="submit" class="button button-positive button-block">
-                    Set Password
-                </button>
-            </form>
-            </div>
-        </div>
         <div ng-if="tab == 'ACCOUNT_CREATED'">
             <div>
                 <p>Account created. Your new address is:</p>
                 <p><b>{{publicAddress}}</b></p>
-                <p>Your 15 word recovery phrase is:</p>
-                <h6>{{recoveryPhrase}}</h6>
                 <p>You need to verify your ID to start sending money.</p>
            </div>
             <form name="confirmDetailsForm">
-                <button id="confirmDetailsButton"
+                <button id="verifyMobileButton"
                         type="submit"
                         class="button button-positive button-block"
-                        ng-click="confirmDetails()">
+                        ng-click="showVerifyMobile()">
                     Mobiil-ID
                 </button>
                 <button id="verifyCardButton"
@@ -56,22 +34,26 @@
                 </button>
             </form>
         </div>
-        <div ng-if="tab == 'VERIFY'">
+        <div ng-if="tab == 'VERIFY_MOBILE'">
             <div id="createVerifyUse-container1">
                 <form id="createVerifyUse-verifyMobile" class="list" ng-submit="verifyMobileId()">
                     <p>
-                        Verify with Mobile ID
+                        Verify with Mobiil-ID. You need to have test certificates from 
+			<a href="https://demo.sk.ee/MIDCertsReg/">here</a>.
                     </p>
                     <label class="item item-input" id="createVerifyUse-input3">
                         <span class="input-label">Phone</span>
                         <input type="tel" ng-model="mobileId.phoneNumber" placeholder="+372 123 4567">
                     </label>
                     <button id="createVerifyUse-button6" class="button button-positive  button-block">Verify</button>
+                    <a id="createVerifyUse-button7" href ng-click="showStart()" class="">Other options</a>
                 </form>
                 <div ng-if="processing">
-                     <ion-card>
-                       Check your mobile with code: {{mobileIdChallengeCode}}
-                     </ion-card>
+                     <div class="card"><div class="item">
+                       Check your mobile with code: 
+                       <b>{{mobileIdChallengeCode}}</b>
+                     </div>
+                     </div>
                 </div>
             </div>
         </div>
@@ -86,6 +68,7 @@
                         <input type="tel" ng-model="mobileId.phoneNumber" placeholder="+372 123 4567">
                     </label>
                     <button id="createVerifyUse-button" ng-disabled="processing" class="button button-positive  button-block">Verify</button>
+                    <a id="createVerifyUse-button7" href ng-click="showStart()" class="">Other options</a>
                 </form>
                 <div class="card" ng-if="processing">
                    <div class="item item-icon-left item-text-wrap">
@@ -109,8 +92,9 @@
                 <div>Name: Euro 2.0 Reserve</div>
                 <div>Account: EE087700771001615943</div>
                 <div>Reference: {{}} TBC</div>
-                <form id="createVerifyUse-verifyBank" class="list" ng-submit="verifyBank()">
-                    <button id="createVerifyUse-button7" class="button button-positive  button-block">I made a bank Transfer</button>
+                <form id="createVerifyUse-verifyBank" class="list">
+                    <button id="createVerifyUse-button7" ng-click="verifyBank()" ng-disabled="true" class="button button-positive  button-block">I made a bank transfer</button>
+                    <a id="createVerifyUse-button7" href ng-click="showStart()" class="">Other options</a>
                 </form>
             </div>
         </div>

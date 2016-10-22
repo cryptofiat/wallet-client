@@ -1,11 +1,13 @@
 export default class MainController {
     constructor($scope, $state, sdk) {
+        /*
         $scope.$watch(function () {
             if (sdk.isUnlocked() && $state.current.name != 'navBar.transactions') {
+                console.log('routing to tx');
                 $state.go('navBar.transactions');
             }
         });
-
+	*/
 
         $scope.isPasswordSet = () => {
             return sdk.initiated();
@@ -21,7 +23,7 @@ export default class MainController {
         $scope.createNew = (email) => {
             if (email) {
                 console.log('create new account with email: ' + email);
-                $state.go('createVerifyUse', {email: email});
+                $state.go('initStorage', {email: email});
             } else {
                 console.log('email undefined')
             }

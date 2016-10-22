@@ -10,8 +10,10 @@ export default class ImportKeyController {
                 $scope.wrongpwd = 0;
         }
 	$scope.key = {};
+        $scope.genKey = () => {
+		$state.go('createVerifyUse');
+	}
         $scope.importKey = () => {
-            console.log("Import key.", $scope.key);
             if ($scope.key.password && sdk.unlock($scope.key.password)) {
                 $scope.newaddr = '0x'+(sdk.pubToAddress(sdk.storeNewKey($scope.key.privKey))).toString('hex');
                 $timeout(() => { $state.go('navBar.transactions') },1000);

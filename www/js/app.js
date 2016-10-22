@@ -7,6 +7,7 @@ import TransactionsController from './controllers/TransactionsController';
 import ExportKeyController from './controllers/ExportKeyController';
 import ImportKeyController from './controllers/ImportKeyController';
 import AboutController from './controllers/AboutController';
+import InitStorageController from './controllers/InitStorageController';
 import SdkService from './services/SdkService'
 
 // loading moment.js
@@ -26,6 +27,7 @@ angular
     .controller('exportKeyCtrl', ExportKeyController)
     .controller('importKeyCtrl', ImportKeyController)
     .controller('aboutCtrl', AboutController)
+    .controller('initCtrl', InitStorageController)
     .controller('transactionsCtrl', TransactionsController)
     .service('sdk', SdkService)
 
@@ -50,6 +52,7 @@ angular
             .state('createVerifyUse', {
                 url: '/verify?email',
                 templateUrl: 'templates/createVerifyUse.html',
+		params: { privKey: null, },
                 controller: 'createVerifyUseCtrl'
             })
             .state('exportKeys', {
@@ -61,6 +64,11 @@ angular
                 url: '/importKey',
                 templateUrl: 'templates/importKey.html',
                 controller: 'importKeyCtrl'
+            })
+            .state('initStorage', {
+                url: '/init',
+                templateUrl: 'templates/initStorage.html',
+                controller: 'initCtrl'
             })
             .state('about', {
                 url: '/about',

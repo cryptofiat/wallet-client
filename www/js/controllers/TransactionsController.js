@@ -6,23 +6,23 @@ export default class TransactionsController {
                 $state.go('main');
             }
         });
-        $scope.idCode = sdk.getEstonianIdCode();
-        sdk.balanceTotalAsync().then( (amount) => { 
-		$scope.totalBalance = amount; 
-		$scope.$apply();
+	this.$scope = $scope;
+	this.sdk = sdk;
+	this.loadData();
+    }
+
+    loadData() {
+        this.$scope.idCode =this.sdk.getEstonianIdCode();
+        this.sdk.balanceTotalAsync().then( (amount) => { 
+		this.$scope.totalBalance = amount; 
+		this.$scope.$apply();
 	})
-        $scope.addresses = sdk.addresses()
+        this.$scope.addresses = this.sdk.addresses()
 
-        sdk.transfersCleanedAsync().then( (tx) => { 
-		$scope.transfers = tx; 
-		$scope.$apply();
+        this.sdk.transfersCleanedAsync().then( (tx) => { 
+		this.$scope.transfers = tx; 
+		this.$scope.$apply();
 	})
-
-        $scope.storeId = () => {
-            console.log("id storing " + sdk.storeEstonianIdCode("343"));
-            $scope.$apply();
-        }
-
     }
 
 }

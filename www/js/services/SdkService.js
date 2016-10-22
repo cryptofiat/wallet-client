@@ -22,6 +22,10 @@ export default class SdkService {
         return this.sdk.storeNewKey(newKeyHex);
     }
 
+    privateToPublic(publicKey) {
+        return wallet.privateToPublic(publicKey)
+    }
+
     pubToAddress(publicKey) {
         return this.sdk.pubToAddress(publicKey)
     }

@@ -21,8 +21,13 @@ export default class SendController {
                 $scope.$apply();
                 sdk.sendToEstonianIdCode($scope.send.eId, 100 * $scope.send.euroAmount, $scope.send.reference)
                  .then( (response) => {
-                  $scope.txHash = response.id;
-                  $scope.txState = "submitted";
+		  if (response.id) {
+                    $scope.txHash = response.id;
+                    $scope.txState = "submitted";
+                  } else {
+                    $scope.err = response.err;
+                    $scope.txState = "error";
+                  }
                   $scope.$apply();
                  } );
             } else {

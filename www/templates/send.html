@@ -50,6 +50,10 @@
             </form>
         </div>
        <div class="list">
+          <div  ng-if="txState == 'error'" class="item item-icon-left item-text-wrap">
+          <i class="icon ion-close assertive"></i>
+          Error: {{err}}
+          </div>
           <div  ng-if="txState == 'submitting'" class="item item-icon-left">
           <i class="icon ion-upload positive"></i>
           Sending
