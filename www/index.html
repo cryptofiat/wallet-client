@@ -41,6 +41,14 @@
             border-left: 0px;
             border-right: 0px;
         }
+        @media only screen and (min-width: 600px) and (min-height:560px)  {
+		.manual-screencenter {
+		     width: 320px; 
+		     height: 520px; 
+		     top: calc(50% - 260px); 
+		     left: calc(50% - 260px);
+		}
+	}
     </style>
 
     <script src="bundle.js"></script>
@@ -52,7 +60,7 @@
 </head>
 <body ng-app="app" animation="slide-left-right-ios7" style="background: grey">
 <div>
-    <ion-side-menus enable-menu-with-back-views="false" data-componentid="side-menu21" style="width: 320px; height: 520px; top: calc(50% - 260px); left: calc(50% - 260px)">
+    <ion-side-menus enable-menu-with-back-views="false" data-componentid="side-menu21" class="manual-screencenter">
         <ion-side-menu-content>
             <ion-nav-bar class="bar-stable">
                 <ion-nav-back-button></ion-nav-back-button>
