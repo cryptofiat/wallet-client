@@ -1,6 +1,6 @@
 export default class SendController {
 
-    constructor($scope, $state, sdk) {
+    constructor($scope, $state, sdk, $interval) {
         $scope.$watch(function () {
             if (!sdk.isUnlocked() && $state.current.name != 'main') {
                 $state.go('main');
@@ -24,6 +24,21 @@ export default class SendController {
 		  if (response.id) {
                     $scope.txHash = response.id;
                     $scope.txState = "submitted";
+		    $scope.pendingCheck = $interval(function() {
+			$scope.pendingRefresh = true;
+			sdk.transferStatusAsync(response.id).then( txCheck => {
+			    if (txCheck.status != "PENDING") {
+				$scope.txState = "confirmed";
+				$interval.cancel($scope.pendingCheck);
+				$scope.pendingCheck = undefined;
+			    } else {
+			    }
+		            console.log("checked tx status: ", txCheck.status)
+			    $scope.pendingRefresh = false;
+			    $scope.$apply();
+			});
+		    }, 10000);
+
                   } else {
                     $scope.err = response.err;
                     $scope.txState = "error";
@@ -52,4 +67,4 @@ export default class SendController {
     }
 }
 
-SendController.$inject = ['$scope', '$state', 'sdk'];
+SendController.$inject = ['$scope', '$state', 'sdk', '$interval'];

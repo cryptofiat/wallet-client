@@ -81,4 +81,8 @@ export default class SdkService {
         return this.sdk.getAddressForEstonianIdCode(idCode)
     }
 
+    transferStatusAsync(transactionHash) {
+        return this.sdk.transferStatusAsync(transactionHash)
+    }
+
 }

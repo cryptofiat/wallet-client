@@ -58,9 +58,14 @@
           <i class="icon ion-upload positive"></i>
           Sending
           </div>
-          <a  ng-if="txState == 'submitted'" class="item item-icon-left item-text-wrap" href="https://etherscan.io/tx/{{txHash}}">
+          <a  ng-if="txState == 'submitted'" class="item item-icon-left item-text-wrap" href="https://etherscan.io/tx/{{txHash}}" target="_blank">
+          <i class="icon ion-clock energized"></i>
+	  Submitted <span class="energized" ng-if="pendingRefresh">refreshing ..</span>
+          <h6>{{txHash}}</h6>
+          </a>
+          <a  ng-if="txState == 'confirmed'" class="item item-icon-left item-text-wrap" href="https://etherscan.io/tx/{{txHash}}">
           <i class="icon ion-checkmark balanced"></i>
-	  Submitted 
+	  Confirmed 
           <h6>{{txHash}}</h6>
           </a>
        </div>

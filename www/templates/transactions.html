@@ -17,7 +17,10 @@
     <p>{{ tx.otherAddress }}</p>
     </a>
 </ul>
-<h6>{{transfers.length.toFixed(0)}} transfers <a href ng-click="loadData()">refresh</a></h6>
+<h6>{{transfers.length.toFixed(0)}} transfers 
+<a href ng-if="!(refreshing)" ng-click="refreshClick()">refresh</a>
+<span ng-if="refreshing"> ... refreshing ... </span>
+</h6>
         </div>
     </ion-content>
 </ion-view>
