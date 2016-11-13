@@ -4,7 +4,7 @@ export default class CreateVerifyController {
         let publicKey;
         let publicAddress;
 
-        if (!sdk.isUnlocked()) {
+        if (!sdk.isUnlocked() && $state.current.name != 'initStorage') {
                 console.log('not initiated. heading back to set password.');
 		$state.go('initStorage');
 		return;

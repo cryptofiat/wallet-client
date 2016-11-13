@@ -1,7 +1,7 @@
 
 export default class InitStorageController {
     constructor($scope, $state, sdk, $ionicHistory) {
-        if (sdk.initiated()) {
+        if (sdk.initiated()&& $state.current.name != 'main') {
            $state.go('main');
         }
         $scope.password = {};
