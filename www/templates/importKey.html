@@ -1,0 +1,40 @@
+<ion-view title="Import" id="importKeysPage">
+    <ion-content padding="true" class="has-header">
+<div class="card">
+  <div class="item item-text-wrap">
+   <p>
+   Enter plaintext private key and wallet password.    
+   </p>
+</div>
+</div>
+            <form name="importKeyForm" ng-submit="importKey()">
+	<div class="list">
+                <label class="item item-input item-stacked-label" id="import-key">
+                    <span class="input-label">Private key (hex)</span>
+                    <textarea rows="6" name="privKey" ng-model="key.privKey" placeholder="0x123456789"></textarea>
+                </label>
+                <label class="item item-input item-stacked-label" id="import-pass">
+                    <span class="input-label">Confirm password</span>
+                    <input type="password" name="password" ng-change="changePwd()" ng-model="key.password" placeholder="****">
+                </label>
+        </div>
+                <button id="importButton" ng-disabled="false" type="submit" class="button button-positive button-block">
+			Import
+		</button>
+                <button id="importButton" ng-click="genKey()" class="button button-positive button-block button-outline">
+			Generate new
+		</button>
+            </form>
+       <div class="list">
+       <div class="item item-icon-left" ng-if="!!(wrongpwd)">
+          <i class="icon ion-close aggressive"></i>
+          <p>Wrong password</p>
+       </div>
+       <div class="item item-icon-left" ng-if="newaddr">
+          <i class="icon ion-checkmark balanced"></i>
+          <p> New address:</p>
+          <h6>{{newaddr}} </h6>
+       </div>
+       </div>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,26 @@
+<ion-view title="EURO 2.0" id="transactionsPage">
+    <ion-content padding="true" class="has-header">
+        <div>
+<div class="card">
+  <div class="item item-text-wrap">
+   <p>
+   Estonian ID: <span>{{idCode}}</span>
+   </p>
+   <p>
+   Balance: <span>{{ (totalBalance / 100).toFixed(2)}}</span> EUR 
+   </p>
+  </div>
+</div>
+<ul class="list">
+    <a class="item" ng-repeat="tx in transfers" href="http://etherscan.io/tx/{{tx.transactionHash}}">
+    <span class="{{ tx.signedAmount > 0 ? 'balanced' : 'assertive'}}">{{ tx.signedAmount / 100 | number: 2 }}</span> <span class="item-note"> {{ctrl.getFormattedDate(tx)}}</span>
+    <p>{{ tx.otherAddress }}</p>
+    </a>
+</ul>
+<h6>{{transfers.length.toFixed(0)}} transfers 
+<a href ng-if="!(refreshing)" ng-click="refreshClick()">refresh</a>
+<span ng-if="refreshing"> ... refreshing ... </span>
+</h6>
+        </div>
+    </ion-content>
+</ion-view>

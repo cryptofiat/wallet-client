@@ -1,0 +1,33 @@
+<ion-view title="Export" id="exportKeysPage">
+    <ion-content padding="true" class="has-header">
+        <div>
+<div class="card">
+  <div class="item item-text-wrap">
+   <p>
+   Click on address to expose the key.
+   </p>
+  </div>
+</div>
+<ul class="list">
+    <li class="item" ng-repeat="addr in addresses">
+    <div  ng-click="addr.showKey = !(addr.showKey)">
+    <span class="">{{ (addr.balance / 100).toFixed(2) }} EUR</span> 
+      <span class="item-note" ng-if="addr.approved">Approved</span>
+      <span class="item-note" ng-if="!(addr.approved)">Pending</span>
+    <p>{{ addr.address }}</p>
+    </div>
+    <div class="" ng-show="addr.showKey">
+      <br>
+      <p>
+       <span class="input-label">Plaintext key in hex</span>
+      </p>
+     <label class="item item-input item-stacked-label">
+      <textarea rows="4" style="width:100%;">{{addr.privKeyHex}}</textarea>
+     </label>
+	<button ng-if="!(addr.approved)" class="button button-positive button-block button-outline" ng-click="verify(addr.privKeyHex)">Verify again</button>
+    </div>
+    </li>
+</ul>
+        </div>
+    </ion-content>
+</ion-view>

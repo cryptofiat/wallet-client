@@ -1,0 +1,42 @@
+<ion-view title="EURO 2.0" id="mainPage">
+    <ion-content padding="true" class="has-header">
+        <div ng-if="isPasswordSet()">
+            <p>Please unlock your wallet!</p>
+            <form name="enterPasswordForm" ng-submit="enterPassword()">
+                <label class="item item-input" id="enterPasswordForm-password">
+                    <span class="input-label">Password:</span>
+                    <input type="password" name="passwordEnter" ng-model="password.password" placeholder="********">
+                </label>
+                <button id="enterPasswordButton" type="submit" class="button button-positive  button-block">
+                    Enter Password
+                </button>
+            </form>
+        </div>
+        <div ng-if="!isPasswordSet()">
+            <div>
+                EURO 2.0 is BOMB!
+            </div>
+            <br>
+            <div>
+                Enter your email address to join!
+            </div>
+            <br>
+            <form name="createForm" class="list" novalidate>
+                <label class="item item-input" id="eURO2-input1">
+                    <span class="input-label">Email:</span>
+                    <input type="email"
+                           name="email"
+                           ng-model="email"
+                           placeholder="foo@bar.com"
+                           required>
+                </label>
+                <br />
+                <div ng-show="createForm.$submitted || createForm.email.$touched">
+                    <span ng-show="createForm.email.$error.required">Email is required</span>
+                    <span ng-show="createForm.email.$error.email">This is not a valid email</span>
+                </div>
+                <button id="createButton" class="button button-positive  button-block" ng-click="createNew(email)">New account</button>
+            </form>
+        </div>
+    </ion-content>
+</ion-view>

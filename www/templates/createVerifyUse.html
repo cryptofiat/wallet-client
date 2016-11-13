@@ -1,0 +1,111 @@
+<ion-view title="Verify" id="createVerifyUsePage">
+    <ion-content padding="true" class="has-header">
+   <div padding="true" class="manual-ios-statusbar-padding">
+        <!--&lt;!&ndash;TODO: highlight these guys depending on the tab variable or delete them&ndash;&gt;-->
+        <!--<div id="createVerifyUse-button-bar1" class="button-bar">-->
+            <!--<button id="createVerifyUse-button3" class="button button-positive  button-block">Create</button>-->
+            <!--<button id="createVerifyUse-button4" class="button button-positive  button-block">Verify</button>-->
+            <!--<button id="createVerifyUse-button5" class="button button-positive  button-block">Use</button>-->
+        <!--</div>-->
+        <div ng-if="tab == 'ACCOUNT_CREATED'">
+            <div>
+                <p>Account created. Your new address is:</p>
+                <p><b>{{publicAddress}}</b></p>
+                <p>You need to verify your ID to start sending money.</p>
+           </div>
+            <form name="confirmDetailsForm">
+                <button id="verifyMobileButton"
+                        type="submit"
+                        class="button button-positive button-block"
+                        ng-click="showVerifyMobile()">
+                    Mobiil-ID
+                </button>
+                <button id="verifyCardButton"
+                        type="submit"
+                        class="button button-positive button-block"
+                        ng-click="showVerifyCard()">
+                    ID Card
+                </button>
+                <button id="verifyBankButton"
+                        type="submit"
+                        class="button button-positive button-block"
+                        ng-click="showVerifyBank()">
+                    Bank Transfer
+                </button>
+            </form>
+        </div>
+        <div ng-if="tab == 'VERIFY_MOBILE'">
+            <div id="createVerifyUse-container1">
+                <form id="createVerifyUse-verifyMobile" class="list" ng-submit="verifyMobileId()">
+                    <p>
+                        Verify with Mobiil-ID. You need to have test certificates from 
+			<a href="https://demo.sk.ee/MIDCertsReg/">here</a>.
+                    </p>
+                    <label class="item item-input" id="createVerifyUse-input3">
+                        <span class="input-label">Phone</span>
+                        <input type="tel" ng-model="mobileId.phoneNumber" placeholder="+372 123 4567">
+                    </label>
+                    <button id="createVerifyUse-button6" class="button button-positive  button-block">Verify</button>
+                    <a id="createVerifyUse-button7" href ng-click="showStart()" class="">Other options</a>
+                </form>
+                <div ng-if="processing">
+                     <div class="card"><div class="item">
+                       Check your mobile with code: 
+                       <b>{{mobileIdChallengeCode}}</b>
+                     </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+        <div ng-if="tab == 'VERIFY_CARD'">
+            <div id="createVerifyUse-container1">
+                <form id="createVerifyUse-verifyCard" class="list" ng-submit="verifyCard();">
+                    <p>
+                        Verify with Estonian ID Card. Have the card ready in the reader.
+                    </p>
+                    <label class="item item-input" id="createVerifyUse-input3">
+                        <span class="input-label">Phone (optional)</span>
+                        <input type="tel" ng-model="mobileId.phoneNumber" placeholder="+372 123 4567">
+                    </label>
+                    <button id="createVerifyUse-button" ng-disabled="processing" class="button button-positive  button-block">Verify</button>
+                    <a id="createVerifyUse-button7" href ng-click="showStart()" class="">Other options</a>
+                </form>
+                <div class="card" ng-if="processing">
+                   <div class="item item-icon-left item-text-wrap">
+                   <i class="icon ion-clock"></i>
+                    Sent request, waiting for response ...
+                   </div>
+                </div>
+            </div>
+        </div>
+        <div ng-if="tab == 'VERIFY_BANK'">
+            <div id="createVerifyUse-markdown3" style="color:#000000;">
+                <div class="card">
+                   <div class="item item-text-wrap">
+			Verify by bank transfer from an Estonian bank account. Only personal bank accounts work.
+                   </div>
+                </div>
+                <br>
+                NOT IMPLEMENTED!
+                <br>
+                <br>
+                <div>Name: Euro 2.0 Reserve</div>
+                <div>Account: EE087700771001615943</div>
+                <div>Reference: {{}} TBC</div>
+                <form id="createVerifyUse-verifyBank" class="list">
+                    <button id="createVerifyUse-button7" ng-click="verifyBank()" ng-disabled="true" class="button button-positive  button-block">I made a bank transfer</button>
+                    <a id="createVerifyUse-button7" href ng-click="showStart()" class="">Other options</a>
+                </form>
+            </div>
+        </div>
+        <div ng-if="tab == 'USE'">
+            <p>Everything is good!</p>
+            <p ng-if="idNumber">You're Estonian id number is {{idNumber}}<br></p>
+            <p>You are ready to send Euro 2.0!</p>
+            <form id="createVerifyUse-finish" class="list" ng-submit="finish()">
+                <button id="createVerifyUse-finishButton" class="button button-positive  button-block">Start!</button>
+            </form>
+        </div>
+    </div>
+   </ion-content>
+</ion-view>

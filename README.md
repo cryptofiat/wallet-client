@@ -1,5 +1,9 @@
-- npm install
-- mkdir build
-- ln -s build/node_modules node_modules
-- npm run gulp
-- http://localhost:9000
+# Cryptofiat wallet client
+
+## Installation
+
+```
+npm install
+npm run webpack-dev-server -- --progress --colors --watch
+
+```
