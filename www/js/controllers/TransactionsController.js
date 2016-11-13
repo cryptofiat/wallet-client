@@ -1,3 +1,5 @@
+import moment from 'moment/moment';
+
 export default class TransactionsController {
 
     constructor($scope, $state, sdk) {
@@ -27,6 +29,10 @@ export default class TransactionsController {
 	        this.$scope.refreshing = false;
 		this.$scope.$apply();
 	})
+    }
+
+    getFormattedDate(tx){
+        return moment().format('MMMM Do YYYY, h:mm:ss a');
     }
 
 }

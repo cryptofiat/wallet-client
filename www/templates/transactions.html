@@ -13,7 +13,7 @@
 </div>
 <ul class="list">
     <a class="item" ng-repeat="tx in transfers" href="http://etherscan.io/tx/{{tx.transactionHash}}">
-    <span class="{{ (tx.signedAmount > 0) ? 'balanced' : 'assertive'}}">{{ (tx.signedAmount / 100).toFixed(2) }}</span> <span class="item-note">20 days ago</span>
+    <span class="{{ tx.signedAmount > 0 ? 'balanced' : 'assertive'}}">{{ tx.signedAmount / 100 | number: 2 }}</span> <span class="item-note"> {{transactionsCtrl.getFormattedDate(tx)}}</span>
     <p>{{ tx.otherAddress }}</p>
     </a>
 </ul>

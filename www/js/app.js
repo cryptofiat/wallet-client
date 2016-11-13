@@ -8,14 +8,7 @@ import ExportKeyController from './controllers/ExportKeyController';
 import ImportKeyController from './controllers/ImportKeyController';
 import AboutController from './controllers/AboutController';
 import InitStorageController from './controllers/InitStorageController';
-import SdkService from './services/SdkService'
-
-// loading moment.js
-
-// var angular = require('angular');
-// require('angular-moment');
-// var ngModule = angular.module('ngApp',['angularMoment']);
-// ngModule.constant('moment', require('moment-timezone'));
+import SdkService from './services/SdkService';
 
 angular
     .module('app', ['ionic'])
