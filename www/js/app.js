@@ -93,7 +93,8 @@ angular
                 views: {
                     'transactionsTab': {
                         templateUrl: 'templates/transactions.html',
-                        controller: 'transactionsCtrl'
+                        controller: 'transactionsCtrl',
+                        controllerAs: 'ctrl'
                     }
                 }
             })

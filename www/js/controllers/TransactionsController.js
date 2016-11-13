@@ -24,7 +24,7 @@ export default class TransactionsController {
 	})
         this.$scope.addresses = this.sdk.addresses()
 
-        this.sdk.transfersCleanedAsync().then( (tx) => { 
+        this.sdk.transfersCleanedAsync().then( (tx) => {
 		this.$scope.transfers = tx; 
 	        this.$scope.refreshing = false;
 		this.$scope.$apply();
@@ -32,7 +32,7 @@ export default class TransactionsController {
     }
 
     getFormattedDate(tx){
-        return moment().format('MMMM Do YYYY, h:mm:ss a');
+        return moment(tx.timestamp).fromNow();
     }
 
 }
