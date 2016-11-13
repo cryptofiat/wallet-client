@@ -33,6 +33,8 @@ export default class TransactionsController {
         this.$scope.addresses = this.sdk.addresses();
 
         this.sdk.transfersCleanedAsync().then((tx) => {
+	    tx.sort(function(a,b){a.timestamp-b.timestamp});
+	    tx.reverse();
             this.$scope.transfers = tx;
             this.$scope.refreshing = false;
             this.$scope.$apply();
