@@ -85,4 +85,12 @@ export default class SdkService {
         return this.sdk.transferStatusAsync(transactionHash)
     }
 
+    referenceSendAsync(transactionHash,senderIdCode,receiverIdCode,referenceText,referenceCode,attachments) {
+        return this.sdk.referenceSendAsync(transactionHash,senderIdCode,receiverIdCode,referenceText,referenceCode,attachments)
+    }
+
+    referenceAsync(transactionHash) {
+        return this.sdk.referenceAsync(transactionHash)
+    }
+
 }

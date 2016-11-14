@@ -20,6 +20,7 @@ export default class TransactionsController {
         $scope.refreshClick = () => {
             this.loadData()
         };
+	//sdk.referenceSendAsync("0x697cbfdcdbdf6d07afe842ca4df370170477c13b3e030844e239a57b55a17c6a","38806080140","38008030265","little return","");
     }
 
     loadData() {
@@ -33,9 +34,7 @@ export default class TransactionsController {
         this.$scope.addresses = this.sdk.addresses();
 
         this.sdk.transfersCleanedAsync().then((tx) => {
-	    tx.sort(function(a,b){a.timestamp-b.timestamp});
-	    tx.reverse();
-            this.$scope.transfers = tx;
+            this.$scope.transfers = tx.sort(function(a,b) { return a.timestamp-b.timestamp; } ).reverse();
             this.$scope.refreshing = false;
             this.$scope.$apply();
         })
