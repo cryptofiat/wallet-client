@@ -18,6 +18,7 @@
     <span class="item-note">{{ctrl.getFormattedDate(tx)}}</span>
     <p>{{ tx.otherAddress }}</p>
     <p><span ng-if="tx.ref.referenceText" class="item-text-wrap">{{ tx.ref.referenceText }}</span></p>
+    <p ng-if="tx.fee" style="font-size: 70%;">fee: {{ tx.fee / 100 | number: 2 }}</p>
     </a>
 </ul>
 <h6>{{transfers.length.toFixed(0)}} transfers 
