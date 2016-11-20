@@ -93,4 +93,8 @@ export default class SdkService {
         return this.sdk.referenceAsync(transactionHash)
     }
 
+    nameFromIdAsync(idCode) {
+        return this.sdk.nameFromIdAsync(idCode)
+    }
+
 }

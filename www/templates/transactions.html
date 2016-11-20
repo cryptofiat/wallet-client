@@ -14,7 +14,9 @@
 <ul class="list">
     <a class="item" ng-repeat="tx in transfers" target="_blank" href="http://etherscan.io/tx/{{tx.transactionHash}}">
     <span class="{{ tx.signedAmount > 0 ? 'balanced' : 'assertive'}}">{{ tx.signedAmount / 100 | number: 2 }}</span>
-    <span ng-if="tx.ref.senderIdCode">{{ tx.counterPartyIdCode }}</span>
+    <span ng-if="tx.ref.senderIdCode">{{ tx.counterPartyFirstName }}</span>
+    <span ng-if="tx.ref.senderIdCode">{{ tx.counterPartyLastName }}</span>
+    <span ng-if="tx.ref.senderIdCode" style="font-size: 85%; color:#aaa;">{{ tx.counterPartyIdCode }}</span>
     <span class="item-note">{{ctrl.getFormattedDate(tx)}}</span>
     <p>{{ tx.otherAddress }}</p>
     <p><span ng-if="tx.ref.referenceText" class="item-text-wrap">{{ tx.ref.referenceText }}</span></p>
