@@ -47,8 +47,8 @@
                     <input type="text" name="reference" ng-model="send.reference" placeholder="for milk">
                 </label>
                 </div>
-                <h6 ng-if="send.accountType == 'IBAN'"> Fee: {{fee}} EUR</h6>
-                <h6 ng-if="send.accountType == 'eId'"> Fee: {{bankFee}} EUR</h6>
+                <h6 ng-if="send.accountType == 'IBAN'"> Fee: {{bankFee}} EUR</h6>
+                <h6 ng-if="send.accountType == 'eId'"> Fee: {{fee}} EUR</h6>
                 <button id="sendEuroButton" ng-disabled="txState == 'submitting' || (send.accountType == 'eId' && idCodeCheck != 'yes')" type="submit" class="button button-positive button-block">
                     Send
                 </button>
