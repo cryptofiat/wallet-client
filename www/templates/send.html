@@ -11,8 +11,8 @@
                             Estonian ID &nbsp;
                         </label>
                         <label>
-                            <input type="radio" name="sendToAccountType" value="ethereum" ng-model="send.accountType">
-                            Ethereum Address
+                            <input type="radio" name="sendToAccountType" value="IBAN" ng-model="send.accountType">
+                            Euro IBAN
                         </label>
                 </div>
 		<!--
@@ -30,9 +30,13 @@
                     <span class="input-label">Estonian ID</span>
                     <input type="text" name="recipientAddress" ng-change="idCodeChecker()" ng-model="send.eId" placeholder="38011050132">
                 </label>
-                <label class="item item-input item-stacked-label" id="sendEuroForm-ethereumAddress" ng-if="send.accountType == 'ethereum'">
-                    <span class="input-label">Ethereum address</span>
-                    <input type="text" name="ethereumAddress" ng-model="send.ethereumAddress" placeholder="0x123456789">
+                <label class="item item-input item-stacked-label" id="sendEuroForm-ibanAddress" ng-if="send.accountType == 'IBAN'">
+                    <span class="input-label">Euro IBAN</span>
+                    <input type="text" name="toIBAN" ng-model="send.toIban" placeholder="EE07021003291200">
+                </label>
+                <label class="item item-input item-stacked-label" id="sendEuroForm-ibanAddress" ng-if="send.accountType == 'IBAN'">
+                    <span class="input-label">Recipient Name</span>
+                    <input type="text" name="recipientName" ng-model="send.recipientName" placeholder="Mariliis Männik">
                 </label>
                 <label class="item item-input item-stacked-label" id="sendEuroForm-euroAmount">
                     <span class="input-label">Amount EUR</span>
@@ -43,7 +47,8 @@
                     <input type="text" name="reference" ng-model="send.reference" placeholder="for milk">
                 </label>
                 </div>
-                <h6> Fee: {{fee}} EUR</h6>
+                <h6 ng-if="send.accountType == 'IBAN'"> Fee: {{fee}} EUR</h6>
+                <h6 ng-if="send.accountType == 'eId'"> Fee: {{bankFee}} EUR</h6>
                 <button id="sendEuroButton" ng-disabled="txState == 'submitting' || (send.accountType == 'eId' && idCodeCheck != 'yes')" type="submit" class="button button-positive button-block">
                     Send
                 </button>

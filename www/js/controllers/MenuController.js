@@ -16,6 +16,9 @@ export default class MenuController {
         $scope.about = () => {
             $state.go('about');
         };
+        $scope.topUp = () => {
+            $state.go('topUp');
+        };
     }
 }
 

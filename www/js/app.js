@@ -68,17 +68,11 @@ angular
                 templateUrl: 'templates/about.html',
                 controller: 'aboutCtrl'
             })
-/*
-            .state('navBar.topUp', {
+            .state('topUp', {
                 url: '/topUp',
-                views: {
-                    'topUpTab': {
-                        templateUrl: 'templates/topup.html',
-                        controller: 'topUpCtrl'
-                    }
-                }
+                templateUrl: 'templates/topup.html',
+                controller: 'topUpCtrl'
             })
-*/
             .state('navBar.sendTab', {
                 url: '/send',
                 views: {

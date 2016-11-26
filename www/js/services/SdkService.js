@@ -97,4 +97,8 @@ export default class SdkService {
         return this.sdk.nameFromIdAsync(idCode)
     }
 
+    findAccountAndSendToBank(toIBAN, amount, ref, recipientName) {
+        return this.sdk.findAccountAndSendToBank(toIBAN, amount, ref, recipientName);
+    }
+
 }

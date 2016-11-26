@@ -7,20 +7,26 @@ export default class SendController {
             }
         });
 
+	//TODO: should read them from wallet-server/fees through sdk
         $scope.fee = "0.01";
+        $scope.bankFee = "0.05";
 
 	$scope.txState = "";
         $scope.txHash = "";
         $scope.send = { accountType: 'eId' };
         $scope.sendEuro = () => {
             console.log('send: ', $scope.send);
+            //TODO
+            //make button disabled
+            $scope.txState = "submitting";
+            $scope.$apply();
+	    let promise;
             if ($scope.send.accountType == 'eId') {
-                //TODO
-		//make button disabled
-                $scope.txState = "submitting";
-                $scope.$apply();
-                sdk.sendToEstonianIdCode($scope.send.eId, 100 * $scope.send.euroAmount, $scope.send.reference)
-                 .then( (response) => {
+                promise = sdk.sendToEstonianIdCode($scope.send.eId, 100 * $scope.send.euroAmount, $scope.send.reference)
+	    } else {
+                promise = sdk.findAccountAndSendToBank($scope.send.toIban, 100 * $scope.send.euroAmount, $scope.send.reference, $scope.send.recipientName)
+	    }
+            promise.then( (response) => {
 		  if (response.id) {
                     $scope.txHash = response.id;
                     $scope.txState = "submitted";
@@ -44,11 +50,7 @@ export default class SendController {
                     $scope.txState = "error";
                   }
                   $scope.$apply();
-                 } );
-            } else {
-                //TODO
-                //sdk.sendAsync(toaddr, amount, ref, _data)
-            }
+           } );
         }
         $scope.idCodeCheck = "";
         $scope.idCodeChecker = () => {
