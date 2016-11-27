@@ -3,15 +3,14 @@ import {Component, ViewChild} from '@angular/core';
 import {Events, MenuController, Nav, Platform} from 'ionic-angular';
 import {Splashscreen, StatusBar} from 'ionic-native';
 
-//import {AccountPage} from '../pages/account/account';
 import {LoginPage} from '../pages/login/login';
 import {SignupPage} from '../pages/signup/signup';
 import {TabsPage} from '../pages/tabs/tabs';
-import {TutorialPage} from '../pages/tutorial/tutorial';
 
 import {UserData} from '../providers/user-data';
 import {AboutPage} from "../pages/about/about";
 import {TopupPage} from "../pages/topup/topup";
+import {TutorialPage} from '../pages/tutorial/tutorial';
 
 @Component({
   templateUrl: 'app.template.html'
@@ -39,8 +38,8 @@ export class CryptofiatWallet {
   }
 
   private navigateToInitialPage() {
-    this.userData.hasInitialized().then(hasLoggedIn => {
-      return hasLoggedIn ?
+    this.userData.hasInitialized().then(hasInitialized => {
+      return hasInitialized ?
         this.userData.hasLoggedIn().then(hasLoggedIn => hasLoggedIn ? TabsPage : LoginPage) :
         this.userData.checkHasSeenTutorial().then(hasSeenTutorial => hasSeenTutorial ? SignupPage : TutorialPage);
     }).then(page => this.rootPage = page)

@@ -6,7 +6,6 @@ import { Storage } from '@ionic/storage';
 import { CryptofiatWallet } from './app.component';
 
 import { AboutPage } from '../pages/about/about';
-import { AccountPage } from '../pages/account/account';
 import { LoginPage } from '../pages/login/login';
 import { TransfersPage } from '../pages/transfers/transfers';
 import { SignupPage } from '../pages/signup/signup';
@@ -21,7 +20,6 @@ import { UserData } from '../providers/user-data';
   declarations: [
     CryptofiatWallet,
     AboutPage,
-    AccountPage,
     LoginPage,
     TransfersPage,
     SignupPage,
@@ -36,7 +34,6 @@ import { UserData } from '../providers/user-data';
   entryComponents: [
     CryptofiatWallet,
     AboutPage,
-    AccountPage,
     LoginPage,
     TransfersPage,
     SignupPage,
