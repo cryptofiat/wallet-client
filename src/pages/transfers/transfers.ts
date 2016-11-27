@@ -15,10 +15,10 @@ import { UserData } from '../../providers/user-data';
 
 
 @Component({
-  selector: 'page-schedule',
-  templateUrl: 'schedule.html'
+  selector: 'page-transfers',
+  templateUrl: 'transfers.html'
 })
-export class SchedulePage {
+export class TransfersPage {
   // the list is a child of the schedule page
   // @ViewChild('scheduleList') gets a reference to the list
   // with the variable #scheduleList, `read: List` tells it to return
@@ -85,60 +85,5 @@ export class SchedulePage {
     this.navCtrl.push(SessionDetailPage, sessionData);
   }
 
-  addFavorite(slidingItem: ItemSliding, sessionData) {
 
-    if (this.user.hasFavorite(sessionData.name)) {
-      // woops, they already favorited it! What shall we do!?
-      // prompt them to remove it
-      this.removeFavorite(slidingItem, sessionData, 'Favorite already added');
-    } else {
-      // remember this session as a user favorite
-      this.user.addFavorite(sessionData.name);
-
-      // create an alert instance
-      let alert = this.alertCtrl.create({
-        title: 'Favorite Added',
-        buttons: [{
-          text: 'OK',
-          handler: () => {
-            // close the sliding item
-            slidingItem.close();
-          }
-        }]
-      });
-      // now present the alert on top of all other content
-      alert.present();
-    }
-
-  }
-
-  removeFavorite(slidingItem: ItemSliding, sessionData, title) {
-    let alert = this.alertCtrl.create({
-      title: title,
-      message: 'Would you like to remove this session from your favorites?',
-      buttons: [
-        {
-          text: 'Cancel',
-          handler: () => {
-            // they clicked the cancel button, do not remove the session
-            // close the sliding item and hide the option buttons
-            slidingItem.close();
-          }
-        },
-        {
-          text: 'Remove',
-          handler: () => {
-            // they want to remove this session from their favorites
-            this.user.removeFavorite(sessionData.name);
-            this.updateSchedule();
-
-            // close the sliding item and hide the option buttons
-            slidingItem.close();
-          }
-        }
-      ]
-    });
-    // now present the alert on top of all other content
-    alert.present();
-  }
 }

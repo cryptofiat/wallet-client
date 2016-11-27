@@ -13,6 +13,7 @@ import {SupportPage} from '../pages/support/support';
 
 import {ConferenceData} from '../providers/conference-data';
 import {UserData} from '../providers/user-data';
+import {AboutPage} from "../pages/about/about";
 
 export interface PageInterface {
   title: string;
@@ -28,15 +29,12 @@ export interface PageInterface {
 export class CryptofiatWallet {
   @ViewChild(Nav) nav: Nav;
 
-  // List of pages that can be navigated to from the left menu
-  // the left menu only works after login
-  // the login page disables the left menu
-  appPages: PageInterface[] = [
+  /*appPages: PageInterface[] = [
     {title: 'Schedule', component: TabsPage, icon: 'calendar'},
     {title: 'Speakers', component: TabsPage, index: 1, icon: 'contacts'},
     {title: 'Map', component: TabsPage, index: 2, icon: 'map'},
     {title: 'About', component: TabsPage, index: 3, icon: 'information-circle'}
-  ];
+  ];*/
   loggedInPages: PageInterface[] = [
     {title: 'Account', component: AccountPage, icon: 'person'},
     {title: 'Support', component: SupportPage, icon: 'help'},
@@ -49,12 +47,8 @@ export class CryptofiatWallet {
   ];
   rootPage: any;
 
-  constructor(public events: Events,
-              public userData: UserData,
-              public menu: MenuController,
-              public platform: Platform,
-              public confData: ConferenceData,
-              public storage: Storage) {
+  constructor(public events: Events, public userData: UserData, public menu: MenuController, public platform: Platform,
+              public confData: ConferenceData, public storage: Storage) {
 
     platform.ready().then(() => {
       StatusBar.styleDefault();
@@ -65,7 +59,7 @@ export class CryptofiatWallet {
 
     confData.load();
 
-    this.userData.hasLoggedIn().then(this.enableMenu);
+    this.userData.hasLoggedIn().then(this.enableMenu.bind(this));
 
     this.listenToLoginEvents();
   }
@@ -89,9 +83,13 @@ export class CryptofiatWallet {
     this.nav.setRoot(TutorialPage);
   }
 
+  openAbout() {
+    this.nav.setRoot(AboutPage);
+  }
+
   listenToLoginEvents() {
     this.events.subscribe('user:login', () => this.enableMenu(true));
-    this.events.subscribe('user:signup', () =>  this.enableMenu(true));
+    this.events.subscribe('user:signup', () => this.enableMenu(true));
     this.events.subscribe('user:logout', () => this.enableMenu(false));
   }
 
