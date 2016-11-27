@@ -5,7 +5,7 @@ import {Splashscreen, StatusBar} from 'ionic-native';
 
 import {LoginPage} from '../pages/login/login';
 import {SignupPage} from '../pages/signup/signup';
-import {TabsPage} from '../pages/tabs/tabs';
+import {LoggedInPage} from '../pages/loggedin/loggedin';
 
 import {UserData} from '../providers/user-data';
 import {AboutPage} from "../pages/about/about";
@@ -26,31 +26,27 @@ export class CryptofiatWallet {
 
   private rootPage: any;
 
-  constructor(private events: Events, private userData: UserData, private menu: MenuController, private platform: Platform) {
+  constructor(events: Events, private userData: UserData, private menu: MenuController, platform: Platform) {
 
     platform.ready().then(() => {
       StatusBar.styleDefault();
       Splashscreen.hide();
     });
 
+    events.subscribe('invalidateRoot', this.navigateToInitialPage);
     this.navigateToInitialPage();
-    this.listenToLoginEvents();
   }
 
   private navigateToInitialPage() {
+
     this.userData.hasInitialized().then(hasInitialized => {
       return hasInitialized ?
-        this.userData.hasLoggedIn().then(hasLoggedIn => hasLoggedIn ? TabsPage : LoginPage) :
+        this.userData.hasLoggedIn().then(hasLoggedIn => hasLoggedIn ? LoggedInPage : LoginPage) :
         this.userData.checkHasSeenTutorial().then(hasSeenTutorial => hasSeenTutorial ? SignupPage : TutorialPage);
-    }).then(page => this.rootPage = page)
-  }
-
-  private listenToLoginEvents() {
-    this.userData.hasInitialized().then(this.enableMenu.bind(this));
-
-    this.events.subscribe('user:login', () => this.enableMenu(true));
-    this.events.subscribe('user:signup', () => this.enableMenu(true));
-    this.events.subscribe('user:logout', () => this.enableMenu(false));
+    }).then(page => {
+      this.rootPage = page;
+      this.enableMenu(page == LoggedInPage);
+    })
   }
 
   private enableMenu(loggedIn) {

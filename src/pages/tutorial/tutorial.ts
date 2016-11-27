@@ -3,7 +3,6 @@ import { Component } from '@angular/core';
 import { MenuController, NavController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
-import { TabsPage } from '../tabs/tabs';
 import {SignupPage} from "../signup/signup";
 
 
@@ -51,12 +50,10 @@ export class TutorialPage {
   }
 
   ionViewDidEnter() {
-    // the root left menu should be disabled on the tutorial page
     this.menu.enable(false);
   }
 
   ionViewWillLeave() {
-    // enable the root left menu when leaving the tutorial page
     this.menu.enable(true);
   }
 

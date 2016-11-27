@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
 
-import { TabsPage } from '../tabs/tabs';
 import { UserData } from '../../providers/user-data';
 
 
@@ -20,8 +19,8 @@ export class SignupPage {
     this.submitted = true;
 
     if (form.valid) {
-      this.userData.signup(this.signup.username);
-      this.navCtrl.push(TabsPage);
+      //this.userData.signup(this.signup.username);
+      //this.navCtrl.push(LoggedInPage);
     }
   }
 }

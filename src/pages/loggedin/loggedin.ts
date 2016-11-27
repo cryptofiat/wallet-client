@@ -7,9 +7,9 @@ import { AboutPage } from '../about/about';
 
 
 @Component({
-  templateUrl: 'tabs.html'
+  templateUrl: 'loggedin.html'
 })
-export class TabsPage {
+export class LoggedInPage {
   tab1Root: any = TransfersPage;
   tab2Root: any = AboutPage;
   mySelectedIndex: number;
