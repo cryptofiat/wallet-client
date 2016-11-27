@@ -1,0 +1,8 @@
+.app-center {
+  @media only screen and (min-width: 600px) and (min-height: 560px) {
+    width: 320px;
+    height: 520px;
+    top: calc(50% - 260px);
+    left: calc(50% - 160px);
+  }
+}

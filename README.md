@@ -4,6 +4,6 @@
 
 ```
 npm install
-npm run webpack-dev-server -- --progress --colors --watch
+npm run ionic:serve
 
 ```
