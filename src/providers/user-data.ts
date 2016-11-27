@@ -1,34 +1,39 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
-import { Events } from 'ionic-angular';
-import { Storage } from '@ionic/storage';
+import {Events} from 'ionic-angular';
+import {Storage} from '@ionic/storage';
 
 
 @Injectable()
 export class UserData {
-  HAS_LOGGED_IN = 'hasInitialized';
-  HAS_SEEN_TUTORIAL = 'hasSeenTutorial';
+  private static HAS_LOGGED_IN = 'hasInitialized';
+  private static HAS_SEEN_TUTORIAL = 'hasSeenTutorial';
 
-  constructor(public events: Events, public storage: Storage) {}
+  constructor(public events: Events, public storage: Storage) {
+  }
 
   login(username) {
-    this.storage.set(this.HAS_LOGGED_IN, true);
+    this.storage.set(UserData.HAS_LOGGED_IN, true);
     this.setUsername(username);
     this.events.publish('user:login');
   };
 
   signup(username) {
-    this.storage.set(this.HAS_LOGGED_IN, true);
+    this.storage.set(UserData.HAS_LOGGED_IN, true);
     this.setUsername(username);
     this.events.publish('user:signup');
   };
 
   logout() {
-    this.storage.remove(this.HAS_LOGGED_IN);
-    this.storage.remove(this.HAS_SEEN_TUTORIAL);
+    this.storage.remove(UserData.HAS_LOGGED_IN);
+    this.storage.remove(UserData.HAS_SEEN_TUTORIAL);
     this.storage.remove('username');
     this.events.publish('user:logout');
   };
+
+  skipTutorial() {
+    this.storage.set(UserData.HAS_SEEN_TUTORIAL, true);
+  }
 
   setUsername(username) {
     this.storage.set('username', username);
@@ -40,15 +45,15 @@ export class UserData {
 
   //TODO: sdk implementation
   hasInitialized() {
-    return this.storage.get(this.HAS_LOGGED_IN)
+    return this.storage.get(UserData.HAS_LOGGED_IN)
   };
 
   hasLoggedIn() {
-    return this.storage.get(this.HAS_LOGGED_IN)
+    return this.storage.get(UserData.HAS_LOGGED_IN)
   };
 
   checkHasSeenTutorial() {
-    return this.storage.get(this.HAS_SEEN_TUTORIAL)
+    return this.storage.get(UserData.HAS_SEEN_TUTORIAL)
   };
 
 
