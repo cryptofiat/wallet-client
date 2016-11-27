@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { NavParams } from 'ionic-angular';
 
 import { TransfersPage } from '../transfers/transfers';
-import { SpeakerListPage } from '../speaker-list/speaker-list';
+import { AboutPage } from '../about/about';
 
 
 @Component({
@@ -11,7 +11,7 @@ import { SpeakerListPage } from '../speaker-list/speaker-list';
 })
 export class TabsPage {
   tab1Root: any = TransfersPage;
-  tab2Root: any = SpeakerListPage;
+  tab2Root: any = AboutPage;
   mySelectedIndex: number;
 
   constructor(navParams: NavParams) {
