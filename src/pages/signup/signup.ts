@@ -4,6 +4,7 @@ import { NavController } from 'ionic-angular';
 
 import { TabsPage } from '../tabs/tabs';
 import { AboutPage } from '../about/about';
+import { TransfersPage } from '../transfers/transfers';
 import { VerifyPage } from '../verify/verify';
 import { UserData } from '../../providers/user-data';
 
@@ -39,7 +40,7 @@ export class SignupPage {
   tryPassword(password : String) : Boolean {
             if (password && this.sdk.unlock(password)) {
 		console.log("successfully tried password");
-	    this.navCtrl.push(VerifyPage);
+	    this.navCtrl.push(TransfersPage);
                 //this.navCtrl.push(TransfersPage);
 		return true;
                 //$state.go('navBar.transactions');
