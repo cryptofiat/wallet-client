@@ -14,7 +14,6 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { TopupPage } from '../pages/topup/topup';
 import { TutorialPage } from '../pages/tutorial/tutorial';
 
-import { ConferenceData } from '../providers/conference-data';
 import { UserData } from '../providers/user-data';
 
 
@@ -45,6 +44,6 @@ import { UserData } from '../providers/user-data';
     TutorialPage,
     TopupPage
   ],
-  providers: [ConferenceData, UserData, Storage]
+  providers: [UserData, Storage]
 })
 export class AppModule { }

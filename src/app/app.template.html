@@ -1,10 +1,8 @@
 <!-- logged out menu -->
 <ion-menu id="loggedOutMenu" [content]="content">
-
   <ion-header>
     <ion-toolbar>
       <ion-title>EURO 2.0</ion-title>
-      <ion-title>v0.3</ion-title>
     </ion-toolbar>
   </ion-header>
 
@@ -13,7 +11,7 @@
       <ion-list-header>
         Account
       </ion-list-header>
-      <button ion-item menuClose (click)="openSignUp()()">
+      <button ion-item menuClose (click)="openSignUp()">
         <ion-icon item-left name="log-in"></ion-icon>
         Sign up
       </button>
@@ -27,7 +25,7 @@
       <ion-list-header>
         How to
       </ion-list-header>
-      <button ion-item menuClose *ngFor="let p of howToPages" (click)="openPage(p.component)">
+      <button ion-item menuClose *ngFor="let p of howToPages" (click)="pushPage(p.component)">
         <ion-icon item-left [name]="p.icon"></ion-icon>
         {{p.title}}
       </button>
@@ -42,7 +40,6 @@
   <ion-header>
     <ion-toolbar>
       <ion-title>EURO 2.0</ion-title>
-      <ion-title>v0.3 {{user}}</ion-title>
     </ion-toolbar>
   </ion-header>
 
@@ -67,7 +64,7 @@
       <ion-list-header>
         How to
       </ion-list-header>
-      <button ion-item menuClose *ngFor="let p of howToPages" (click)="openPage(p.component)">
+      <button ion-item menuClose *ngFor="let p of howToPages" (click)="pushPage(p.component)">
         <ion-icon item-left [name]="p.icon"></ion-icon>
         {{p.title}}
       </button>

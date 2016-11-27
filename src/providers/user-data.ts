@@ -6,7 +6,7 @@ import { Storage } from '@ionic/storage';
 
 @Injectable()
 export class UserData {
-  HAS_LOGGED_IN = 'hasLoggedIn';
+  HAS_LOGGED_IN = 'hasInitialized';
   HAS_SEEN_TUTORIAL = 'hasSeenTutorial';
 
   constructor(public events: Events, public storage: Storage) {}
@@ -39,6 +39,10 @@ export class UserData {
   };
 
   //TODO: sdk implementation
+  hasInitialized() {
+    return this.storage.get(this.HAS_LOGGED_IN)
+  };
+
   hasLoggedIn() {
     return this.storage.get(this.HAS_LOGGED_IN)
   };
