@@ -14,6 +14,7 @@ import {SupportPage} from '../pages/support/support';
 import {ConferenceData} from '../providers/conference-data';
 import {UserData} from '../providers/user-data';
 import {AboutPage} from "../pages/about/about";
+import {TopupPage} from "../pages/topup/topup";
 
 export interface PageInterface {
   title: string;
@@ -44,6 +45,8 @@ export class CryptofiatWallet {
     {title: 'Login', component: LoginPage, icon: 'log-in'},
     {title: 'Support', component: SupportPage, icon: 'help'},
     {title: 'Signup', component: SignupPage, icon: 'person-add'}
+    {title: 'About', component: AboutPage, icon: 'information-circle'}
+    {title: 'Add from bank', component: TopupPage, icon: 'information-circle'}
   ];
   rootPage: any;
 
