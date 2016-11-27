@@ -11,8 +11,8 @@ import { LoginPage } from '../pages/login/login';
 import { TransfersPage } from '../pages/transfers/transfers';
 import { SignupPage } from '../pages/signup/signup';
 import { TabsPage } from '../pages/tabs/tabs';
+import { TopupPage } from '../pages/topup/topup';
 import { TutorialPage } from '../pages/tutorial/tutorial';
-import { SupportPage } from '../pages/support/support';
 
 import { ConferenceData } from '../providers/conference-data';
 import { UserData } from '../providers/user-data';
@@ -28,7 +28,7 @@ import { UserData } from '../providers/user-data';
     SignupPage,
     TabsPage,
     TutorialPage,
-    SupportPage
+    TopupPage
   ],
   imports: [
     IonicModule.forRoot(CryptofiatWallet)
@@ -43,7 +43,7 @@ import { UserData } from '../providers/user-data';
     SignupPage,
     TabsPage,
     TutorialPage,
-    SupportPage
+    TopupPage
   ],
   providers: [ConferenceData, UserData, Storage]
 })

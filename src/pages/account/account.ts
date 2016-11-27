@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 
 import { AlertController, NavController } from 'ionic-angular';
 
-import { LoginPage } from '../login/login';
-import { SupportPage } from '../support/support';
 import { UserData } from '../../providers/user-data';
 
 
@@ -62,12 +60,4 @@ export class AccountPage {
     console.log('Clicked to change password');
   }
 
-  logout() {
-    this.userData.logout();
-    this.nav.setRoot(LoginPage);
-  }
-
-  support() {
-    this.nav.push(SupportPage);
-  }
 }

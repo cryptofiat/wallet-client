@@ -1,49 +1,36 @@
-
 <!-- logged out menu -->
 <ion-menu id="loggedOutMenu" [content]="content">
 
   <ion-header>
     <ion-toolbar>
-      <ion-title>Menu</ion-title>
+      <ion-title>EURO 2.0</ion-title>
+      <ion-title>v0.3</ion-title>
     </ion-toolbar>
   </ion-header>
 
   <ion-content class="outer-content">
-
-    <!--<ion-list>
-      <ion-list-header>
-        Navigate
-      </ion-list-header>
-      <button ion-item menuClose *ngFor="let p of appPages" (click)="openPage(p)">
-        <ion-icon item-left [name]="p.icon"></ion-icon>
-        {{p.title}}
-      </button>
-    </ion-list>-->
-
     <ion-list>
       <ion-list-header>
         Account
       </ion-list-header>
-      <button ion-item menuClose *ngFor="let p of loggedOutPages" (click)="openPage(p)">
-        <ion-icon item-left [name]="p.icon"></ion-icon>
-        {{p.title}}
+      <button ion-item menuClose (click)="openSignUp()()">
+        <ion-icon item-left name="log-in"></ion-icon>
+        Sign up
+      </button>
+      <button ion-item menuClose (click)="openImportKey()">
+        <ion-icon item-left name="cloud-upload"></ion-icon>
+        Import key
       </button>
     </ion-list>
 
     <ion-list>
       <ion-list-header>
-        About
+        How to
       </ion-list-header>
-      <button ion-item menuClose (click)="openTutorial()">
-        <ion-icon item-left name="hammer"></ion-icon>
-        Show Tutorial
+      <button ion-item menuClose *ngFor="let p of howToPages" (click)="openPage(p.component)">
+        <ion-icon item-left [name]="p.icon"></ion-icon>
+        {{p.title}}
       </button>
-
-      <button ion-item menuClose (click)="openAbout()">
-        <ion-icon item-left name="information-circle"></ion-icon>
-        About
-      </button>
-
     </ion-list>
   </ion-content>
 
@@ -54,7 +41,8 @@
 
   <ion-header>
     <ion-toolbar>
-      <ion-title>Menu</ion-title>
+      <ion-title>EURO 2.0</ion-title>
+      <ion-title>v0.3 {{user}}</ion-title>
     </ion-toolbar>
   </ion-header>
 
@@ -63,22 +51,27 @@
       <ion-list-header>
         Account
       </ion-list-header>
-      <button ion-item menuClose *ngFor="let p of loggedInPages" (click)="openPage(p)">
-        <ion-icon item-left [name]="p.icon"></ion-icon>
-        {{p.title}}
+
+      <button ion-item menuClose (click)="openKeysManagement()">
+        <ion-icon item-left name="cloud-upload"></ion-icon>
+        Keys
+      </button>
+
+      <button ion-item menuClose (click)="logout()">
+        <ion-icon item-left name="log-out"></ion-icon>
+        Logout
       </button>
     </ion-list>
 
     <ion-list>
       <ion-list-header>
-        Tutorial
+        How to
       </ion-list-header>
-      <button ion-item menuClose (click)="openTutorial()">
-        <ion-icon item-left name="hammer"></ion-icon>
-        Show Tutorial
+      <button ion-item menuClose *ngFor="let p of howToPages" (click)="openPage(p.component)">
+        <ion-icon item-left [name]="p.icon"></ion-icon>
+        {{p.title}}
       </button>
     </ion-list>
-
   </ion-content>
 
 </ion-menu>

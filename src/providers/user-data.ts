@@ -38,6 +38,7 @@ export class UserData {
     return this.storage.get('username')
   };
 
+  //TODO: sdk implementation
   hasLoggedIn() {
     return this.storage.get(this.HAS_LOGGED_IN)
   };
@@ -45,4 +46,6 @@ export class UserData {
   checkHasSeenTutorial() {
     return this.storage.get(this.HAS_SEEN_TUTORIAL)
   };
+
+
 }

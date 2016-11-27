@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
-import { NavController } from 'ionic-angular';
+import {NavController} from 'ionic-angular';
 
-import { SignupPage } from '../signup/signup';
-import { TabsPage } from '../tabs/tabs';
-import { UserData } from '../../providers/user-data';
+import {SignupPage} from '../signup/signup';
+import {TabsPage} from '../tabs/tabs';
+import {UserData} from '../../providers/user-data';
 
 
 @Component({
@@ -15,7 +15,8 @@ export class LoginPage {
   login: {username?: string, password?: string} = {};
   submitted = false;
 
-  constructor(public navCtrl: NavController, public userData: UserData) { }
+  constructor(public navCtrl: NavController, public userData: UserData) {
+  }
 
   onLogin(form) {
     this.submitted = true;
