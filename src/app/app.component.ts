@@ -44,8 +44,8 @@ export class CryptofiatWallet {
   loggedOutPages: PageInterface[] = [
     {title: 'Login', component: LoginPage, icon: 'log-in'},
     {title: 'Support', component: SupportPage, icon: 'help'},
-    {title: 'Signup', component: SignupPage, icon: 'person-add'}
-    {title: 'About', component: AboutPage, icon: 'information-circle'}
+    {title: 'Signup', component: SignupPage, icon: 'person-add'},
+    {title: 'About', component: AboutPage, icon: 'information-circle'},
     {title: 'Add from bank', component: TopupPage, icon: 'information-circle'}
   ];
   rootPage: any;
