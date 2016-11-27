@@ -1,117 +1,45 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" dir="ltr">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <title></title>
+  <meta charset="UTF-8">
+  <title>Cryptofiat wallet</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="msapplication-tap-highlight" content="no">
 
+  <link rel="icon" type="image/x-icon" href="assets/icon/favicon.ico">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#387ef5">
 
-    <script src="lib/ionic/js/ionic.bundle.js"></script>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="apple-touch-icon" href="assets/img/appicon.png">
 
-    <!--<script src="cordova.js"></script>-->
+  <script>
+    /*if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js')
+        .then(() => console.log('service worker installed'))
+        .catch(err => console.log('Error', err));
+    }*/
+  </script>
 
-    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
-    <link href="css/ionic.app.css" rel="stylesheet">
-    -->
-
-
-    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
-
-
-    <style type="text/css">
-        .platform-ios .manual-ios-statusbar-padding {
-            padding-top: 20px;
-        }
-
-        .manual-remove-top-padding {
-            padding-top: 0px;
-        }
-
-        .manual-remove-top-padding .scroll {
-            padding-top: 0px !important;
-        }
-
-        ion-list.manual-list-fullwidth div.list, .list.card.manual-card-fullwidth {
-            margin-left: -10px;
-            margin-right: -10px;
-        }
-
-        ion-list.manual-list-fullwidth div.list > .item, .list.card.manual-card-fullwidth > .item {
-            border-radius: 0px;
-            border-left: 0px;
-            border-right: 0px;
-        }
-        @media only screen and (min-width: 600px) and (min-height:560px)  {
-		.manual-screencenter {
-		     width: 320px; 
-		     height: 520px; 
-		     top: calc(50% - 260px); 
-		     left: calc(50% - 260px);
-		}
-	}
-    </style>
-
-    <script src="bundle.js"></script>
-
-    <!-- Only required for Tab projects w/ pages in multiple tabs
-    <script src="lib/ionicuirouter/ionicUIRouter.js"></script>
-    -->
+  <link href="build/main.css" rel="stylesheet">
 
 </head>
-<body ng-app="app" animation="slide-left-right-ios7" style="background: grey">
-<div>
-    <ion-side-menus enable-menu-with-back-views="false" data-componentid="side-menu21" class="manual-screencenter">
-        <ion-side-menu-content>
-            <ion-nav-bar class="bar-stable">
-                <ion-nav-back-button></ion-nav-back-button>
-                <ion-nav-buttons side="left">
-                    <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
-                </ion-nav-buttons>
-            </ion-nav-bar>
-            <ion-nav-view></ion-nav-view>
-        </ion-side-menu-content>
-        <ion-side-menu side="left" id="side-menu21">
-            <ion-header-bar class="bar-stable">
-                <div class="title">Menu</div>
-            </ion-header-bar>
-            <ion-content ng-controller="menuCtrl" padding="false" class="side-menu-left has-header ">
+<body>
 
-                <ion-list id="menu-list1" data-componentid="list1">
-                    <ion-item menu-close id="menu-list-item1"
-                              data-componentid="list-item3"
-                              ng-controller="menuCtrl"
-                              ng-click="transfers()">
-                       Home 
-                    </ion-item>
-                    <ion-item menu-close id="menu-list-item1"
-                              data-componentid="list-item1"
-                              ng-controller="menuCtrl"
-                              ng-click="importKey()">
-                        Import account 
-                    </ion-item>
-                    <ion-item menu-close id="menu-list-item2" 
-				data-componentid="list-item2"
-                              ng-controller="menuCtrl"
-                              ng-click="exportKeys()">
-			Export account
-		     </ion-item>
-                    <ion-item menu-close id="menu-list-item3" 
-				data-componentid="list-item3"
-                              ng-controller="menuCtrl"
-                              ng-click="topUp()">
-			Add from Bank
-		     </ion-item>
-                    <ion-item menu-close id="menu-list-item4" 
-				data-componentid="list-item4"
-                              ng-controller="menuCtrl"
-                              ng-click="about()">
-			About
-		     </ion-item>
-                </ion-list>
+  <!-- Ionic's root component and where the app will load -->
+  <ion-app class="app-center"></ion-app>
 
-            </ion-content>
-        </ion-side-menu>
-    </ion-side-menus>
-</div>
+  <script src="cordova.js"></script>
+
+  <!-- The polyfills js is generated during the build process -->
+  <script src="build/polyfills.js"></script>
+
+  <!-- The bundle js is generated during the build process -->
+  <script src="build/main.js"></script>
+
+  <!-- google maps script is loaded last as to not block rendering -->
+  <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+
 </body>
 </html>
