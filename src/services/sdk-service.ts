@@ -1,6 +1,8 @@
 import * as wallet from 'cryptofiat-wallet';
+import { Injectable } from '@angular/core';
 
-export default class SdkService {
+@Injectable()
+export class SdkService {
   private sdk;
 
   constructor() {
@@ -8,7 +10,7 @@ export default class SdkService {
     this.sdk.attachStorage(window.localStorage);
   }
 
-  initiated() : String { //encryptedChallenge
+  initiated() : Boolean { //encryptedChallenge
     return this.sdk.initiated();
   }
 
@@ -16,28 +18,28 @@ export default class SdkService {
     return this.sdk.unlock(secret);
   }
 
-  initLocalStorage(secret) : String { //encryptedChallenge
+  initLocalStorage(secret) : string { //encryptedChallenge
     return this.sdk.initLocalStorage(secret);
   }
 
-  storeNewKey(newKeyHex) : String { //encryptedChallenge
+  storeNewKey(newKeyHex : string) : Uint8Array {
     return this.sdk.storeNewKey(newKeyHex);
   }
 
-  privateToPublic(publicKey) : Object { //type of ethereumjs Buffer (?)
-    return this.sdk.privateToPublic(publicKey)
+  privateToPublic(privKey : Uint8Array) : Uint8Array { 
+    return this.sdk.privateToPublic(privKey);
   }
 
-  pubToAddress(publicKey) : Object { //type of ethereumjs Buffer (?)
-    return this.sdk.pubToAddress(publicKey)
+  pubToAddress(publicKey : Uint8Array) : string {
+    return this.sdk.pubToAddress(publicKey).toString('hex');
   }
 
-  approveWithEstonianMobileId(address, phoneNumber, callback) : Promise<Object> {
-    return this.sdk.approveWithEstonianMobileId(address, phoneNumber, callback);
+  approveWithEstonianMobileId(address : string, phoneNumber : string, callback) : Promise<Object> {
+    return this.sdk.approveWithEstonianMobileId(address.slice(2), phoneNumber, callback);
   }
 
-  approveWithEstonianIdCard(address) : Promise<Object> {
-    return this.sdk.approveWithEstonianIdCard(address);
+  approveWithEstonianIdCard(address : string) : Promise<Object> {
+    return this.sdk.approveWithEstonianIdCard(address.slice(2));
   }
 
   approveWithEstonianBankTransfer(publicAddress) : Promise<Object> {
@@ -63,11 +65,11 @@ export default class SdkService {
   storeEstonianIdCode(idCode) : Boolean {
     return this.sdk.storeEstonianIdCode(idCode)
   }
-  getEstonianIdCode() : String { //estonia id code
+  getEstonianIdCode() : string { //estonia id code
     return this.sdk.getEstonianIdCode()
   }
 
-  addresses() : Array<String> {
+  addresses() : Array<string> {
     return this.sdk.addresses()
   }
 

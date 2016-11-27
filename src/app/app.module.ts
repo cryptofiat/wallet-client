@@ -12,8 +12,10 @@ import { SignupPage } from '../pages/signup/signup';
 import { TabsPage } from '../pages/tabs/tabs';
 import { TopupPage } from '../pages/topup/topup';
 import { TutorialPage } from '../pages/tutorial/tutorial';
+import { VerifyPage } from '../pages/verify/verify';
 
 import { UserData } from '../providers/user-data';
+import { SdkService } from '../services/sdk-service.ts';
 
 
 @NgModule({
@@ -25,6 +27,7 @@ import { UserData } from '../providers/user-data';
     SignupPage,
     TabsPage,
     TutorialPage,
+    VerifyPage,
     TopupPage
   ],
   imports: [
@@ -39,8 +42,9 @@ import { UserData } from '../providers/user-data';
     SignupPage,
     TabsPage,
     TutorialPage,
+    VerifyPage,
     TopupPage
   ],
-  providers: [UserData, Storage]
+  providers: [UserData, Storage, SdkService]
 })
 export class AppModule { }
