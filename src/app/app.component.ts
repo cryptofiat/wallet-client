@@ -4,7 +4,7 @@ import {Events, MenuController, Nav, Platform} from 'ionic-angular';
 import {Splashscreen, StatusBar} from 'ionic-native';
 import {Storage} from '@ionic/storage';
 
-import {AccountPage} from '../pages/account/account';
+//import {AccountPage} from '../pages/account/account';
 import {LoginPage} from '../pages/login/login';
 import {SignupPage} from '../pages/signup/signup';
 import {TabsPage} from '../pages/tabs/tabs';
