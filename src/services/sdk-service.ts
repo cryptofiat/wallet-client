@@ -1,5 +1,6 @@
 import * as wallet from 'cryptofiat-wallet';
 import { Injectable } from '@angular/core';
+import { Transfer, TransferReference } from '../providers/transfer-data';
 
 @Injectable()
 export class SdkService {
@@ -23,6 +24,7 @@ export class SdkService {
   }
 
   storeNewKey(newKeyHex : string) : Uint8Array {
+    //TODO: should  only store in localStorage if the privKey is valid
     return this.sdk.storeNewKey(newKeyHex);
   }
 
@@ -46,7 +48,7 @@ export class SdkService {
     return this.sdk.approveWithEstonianBankTransfer(publicAddress);
   }
 
-  balanceTotalAsync() : Promise<Object> {
+  balanceTotalAsync() : Promise<number> {
     return this.sdk.balanceTotalAsync();
   }
 
@@ -73,8 +75,28 @@ export class SdkService {
     return this.sdk.addresses()
   }
 
-  transfersCleanedAsync() : Promise<Object> {
-    return this.sdk.transfersCleanedAsync()
+  transfersCleanedAsync() : Promise<Transfer[]> {
+    //TODO: if wallet-sdk was typescript should move this upstream
+    let txs : Array<Transfer> = [];
+    let jsonHolder : any[];
+    let transfer : Transfer;
+    let transferRef : TransferReference;
+    return this.sdk.transfersCleanedAsync().then( (jsonTxs) => {
+       jsonHolder = jsonTxs;
+       jsonHolder.forEach((jsonTx) => { 
+	   //This magic here expects that wallet-sdk uses exact same naming
+	   transfer = new Transfer();
+	   transferRef = new TransferReference();
+	   transferRef = Object.assign({},jsonTx.ref);
+	   transfer = Object.assign({},jsonTx, { 
+	        counterPartyAddress : jsonTx.otherAddress, // should change in sdk
+		ref:  null
+	   });
+	   transfer.ref = transferRef;
+           txs.push(transfer);
+       } );
+       return txs;
+    });
   }
 
   contractDataAsync() : Promise<Object> {

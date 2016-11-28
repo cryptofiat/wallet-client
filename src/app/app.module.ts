@@ -15,6 +15,7 @@ import { TutorialPage } from '../pages/tutorial/tutorial';
 import { VerifyPage } from '../pages/verify/verify';
 
 import { UserData } from '../providers/user-data';
+import { Transfer, TransferReference } from '../providers/transfer-data';
 import { SdkService } from '../services/sdk-service.ts';
 
 
@@ -45,6 +46,6 @@ import { SdkService } from '../services/sdk-service.ts';
     VerifyPage,
     TopupPage
   ],
-  providers: [UserData, Storage, SdkService]
+  providers: [UserData, Storage, SdkService, Transfer, TransferReference]
 })
 export class AppModule { }
