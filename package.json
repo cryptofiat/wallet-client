@@ -25,6 +25,7 @@
   },
   "devDependencies": {
     "@ionic/app-scripts": "0.0.46",
+    "rx": "^4.1.0",
     "typescript": "2.0.9",
     "webpack-bundle-analyzer": "^1.5.3"
   },

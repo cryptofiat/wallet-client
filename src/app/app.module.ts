@@ -8,6 +8,7 @@ import { CryptofiatWallet } from './app.component';
 import { AboutPage } from '../pages/about/about';
 import { LoginPage } from '../pages/login/login';
 import { TransfersPage } from '../pages/transfers/transfers';
+import { SendPage } from '../pages/send/send';
 import { SignupPage } from '../pages/signup/signup';
 import { LoggedInPage } from '../pages/loggedin/loggedin';
 import { TopupPage } from '../pages/topup/topup';
@@ -29,6 +30,7 @@ import { SdkService } from '../services/sdk-service.ts';
     LoggedInPage,
     TutorialPage,
     VerifyPage,
+    SendPage,
     TopupPage
   ],
   imports: [
@@ -44,6 +46,7 @@ import { SdkService } from '../services/sdk-service.ts';
     LoggedInPage,
     TutorialPage,
     VerifyPage,
+    SendPage,
     TopupPage
   ],
   providers: [UserData, Storage, SdkService, Transfer, TransferReference]

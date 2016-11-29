@@ -56,8 +56,8 @@ export class SdkService {
     return this.sdk.isUnlocked();
   }
 
-  sendToEstonianIdCode(idCode, amount, ref) : Promise<Object> {
-    return this.sdk.sendToEstonianIdCode(idCode, amount, ref)
+  sendToEstonianIdCode(idCode : string, amount : number, ref : string) : Promise<string> {
+    return this.sdk.sendToEstonianIdCode(idCode, amount, ref).id
   }
 
   sendAsync(toAddress, amount, ref) : Promise<Object> {
@@ -124,6 +124,6 @@ export class SdkService {
   }
 
   findAccountAndSendToBank(toIBAN, amount, ref, recipientName) : Promise<Object> {
-    return this.sdk.findAccountAndSendToBank(toIBAN, amount, ref, recipientName);
+    return this.sdk.findAccountAndSendToBank(toIBAN, amount, ref, recipientName).id;
   }
 }

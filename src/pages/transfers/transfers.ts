@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { SdkService } from '../../services/sdk-service';
 import { Transfer, TransferReference } from '../../providers/transfer-data';
+import { SendPage } from '../send/send';
 
 /*
   To learn how to use third party libs in an
@@ -50,5 +51,9 @@ export class TransfersPage {
 
   getFormattedDate(tx : Transfer) : string {
         return moment(tx.timestamp).fromNow();
+  }
+
+  toSendPage() {
+    this.navCtrl.push(SendPage);
   }
 }
