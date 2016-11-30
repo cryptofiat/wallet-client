@@ -41,23 +41,25 @@ export class SendPage {
 	    } else {
                 promise = this.sdk.findAccountAndSendToBank(this.send.toIban, 100 * this.send.euroAmount, this.send.reference, this.send.recipientName)
 	    }
+	    console.log("promise now is: ", promise);
+	    if (!promise) {return};
             promise.then( (transactionHash : string) => {
 		  if (transactionHash) {
                     this.txHash = transactionHash;
                     this.txState = "submitted";
 		    this.pendingCheck = Observable.timer(5000);
                     this.checkAction = this.pendingCheck.subscribe(
-                      function(x) {
+                      (x) => {
 			console.log("refresh try: ", x);
 			this.pendingRefresh = true;
-			this.sdk.transferStatusAsync(this.txHash).then( (txCheck) => {
-			    if (txCheck.status != "PENDING") {
+			this.sdk.transferStatusAsync(this.txHash).then( (txCheckStatus : string) => {
+			    if (txCheckStatus != "PENDING") {
 				this.txState = "confirmed";
 				this.checkAction.unsubscribe();
 				this.pendingCheck = undefined;
 			    } else {
 			    }
-		            console.log("checked tx status: ", txCheck.status)
+		            console.log("checked tx status: ", txCheckStatus)
 			    this.pendingRefresh = false;
 			});
 		    });

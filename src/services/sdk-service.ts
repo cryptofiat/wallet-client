@@ -57,7 +57,9 @@ export class SdkService {
   }
 
   sendToEstonianIdCode(idCode : string, amount : number, ref : string) : Promise<string> {
-    return this.sdk.sendToEstonianIdCode(idCode, amount, ref).id
+    return this.sdk.sendToEstonianIdCode(idCode, amount, ref).then((response) => {
+       return response.id;
+    });
   }
 
   sendAsync(toAddress, amount, ref) : Promise<Object> {
@@ -107,8 +109,10 @@ export class SdkService {
     return this.sdk.getAddressForEstonianIdCode(idCode)
   }
 
-  transferStatusAsync(transactionHash) : Promise<Object> {
-    return this.sdk.transferStatusAsync(transactionHash)
+  transferStatusAsync(transactionHash : string) : Promise<string> {
+    return this.sdk.transferStatusAsync(transactionHash).then( (tx) => {
+        return tx.status;
+    });
   }
 
   referenceSendAsync(transactionHash,senderIdCode,receiverIdCode,referenceText,referenceCode,attachments) : Promise<Object> {
@@ -123,7 +127,9 @@ export class SdkService {
     return this.sdk.nameFromIdAsync(idCode)
   }
 
-  findAccountAndSendToBank(toIBAN, amount, ref, recipientName) : Promise<Object> {
-    return this.sdk.findAccountAndSendToBank(toIBAN, amount, ref, recipientName).id;
+  findAccountAndSendToBank(toIBAN, amount, ref, recipientName) : Promise<string> {
+    return this.sdk.findAccountAndSendToBank(toIBAN, amount, ref, recipientName).then( (response) => {
+        return response.id;
+    });
   }
 }
