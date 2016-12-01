@@ -3,10 +3,8 @@ import {Component, ViewChild} from '@angular/core';
 import {Events, MenuController, Nav, Platform} from 'ionic-angular';
 import {Splashscreen, StatusBar} from 'ionic-native';
 
-import {LoginPage} from '../pages/login/login';
 import {SignupPage} from '../pages/signup/signup';
 import {TransfersPage} from '../pages/transfers/transfers';
-import {LoggedInPage} from '../pages/loggedin/loggedin';
 
 import {SdkService} from '../services/sdk-service';
 import {UserData} from '../providers/user-data';

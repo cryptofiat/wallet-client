@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
 
-import { NavController } from 'ionic-angular';
+import { Events, ToastController, NavController } from 'ionic-angular';
 import { SdkService } from '../../services/sdk-service';
 import { Transfer, TransferReference } from '../../providers/transfer-data';
 import { SendPage } from '../send/send';
@@ -20,11 +21,15 @@ export class TransfersPage {
   owner : { firstName?: string, lastName? : string} = {};
   idCode: string;
   totalBalance: number;
+  totalPending : number;
   transfers : Transfer[] = [];
+  pendingTransfers : Transfer[] = [];
   refreshing : boolean = false;
 
   constructor(
     public navCtrl: NavController,
+    private toastCtrl: ToastController,
+    public events: Events,
     public sdk: SdkService
   ) {
         this.idCode = this.sdk.getEstonianIdCode();
@@ -32,6 +37,7 @@ export class TransfersPage {
         this.sdk.nameFromIdAsync(this.idCode).then( (nameJson) => {
           this.owner = nameJson;
         });
+        events.subscribe('tx:newPending', () => this.refreshPending());
   }
 
   loadData() {
@@ -60,4 +66,37 @@ export class TransfersPage {
     //blocks access if logged out
     return !!this.sdk.isUnlocked();
   }
+
+  private refreshPending() {
+      this.pendingTransfers = this.sdk.getPendingTransfers();
+      this.totalPending = this.sdk.getPendingTotal();
+
+      let pendingCheck = Observable.interval(10000).take(25);
+      let checkAction = pendingCheck.subscribe(
+       (x) => {
+        if (this.pendingTransfers == null || this.pendingTransfers.length == 0) {
+		checkAction.unsubscribe();
+		pendingCheck = undefined;
+        }
+	console.log("pending refresh try: ", x);
+        this.pendingTransfers.map( (pendingTx) => {
+	        pendingTx.pendingRefresh = true;
+		this.sdk.transferStatusAsync(pendingTx.transactionHash).then( (txCheckStatus : string) => {
+
+		    console.log("got back tx status: ",txCheckStatus);
+
+		    if (txCheckStatus != "PENDING") {
+                        this.sdk.removePendingTransfer(pendingTx.transactionHash);
+		        this.toastCtrl.create({message: 'Confirmed ' + pendingTx.transactionHash, duration: 5000});
+                        this.pendingTransfers = this.sdk.getPendingTransfers();
+                        this.totalPending = this.sdk.getPendingTotal();
+                        this.loadData();
+		    } else {
+		    }
+		    pendingTx.pendingRefresh = false;
+		});
+	});
+      });
+  };
+
 }

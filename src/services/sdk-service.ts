@@ -137,4 +137,39 @@ export class SdkService {
         return response.id;
     });
   }
+
+  // Penging Transfers <<= this part should move to wallet-sdk
+
+  storePendingTransfer(tx : Transfer){
+      let storedJson : string;
+      let storedTransfers : Array<Transfer>;
+      storedTransfers = this.getPendingTransfers();
+      if (storedTransfers == null ) {storedTransfers = []}
+      storedTransfers.push(tx);
+      storedJson = JSON.stringify(storedTransfers);
+      this.sdk._storage.setItem("pendingTransfers",storedJson);
+  }
+
+  removePendingTransfer(txHash : string){
+      let storedJson : string;
+      let storedTransfers : Array<Transfer>;
+      storedTransfers = this.getPendingTransfers();
+      if (storedTransfers == null ) {storedTransfers = []}
+      storedJson = JSON.stringify(storedTransfers.filter( (tx) => tx.transactionHash != txHash ));
+      this.sdk._storage.setItem("pendingTransfers",storedJson);
+  }
+
+  getPendingTransfers() : Array<Transfer> {
+      let storedTransfers : Transfer[] = [];
+      let storedJson : string;
+      storedJson = this.sdk._storage.getItem("pendingTransfers");
+      storedTransfers = JSON.parse(storedJson);
+      return storedTransfers;
+  }
+
+  getPendingTotal() : number {
+      let  bal : number = 0;
+      return this.getPendingTransfers().map((tx) => (tx.fee ? tx.fee : 0) + tx.amount).reduce((prev, curr) => prev + curr);
+  }
+  // END Pending TX
 }

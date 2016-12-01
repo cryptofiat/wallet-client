@@ -8,7 +8,7 @@ export class Transfer {
 
   public amount : number; //EUR_CENT 
   public signedAmount : number; //EUR_CENT 
-  public fees : number; //EUR_CENT
+  public fee : number; //EUR_CENT
   public sourceAccount : string; //0x..
   public targetAccount : string; //0x..
 
@@ -19,7 +19,10 @@ export class Transfer {
 
   public ref : TransferReference;
 
+  public pendingRefresh : boolean; // for UI convenience
+
   constructor() {
+     this.ref = new TransferReference();
   }
 
 }

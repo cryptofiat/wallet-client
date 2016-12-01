@@ -6,7 +6,6 @@ import { Storage } from '@ionic/storage';
 import { CryptofiatWallet } from './app.component';
 
 import { AboutPage } from '../pages/about/about';
-import { LoginPage } from '../pages/login/login';
 import { TransfersPage } from '../pages/transfers/transfers';
 import { SendPage } from '../pages/send/send';
 import { SignupPage } from '../pages/signup/signup';
@@ -25,7 +24,6 @@ import { SdkService } from '../services/sdk-service.ts';
   declarations: [
     CryptofiatWallet,
     AboutPage,
-    LoginPage,
     TransfersPage,
     SignupPage,
     LoggedInPage,
@@ -43,7 +41,6 @@ import { SdkService } from '../services/sdk-service.ts';
   entryComponents: [
     CryptofiatWallet,
     AboutPage,
-    LoginPage,
     TransfersPage,
     SignupPage,
     LoggedInPage,

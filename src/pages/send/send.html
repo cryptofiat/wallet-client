@@ -67,9 +67,9 @@
 	</ion-input>
       </ion-item>
     </ion-list>
-      <div [ngSwitch]="destination">
-                <h6 *ngSwitchCase="'IBAN'"> Fee: {{bankFee}} EUR</h6>
-                <h6 *ngSwitchCase="'eId'"> Fee: {{fee}} EUR</h6>
+      <div class="fees" [ngSwitch]="destination">
+                <span *ngSwitchCase="'IBAN'"> Fee: {{bankFee}} EUR</span>
+                <span *ngSwitchCase="'eId'"> Fee: {{fee}} EUR</span>
       </div>
 
     <button ion-button 

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
+import { Events, NavController,ToastController } from 'ionic-angular';
 import { Observable } from 'rxjs';
 import { SdkService } from "../../services/sdk-service";
+import { Transfer } from "../../providers/transfer-data";
 
 @Component({
   selector: 'page-send',
@@ -29,7 +31,12 @@ export class SendPage {
   err:string;
   idRecipient : { firstName?: string, lastName? : string} = {};
 
-  constructor(private sdk: SdkService) {
+  constructor(
+     private sdk: SdkService, 
+     private navCtrl: NavController, 
+     private toastCtrl: ToastController,
+     private events: Events
+  ) {
   }
 
   sendEuro() {
@@ -48,7 +55,18 @@ export class SendPage {
 		  if (transactionHash) {
                     this.txHash = transactionHash;
                     this.txState = "submitted";
-		    this.pendingCheck = Observable.timer(5000).take(10);
+
+                    let pendingTx : Transfer = new Transfer();
+                    pendingTx.amount = 100 * this.send.euroAmount;
+                    pendingTx.signedAmount = - pendingTx.amount;
+                    pendingTx.transactionHash = transactionHash;
+                    if (this.send.eId) pendingTx.counterPartyIdCode = this.send.eId;
+                    this.sdk.storePendingTransfer(pendingTx);
+                    this.events.publish("tx:newPending");
+		    this.toastCtrl.create({message: 'submitted ' + transactionHash, duration: 3000});
+		    this.navCtrl.pop();
+/*
+		    this.pendingCheck = Observable.interval(5000).take(15);
                     this.checkAction = this.pendingCheck.subscribe(
                       (x) => {
 			console.log("refresh try: ", x);
@@ -69,7 +87,7 @@ export class SendPage {
 			    this.pendingRefresh = false;
 			});
 		    });
-
+*/
                   }
                }, (err) => {
                     this.err = err; 
