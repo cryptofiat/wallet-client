@@ -3,29 +3,28 @@ import {Injectable} from '@angular/core';
 import {Events} from 'ionic-angular';
 import {Storage} from '@ionic/storage';
 
+import {SdkService} from '../services/sdk-service';
 
 @Injectable()
 export class UserData {
-  private static HAS_LOGGED_IN = 'hasInitialized';
   private static HAS_SEEN_TUTORIAL = 'hasSeenTutorial';
 
-  constructor(public events: Events, public storage: Storage) {
+
+  constructor(public events: Events, public storage: Storage, private sdk: SdkService) {
   }
 
-  login(username) {
-    this.storage.set(UserData.HAS_LOGGED_IN, true);
-    this.setUsername(username);
-    this.events.publish('user:login');
+  login(secret) {
+    //this.setUsername(username);
+    //this.sdk.unlock(secret);
+    
   };
 
   signup(username) {
-    this.storage.set(UserData.HAS_LOGGED_IN, true);
     this.setUsername(username);
     this.events.publish('user:signup');
   };
 
   logout() {
-    this.storage.remove(UserData.HAS_LOGGED_IN);
     this.storage.remove(UserData.HAS_SEEN_TUTORIAL);
     this.storage.remove('username');
     this.events.publish('user:logout');
@@ -45,11 +44,13 @@ export class UserData {
 
   //TODO: sdk implementation
   hasInitialized() {
-    return this.storage.get(UserData.HAS_LOGGED_IN)
+    return Promise.resolve(!!(this.sdk.initiated()));
+    //return this.storage.get(UserData.HAS_LOGGED_IN)
   };
 
   hasLoggedIn() {
-    return this.storage.get(UserData.HAS_LOGGED_IN)
+    return Promise.resolve(!!(this.sdk.isUnlocked()));
+    //return this.storage.get(UserData.HAS_LOGGED_IN)
   };
 
   checkHasSeenTutorial() {

@@ -10,6 +10,9 @@
 <ion-content>
   <ion-card><ion-card-content>
    <p>
+   <span>{{ owner.firstName }} {{ owner.lastName }}</span>
+   </p>
+   <p>
    Estonian ID: <span>{{idCode}}</span>
    </p>
    <p>
@@ -30,13 +33,10 @@
     </a>
     </ion-item>
 </ion-list>
-<h6>{{transfers.length.toFixed(0)}} transfers 
-<a href="#" *ngIf="!(refreshing)" (click)="refreshClick()">refresh</a>
+  <ion-list-header>
+{{transfers.length.toFixed(0)}} transfers 
+<a href="#" *ngIf="!(refreshing)" (click)="loadData()">refresh</a>
 <span *ngIf="refreshing"> ... refreshing ... </span>
-</h6>
-
-  <ion-list-header [hidden]="transfers.length > 0">
-      No transfers yet
   </ion-list-header>
 
   <ion-fab bottom right>

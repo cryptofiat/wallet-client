@@ -24,7 +24,7 @@
       <ion-item>
         <ion-label stacked>Estonian ID</ion-label>
         <ion-input placeholder="38003029210"
-           (change)="idCodeChecker()"
+           (input)="idCodeChecker()"
            [(ngModel)]="send.eId">
 	</ion-input>
 	    <ion-icon color="positive" name="clock" 
@@ -33,6 +33,9 @@
                *ngIf="idCodeCheck == 'yes'" item-right></ion-icon>
 	    <ion-icon color="assertive" name="close"
                *ngIf="idCodeCheck == 'no'" item-right></ion-icon>
+      </ion-item>
+      <ion-item [hidden]="idCodeCheck != 'yes'" item-content>
+         {{ idRecipient.firstName }} {{ idRecipient.lastName }}
       </ion-item>
     </ion-list>
     <ion-list *ngSwitchCase="'IBAN'">

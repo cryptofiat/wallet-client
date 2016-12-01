@@ -11,13 +11,30 @@
       <ion-list-header>
         Account
       </ion-list-header>
-      <button ion-item menuClose (click)="openSignUp()">
-        <ion-icon item-left name="log-in"></ion-icon>
+      <button [hidden]="loginState != 'IN'" 
+           ion-item menuClose (click)="openTransfers()">
+        <ion-icon item-left name="home"></ion-icon>
+        Home
+      </button>
+      <button [hidden]="loginState != 'PRE_INIT'" 
+           ion-item menuClose (click)="openSignUp()">
+        <ion-icon item-left name="person-add"></ion-icon>
         Sign up
       </button>
-      <button ion-item menuClose (click)="openImportKey()">
-        <ion-icon item-left name="cloud-upload"></ion-icon>
-        Import key
+      <button [hidden]="loginState != 'OUT'" 
+           ion-item menuClose (click)="openSignUp()">
+        <ion-icon item-left name="log-in"></ion-icon>
+        Log in
+      </button>
+      <button [hidden]="loginState != 'IN'"  
+	   ion-item menuClose (click)="openKeys()">
+        <ion-icon item-left name="key"></ion-icon>
+        Keys
+      </button>
+      <button [hidden]="loginState != 'IN'"  
+	   ion-item menuClose (click)="logout()">
+        <ion-icon item-left name="log-out"></ion-icon>
+        Log out
       </button>
     </ion-list>
 

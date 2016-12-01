@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { NavController } from 'ionic-angular';
+import { Events, NavController } from 'ionic-angular';
 
 import { TabsPage } from '../tabs/tabs';
 import { AboutPage } from '../about/about';
@@ -22,7 +22,7 @@ export class SignupPage {
   initStorage: {password?: string, passwordCheck?: string} = {};
   createNewClicked : boolean = false;
 
-  constructor(public navCtrl: NavController, public userData: UserData, public sdk: SdkService) {}
+  constructor(public events: Events, public navCtrl: NavController, public userData: UserData, public sdk: SdkService) {}
 
   onSignup(form) {
     this.submitted = true;
@@ -40,7 +40,8 @@ export class SignupPage {
   tryPassword(password : String) : Boolean {
             if (password && this.sdk.unlock(password)) {
 		console.log("successfully tried password");
-	    this.navCtrl.push(TransfersPage);
+                this.events.publish('user:login');
+	        this.navCtrl.setRoot(TransfersPage);
                 //this.navCtrl.push(TransfersPage);
 		return true;
                 //$state.go('navBar.transactions');
@@ -51,7 +52,8 @@ export class SignupPage {
 	console.log("Starting to check pass: ",this.initStorage.password, " with: ",this.initStorage.passwordCheck);
 	if (this.initStorage.password == this.initStorage.passwordCheck) {
             this.sdk.initLocalStorage(this.initStorage.password);
-	    this.navCtrl.push(VerifyPage);
+            this.events.publish('user:initiate');
+	    this.navCtrl.setRoot(VerifyPage);
 	    //this.navCtrl.push(AboutPage);
 	}
 	return false;

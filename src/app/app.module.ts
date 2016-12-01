@@ -14,6 +14,7 @@ import { LoggedInPage } from '../pages/loggedin/loggedin';
 import { TopupPage } from '../pages/topup/topup';
 import { TutorialPage } from '../pages/tutorial/tutorial';
 import { VerifyPage } from '../pages/verify/verify';
+import { KeysPage,ImportKeyPage } from '../pages/keys/keys';
 
 import { UserData } from '../providers/user-data';
 import { Transfer, TransferReference } from '../providers/transfer-data';
@@ -31,6 +32,8 @@ import { SdkService } from '../services/sdk-service.ts';
     TutorialPage,
     VerifyPage,
     SendPage,
+    KeysPage,
+    ImportKeyPage,
     TopupPage
   ],
   imports: [
@@ -47,6 +50,8 @@ import { SdkService } from '../services/sdk-service.ts';
     TutorialPage,
     VerifyPage,
     SendPage,
+    KeysPage,
+    ImportKeyPage,
     TopupPage
   ],
   providers: [UserData, Storage, SdkService, Transfer, TransferReference]

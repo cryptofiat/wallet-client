@@ -11,7 +11,7 @@ export class VerifyPage {
   tab : string = "ACCOUNT_CREATED";
   mobileId: {phoneNumber?: string} = {};
 
-  private privKey : Uint8Array;
+  private privKey : string;
   public publicKey : Uint8Array;
   public publicAddress : string;
   public processing : boolean;
@@ -21,6 +21,7 @@ export class VerifyPage {
   constructor(private navCtrl: NavController, private sdk: SdkService, public params: NavParams) {
  	this.privKey = params.get("privKey");
 	if (this.privKey) {
+	   console.log("re-verifying key: ", this.privKey);
 	   this.publicKey = this.sdk.privateToPublic(this.privKey);
 	} else {
            this.publicKey = this.sdk.storeNewKey(null);

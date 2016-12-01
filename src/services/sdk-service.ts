@@ -9,10 +9,19 @@ export class SdkService {
   constructor() {
     this.sdk =  new wallet.Application();
     this.sdk.attachStorage(window.localStorage);
+    this.sdk.attachSessionStorage(window.sessionStorage);
   }
 
   initiated() : Boolean { //encryptedChallenge
     return this.sdk.initiated();
+  }
+
+  isUnlocked() : Boolean {
+    return this.sdk.isUnlocked();
+  }
+
+  logout() : void {
+    this.sdk.logout();
   }
 
   unlock(secret) : Boolean {
@@ -28,8 +37,8 @@ export class SdkService {
     return this.sdk.storeNewKey(newKeyHex);
   }
 
-  privateToPublic(privKey : Uint8Array) : Uint8Array { 
-    return this.sdk.privateToPublic(privKey);
+  privateToPublic(privKey : string) : Uint8Array { 
+    return wallet.privateToPublic(privKey);
   }
 
   pubToAddress(publicKey : Uint8Array) : string {
@@ -50,10 +59,6 @@ export class SdkService {
 
   balanceTotalAsync() : Promise<number> {
     return this.sdk.balanceTotalAsync();
-  }
-
-  isUnlocked() : Boolean {
-    return this.sdk.isUnlocked();
   }
 
   sendToEstonianIdCode(idCode : string, amount : number, ref : string) : Promise<string> {
@@ -101,7 +106,7 @@ export class SdkService {
     });
   }
 
-  contractDataAsync() : Promise<Object> {
+  contractDataAsync() : Promise<Object[]> {
     return this.sdk.contractDataAsync()
   }
 

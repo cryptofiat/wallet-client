@@ -27,6 +27,7 @@ export class SendPage {
   pendingRefresh: boolean;
   checkAction: any;
   err:string;
+  idRecipient : { firstName?: string, lastName? : string} = {};
 
   constructor(private sdk: SdkService) {
   }
@@ -47,17 +48,22 @@ export class SendPage {
 		  if (transactionHash) {
                     this.txHash = transactionHash;
                     this.txState = "submitted";
-		    this.pendingCheck = Observable.timer(5000);
+		    this.pendingCheck = Observable.timer(5000).take(10);
                     this.checkAction = this.pendingCheck.subscribe(
                       (x) => {
 			console.log("refresh try: ", x);
 			this.pendingRefresh = true;
 			this.sdk.transferStatusAsync(this.txHash).then( (txCheckStatus : string) => {
+
+			    console.log("got back tx status: ",txCheckStatus);
+
 			    if (txCheckStatus != "PENDING") {
+			        console.log("should NOT be pending: ",txCheckStatus);
 				this.txState = "confirmed";
 				this.checkAction.unsubscribe();
 				this.pendingCheck = undefined;
 			    } else {
+			        console.log("should be pending: ",txCheckStatus);
 			    }
 		            console.log("checked tx status: ", txCheckStatus)
 			    this.pendingRefresh = false;
@@ -80,7 +86,13 @@ export class SendPage {
 
           this.sdk.getAddressForEstonianIdCode(this.send.eId).then( (addr) => {
             if (addr) {
+              this.idRecipient = {};
               this.idCodeCheck = "yes" 
+              this.sdk.nameFromIdAsync(this.send.eId).then( (nameJson) => {
+                console.log("json responded for "+this.send.eId+": ",nameJson)
+                this.idRecipient = nameJson;
+                console.log("converteded: ",this.idRecipient)
+              });
             } else {
               this.idCodeCheck = "no" 
             }

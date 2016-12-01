@@ -17,6 +17,7 @@ import moment from 'moment';
 })
 export class TransfersPage {
 
+  owner : { firstName?: string, lastName? : string} = {};
   idCode: string;
   totalBalance: number;
   transfers : Transfer[] = [];
@@ -28,12 +29,10 @@ export class TransfersPage {
   ) {
         this.idCode = this.sdk.getEstonianIdCode();
         this.loadData()
-
+        this.sdk.nameFromIdAsync(this.idCode).then( (nameJson) => {
+          this.owner = nameJson;
+        });
   }
-
-  refreshClick() {
-            this.loadData()
-  };
 
   loadData() {
         this.refreshing = true;
@@ -55,5 +54,10 @@ export class TransfersPage {
 
   toSendPage() {
     this.navCtrl.push(SendPage);
+  }
+
+  ionViewCanEnter() : boolean {
+    //blocks access if logged out
+    return !!this.sdk.isUnlocked();
   }
 }

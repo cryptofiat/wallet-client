@@ -41,7 +41,7 @@ export class TutorialPage {
   }
 
   startApp() {
-    this.navCtrl.push(SignupPage);
+    this.navCtrl.setRoot(SignupPage);
     this.storage.set('hasSeenTutorial', 'true');
   }
 
