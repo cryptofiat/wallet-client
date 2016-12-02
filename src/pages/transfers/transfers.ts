@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 
 import { Events, ToastController, NavController } from 'ionic-angular';
 import { SdkService } from '../../services/sdk-service';
-import { Transfer, TransferReference } from '../../providers/transfer-data';
+import { Transfer } from '../../providers/transfer-data';
 import { SendPage } from '../send/send';
 
 /*

@@ -44,15 +44,17 @@
     Completed 
   </ion-list-header>
 <ion-item *ngFor="let tx of transfers">
-    <a class="item" target="_blank" href="http://etherscan.io/tx/{{tx.transactionHash}}">
-    <span class="{{ tx.signedAmount > 0 ? 'balanced' : 'assertive'}}">{{ (tx.signedAmount / 100).toFixed(2)  }}</span>
+    <a class="transactionItem" target="_blank" href="http://etherscan.io/tx/{{tx.transactionHash}}">
+    <span class="{{ tx.signedAmount > 0 ? 'inboundAmount' : 'outboundAmount'}}">{{ (tx.signedAmount / 100).toFixed(2)  }}</span>
     <span *ngIf="tx.ref.senderIdCode">{{ tx.counterPartyFirstName }}</span>
     <span *ngIf="tx.ref.senderIdCode">{{ tx.counterPartyLastName }}</span>
-    <span *ngIf="tx.ref.senderIdCode" style="font-size: 85%; color:#aaa;">{{ tx.counterPartyIdCode }}</span>
-    <span class="item-note">{{ getFormattedDate(tx)}}</span>
-    <p>{{ tx.counterPartyAddress }}</p>
-    <p><span *ngIf="tx.ref.referenceText" class="item-text-wrap">{{ tx.ref.referenceText }}</span></p>
-    <p *ngIf="tx.fee" style="font-size: 70%;">fee: {{ (tx.fee / 100).toFixed(2) }}</p>
+    <span *ngIf="tx.ref.senderIdCode" class="idCode" >{{ tx.counterPartyIdCode }}</span>
+    <p class="hash">{{ tx.counterPartyAddress }}</p>
+    <p><span *ngIf="tx.ref.referenceText" class="referenceText item-text-wrap">{{ tx.ref.referenceText }}</span></p>
+    <div>
+       <div *ngIf="tx.fee" class="fee">fee: {{ (tx.fee / 100).toFixed(2) }}</div>
+       <div class="timeAgo">{{ getFormattedDate(tx)}}</div>
+    </div>
     </a>
     </ion-item>
 </ion-list>

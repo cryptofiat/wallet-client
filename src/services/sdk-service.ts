@@ -168,7 +168,6 @@ export class SdkService {
   }
 
   getPendingTotal() : number {
-      let  bal : number = 0;
       if (this.getPendingTransfers().length == 0) return 0;
       return this.getPendingTransfers().map( (tx) => (tx.fee ? tx.fee : 0) + tx.amount).reduce((prev, curr) => prev + curr);
   }

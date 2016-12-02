@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Events, NavController,ToastController } from 'ionic-angular';
-import { Observable } from 'rxjs';
 import { SdkService } from "../../services/sdk-service";
 import { Transfer } from "../../providers/transfer-data";
 

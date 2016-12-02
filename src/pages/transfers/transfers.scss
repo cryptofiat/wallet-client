@@ -17,4 +17,37 @@ $categories: (
 
 page-transfers {
 
+a.transactionItem {
+  text-decoration:none;
+  color:inherit;
+} 
+
+a.transactionItem .fee {
+  font-size: 70%;
+  float:left;
+} 
+
+a.transactionItem .idCode {
+  font-size: 85%;
+  color: #999;
+} 
+
+a.transactionItem .hash {
+  font-size: 90%;
+  color:#bbb;
+} 
+
+a.transactionItem .timeAgo {
+  font-size: 70%;
+  float:right;
+} 
+
+.inboundAmount {
+  color: green;
+}
+
+.outboundAmount {
+  color: red;
+}
+
 }

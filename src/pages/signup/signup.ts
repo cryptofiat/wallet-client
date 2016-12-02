@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 
 import { Events, NavController } from 'ionic-angular';
 
-import { TabsPage } from '../tabs/tabs';
-import { AboutPage } from '../about/about';
 import { TransfersPage } from '../transfers/transfers';
 import { VerifyPage } from '../verify/verify';
 import { UserData } from '../../providers/user-data';
