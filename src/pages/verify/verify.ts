@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { Observable } from 'rxjs';
+import { ToastController,NavController, NavParams } from 'ionic-angular';
 import { SdkService } from "../../services/sdk-service";
-import { AboutPage } from "../about/about";
+import { TransfersPage } from "../transfers/transfers";
 
 @Component({
   selector: 'page-verify',
@@ -15,13 +16,14 @@ export class VerifyPage {
   public publicKey : Uint8Array;
   public publicAddress : string;
   public processing : boolean;
+  public refreshing : boolean;
   public mobileIdChallengeCode : string;
   public idNumber : string;
+  public pendingApprovals : Array<string> = [];
 
-  constructor(private navCtrl: NavController, private sdk: SdkService, public params: NavParams) {
+  constructor(private toastCtrl: ToastController, private navCtrl: NavController, private sdk: SdkService, public params: NavParams) {
  	this.privKey = params.get("privKey");
 	if (this.privKey) {
-	   console.log("re-verifying key: ", this.privKey);
 	   this.publicKey = this.sdk.privateToPublic(this.privKey);
 	} else {
            this.publicKey = this.sdk.storeNewKey(null);
@@ -36,22 +38,19 @@ export class VerifyPage {
   verifyMobileId() {
             if(this.mobileId.phoneNumber){
 		this.processing = true;
-                console.log('phoneNumber: ' + this.mobileId.phoneNumber);
-		console.log('submitting addr: ' + this.publicAddress);
                 this.sdk.approveWithEstonianMobileId(this.publicAddress ,this.mobileId.phoneNumber,
                     (data) => {
                        this.mobileIdChallengeCode = data.mobileIdChallengeCode;
                        console.log('mobileIdChallengeCode', data.mobileIdChallengeCode)
                        //$scope.$apply();
                     }
-                ).then((ownerId) => {
-                    this.idNumber = ownerId.toString();
-                    console.log("approve estonia mobile id had a response: " + ownerId);
-		    this.sdk.storeEstonianIdCode(ownerId);
+                ).then((res : {ownerId?: string, transactionHash?: string} ) => {
+                    this.idNumber = res.ownerId;
+                    console.log("approve estonia mobile id had a response: " + this.idNumber);
+		    this.sdk.storeEstonianIdCode(this.idNumber);
+       	            this.sdk.storePendingApproval(res.transactionHash,this.publicAddress);
                     this.processing = false;
                     this.tab = 'USE';
-                    console.log("tab: "+this.tab);
-                    //$scope.$apply();
                 },(err) => {
 		    console.log("error: ",err)
                     this.processing = false;
@@ -66,18 +65,54 @@ export class VerifyPage {
             console.log('verify by card');
             this.processing = true;
 	    //TODO: change account-identity server call to accept '0x' in hex
-            this.sdk.approveWithEstonianIdCard(this.publicAddress).then( (ownerId) => {
-              console.log("id  returned: ",ownerId); 
+            this.sdk.approveWithEstonianIdCard(this.publicAddress).then( 
+              (res : {ownerId?: string, transactionHash?: string} ) => {
+              console.log("id  returned: ",res.ownerId, " with hash ", res.transactionHash); 
+              this.idNumber = res.ownerId;
               this.processing = false;
-       	      this.sdk.storeEstonianIdCode(ownerId);
+       	      this.sdk.storeEstonianIdCode(res.ownerId);
+       	      this.sdk.storePendingApproval(res.transactionHash,this.publicAddress);
               this.tab = 'USE';
+	      this.refreshApprovals();
+	      this.pendingPolling();
             });
   }
 
-  finish() {
-    this.navCtrl.push(AboutPage);
+  refreshApprovals() {
+    this.pendingApprovals = this.sdk.pendingApprovalArray();
   }
 
-  testSdk() {
+  getPendingApproval(addr : string) : string {
+    return this.sdk.getPendingApproval(addr);
+  }
+
+  finish() {
+    this.navCtrl.setRoot(TransfersPage);
+  }
+
+  pendingPolling() {
+      let pendingCheck = Observable.interval(10000).take(25);
+      let checkAction = pendingCheck.subscribe( (x) => {
+        if (this.pendingApprovals == null || this.pendingApprovals.length == 0) {
+		checkAction.unsubscribe();
+		pendingCheck = undefined;
+        }
+	console.log("pending refresh try: ", x);
+	this.refreshing = true;
+        this.pendingApprovals.map( (addr) => {
+		this.sdk.transferStatusAsync(this.getPendingApproval(addr)).then( (txCheckStatus : string) => {
+
+		    console.log("got back tx status: ",txCheckStatus);
+
+		    if (txCheckStatus != "PENDING") {
+                        this.sdk.removePendingApproval(addr);
+		        this.toastCtrl.create({message: 'Confirmed ' + addr, duration: 5000});
+                        this.refreshApprovals();
+		    } else {
+		    }
+		    this.refreshing = false;
+		});
+	});
+      });
   }
 }

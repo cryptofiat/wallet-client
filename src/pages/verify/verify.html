@@ -115,13 +115,20 @@
         </div>
         <div *ngIf="tab == 'USE'">
             <p>Everything is good!</p>
-            <p ng-if="idNumber">You're Estonian id number is {{idNumber}}<br></p>
-            <p>You are ready to send Euro 2.0!</p>
+            <p *ngIf="idNumber">Your Estonian ID number is {{idNumber}}.<br></p>
+            <p [hidden]="!(pendingApprovals.length > 0)">It may take up to 3 minutes to have your access approved on Euro 2.0 blockchain.</p>
+	    <ion-list>
+	      <ion-item *ngFor="let approve of pendingApprovals">
+	        <ion-icon [hidden]="refreshing" name="clock" item-left> </ion-icon>
+	        <ion-icon [hidden]="!refreshing" name="refresh" item-left> </ion-icon>
+		<a href="https://etherscan.io/tx/{{getPendingApproval(approve)}}" target=_new>{{approve}}</a>
+	      </ion-item>
+	    </ion-list>
             <form id="createVerifyUse-finish">
                 <button ion-button id="createVerifyUse-finishButton" 
 		   (click)="finish()"
 		   class="button button-positive  button-block">
-		   Start!
+		   Start
   	        </button>
             </form>
         </div>

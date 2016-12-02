@@ -9,7 +9,6 @@ import { AboutPage } from '../pages/about/about';
 import { TransfersPage } from '../pages/transfers/transfers';
 import { SendPage } from '../pages/send/send';
 import { SignupPage } from '../pages/signup/signup';
-import { LoggedInPage } from '../pages/loggedin/loggedin';
 import { TopupPage } from '../pages/topup/topup';
 import { TutorialPage } from '../pages/tutorial/tutorial';
 import { VerifyPage } from '../pages/verify/verify';
@@ -26,7 +25,6 @@ import { SdkService } from '../services/sdk-service.ts';
     AboutPage,
     TransfersPage,
     SignupPage,
-    LoggedInPage,
     TutorialPage,
     VerifyPage,
     SendPage,
@@ -43,7 +41,6 @@ import { SdkService } from '../services/sdk-service.ts';
     AboutPage,
     TransfersPage,
     SignupPage,
-    LoggedInPage,
     TutorialPage,
     VerifyPage,
     SendPage,

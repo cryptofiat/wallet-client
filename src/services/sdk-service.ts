@@ -169,7 +169,32 @@ export class SdkService {
 
   getPendingTotal() : number {
       let  bal : number = 0;
-      return this.getPendingTransfers().map((tx) => (tx.fee ? tx.fee : 0) + tx.amount).reduce((prev, curr) => prev + curr);
+      if (this.getPendingTransfers().length == 0) return 0;
+      return this.getPendingTransfers().map( (tx) => (tx.fee ? tx.fee : 0) + tx.amount).reduce((prev, curr) => prev + curr);
   }
   // END Pending TX
+
+
+  // Penging Approvals <<= this part should move to wallet-sdk
+  // Should make a keys domain object key.private, key.public, key.approvalHash, key.pending ..
+
+  storePendingApproval(txHash : string, addr : string) {
+     this.sdk._storage.setItem('pendingApproval:'+addr,txHash); 
+  }
+
+  removePendingApproval(addr : string) {
+     this.sdk._storage.removeItem('pendingApproval:'+addr); 
+  }
+
+  getPendingApproval(addr : string) : string {
+     return this.sdk._storage.getItem('pendingApproval:'+addr); 
+  }
+
+  pendingApprovalArray() : Array<string> {
+     return this.addresses().filter( (addr) => { 
+		return (this.getPendingApproval(addr) != undefined)
+	} );
+  }
+  // END Pending Approval
+
 }
