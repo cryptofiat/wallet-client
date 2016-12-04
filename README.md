@@ -3,6 +3,7 @@
 ## Installation
 
 ```
+npm update
 npm install
 npm run ionic:serve
 
