@@ -19,7 +19,7 @@
    Balance: <span>{{ (totalBalance / 100).toFixed(2)}}</span> EUR 
    </p>
    <p [hidden]="!(totalPending > 0)">
-   Pending: <span>{{ ( - totalPending / 100).toFixed(2)}}</span> EUR 
+   Pending: <span>{{ (totalPending / 100).toFixed(2)}}</span> EUR 
    </p>
   </ion-card-content></ion-card>
 <ion-list>
@@ -29,15 +29,17 @@
 <ion-item *ngFor="let tx of pendingTransfers">
     <ion-icon [hidden]="tx.pendingRefresh" name="clock" item-left></ion-icon>
     <ion-icon [hidden]="!tx.pendingRefresh" name="refresh" item-left></ion-icon>
-    <a class="item" target="_blank" href="http://etherscan.io/tx/{{tx.transactionHash}}">
-    <span class="{{ tx.signedAmount > 0 ? 'balanced' : 'assertive'}}">{{ (tx.signedAmount / 100).toFixed(2)  }}</span>
+    <a class="transactionItem" target="_blank" href="http://etherscan.io/tx/{{tx.transactionHash}}">
+    <span class="{{ tx.signedAmount > 0 ? 'inboundAmount' : 'outboundAmount'}}">{{ (tx.signedAmount / 100).toFixed(2)  }}</span>
     <span *ngIf="tx.ref.senderIdCode">{{ tx.counterPartyFirstName }}</span>
     <span *ngIf="tx.ref.senderIdCode">{{ tx.counterPartyLastName }}</span>
     <span *ngIf="tx.counterPartyIdCode" style="font-size: 85%; color:#aaa;">{{ tx.counterPartyIdCode }}</span>
-    <span class="item-note">{{ getFormattedDate(tx)}}</span>
     <p>Transfer: {{ tx.transactionHash }}</p>
     <p><span *ngIf="tx.ref.referenceText" class="item-text-wrap">{{ tx.ref.referenceText }}</span></p>
-    <p *ngIf="tx.fee" style="font-size: 70%;">fee: {{ (tx.fee / 100).toFixed(2) }}</p>
+    <div>
+       <div *ngIf="tx.fee" class="fee">fee: {{ (tx.fee / 100).toFixed(2) }}</div>
+       <div class="timeAgo">{{ getFormattedDate(tx)}}</div>
+    </div>
     </a>
 </ion-item>
   <ion-list-header [hidden]="pendingTransfers.length < 1">

@@ -116,6 +116,7 @@
         <div *ngIf="tab == 'USE'">
             <p>Everything is good!</p>
             <p *ngIf="idNumber">Your Estonian ID number is {{idNumber}}.<br></p>
+            <p [hidden]="!escrow">You had <b>{{ (escrowAmount / 100).toFixed(2) }} EUR</b> already waiting for you. It is being transferred to your new address.</p>
             <p [hidden]="!(pendingApprovals.length > 0)">It may take up to 3 minutes to have your access approved on Euro 2.0 blockchain.</p>
 	    <ion-list>
 	      <ion-item *ngFor="let approve of pendingApprovals">

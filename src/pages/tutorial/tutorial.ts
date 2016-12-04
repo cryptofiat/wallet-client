@@ -23,18 +23,18 @@ export class TutorialPage {
   constructor(public navCtrl: NavController, public menu: MenuController, public storage: Storage) {
     this.slides = [
       {
-        title: 'Welcome to <b>ICA</b>',
-        description: 'The <b>Ionic Conference App</b> is a practical preview of the Ionic Framework in action, and a demonstration of proper code use.',
+        title: 'Welcome to <b>EURO 2.0</b>',
+        description: 'The <b>Reference App</b> is a practical preview of the Estonian Euro 2.0 Infrastructure in action.',
         image: 'assets/img/ica-slidebox-img-1.png',
       },
       {
-        title: 'What is Ionic?',
-        description: '<b>Ionic Framework</b> is an open source SDK that enables developers to build high quality mobile apps with web technologies like HTML, CSS, and JavaScript.',
+        title: 'What is Euro 2.0?',
+        description: '<b>Euro 2.0 infrastructure</b> is an Ethereum blockchain based autonomous monetary system, where everyone can hold and move Euros without intermediators or cenral party.',
         image: 'assets/img/ica-slidebox-img-2.png',
       },
       {
-        title: 'What is Ionic Platform?',
-        description: 'The <b>Ionic Platform</b> is a cloud platform for managing and scaling Ionic apps with integrated services like push notifications, native builds, user auth, and live updating.',
+        title: 'How can I use it?',
+        description: 'You can join <b>EURO 2.0</b> with Estonian digital ID and you can send money to anyone, who holds an Estonian ID code (isikukood).',
         image: 'assets/img/ica-slidebox-img-3.png',
       }
     ];

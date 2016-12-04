@@ -10,6 +10,7 @@ export class SdkService {
     this.sdk =  new wallet.Application();
     this.sdk.attachStorage(window.localStorage);
     this.sdk.attachSessionStorage(window.sessionStorage);
+    //this.sdk.ID_SERVER = "http://localhost:8080/v1/";
   }
 
   initiated() : Boolean { //encryptedChallenge
@@ -47,6 +48,10 @@ export class SdkService {
 
   approveWithEstonianMobileId(address : string, phoneNumber : string, callback) : Promise<Object> {
     return this.sdk.approveWithEstonianMobileId(address.slice(2), phoneNumber, callback);
+  }
+
+  approveWithTest(address : string, idCode : string) : Promise<Object> {
+    return this.sdk.approveWithTest(address,idCode);
   }
 
   approveWithEstonianIdCard(address : string) : Promise<Object> {
@@ -141,35 +146,26 @@ export class SdkService {
   // Penging Transfers <<= this part should move to wallet-sdk
 
   storePendingTransfer(tx : Transfer){
-      let storedJson : string;
-      let storedTransfers : Array<Transfer>;
-      storedTransfers = this.getPendingTransfers();
-      if (storedTransfers == null ) {storedTransfers = []}
-      storedTransfers.push(tx);
-      storedJson = JSON.stringify(storedTransfers);
-      this.sdk._storage.setItem("pendingTransfers",storedJson);
+      return this.sdk.pending.storePendingTransfer(tx);
   }
 
   removePendingTransfer(txHash : string){
-      let storedJson : string;
-      let storedTransfers : Array<Transfer>;
-      storedTransfers = this.getPendingTransfers();
-      if (storedTransfers == null ) {storedTransfers = []}
-      storedJson = JSON.stringify(storedTransfers.filter( (tx) => tx.transactionHash != txHash ));
-      this.sdk._storage.setItem("pendingTransfers",storedJson);
+      return this.sdk.pending.removePendingTransfer(txHash);
   }
 
   getPendingTransfers() : Array<Transfer> {
-      let storedTransfers : Transfer[] = [];
-      let storedJson : string;
-      storedJson = this.sdk._storage.getItem("pendingTransfers");
-      storedTransfers = JSON.parse(storedJson);
-      return storedTransfers;
+      let temp : Array<Transfer> = this.sdk.pending.getPendingTransfers();
+      return temp;
+   /*   return temp.map( (tx) => {
+		if (!tx.signedAmount && tx.amount) {tx.signedAmount = tx.amount};
+		if (!tx.ref) {tx.ref = new TransferReference()};
+		return tx;
+	});
+   */
   }
 
   getPendingTotal() : number {
-      if (this.getPendingTransfers().length == 0) return 0;
-      return this.getPendingTransfers().map( (tx) => (tx.fee ? tx.fee : 0) + tx.amount).reduce((prev, curr) => prev + curr);
+      return this.sdk.pending.getPendingTotal();
   }
   // END Pending TX
 
@@ -196,4 +192,7 @@ export class SdkService {
   }
   // END Pending Approval
 
+  escrowToPending(str : any) : void {
+      return this.sdk.escrowToPending(str);
+  }
 }

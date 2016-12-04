@@ -99,4 +99,10 @@ export class TransfersPage {
       });
   };
 
+  testit() {
+    var arr = [{amount: 32, transactionHash:'0x223'},{amount:33, transactionHash: '0x444'}];
+    this.sdk.escrowToPending(arr);
+    this.refreshPending()
+
+  }
 }

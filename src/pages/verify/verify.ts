@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ToastController,NavController, NavParams } from 'ionic-angular';
+import { Events, ToastController,NavController, NavParams } from 'ionic-angular';
 import { SdkService } from "../../services/sdk-service";
 import { TransfersPage } from "../transfers/transfers";
 
@@ -20,8 +20,10 @@ export class VerifyPage {
   public mobileIdChallengeCode : string;
   public idNumber : string;
   public pendingApprovals : Array<string> = [];
+  public escrowAmount : number;
+  public escrow : boolean;
 
-  constructor(private toastCtrl: ToastController, private navCtrl: NavController, private sdk: SdkService, public params: NavParams) {
+  constructor(private events : Events, private toastCtrl: ToastController, private navCtrl: NavController, private sdk: SdkService, public params: NavParams) {
  	this.privKey = params.get("privKey");
 	if (this.privKey) {
 	   this.publicKey = this.sdk.privateToPublic(this.privKey);
@@ -33,6 +35,29 @@ export class VerifyPage {
 
   showTab(tab : string) {
       this.tab = tab;
+  }
+  testit() {
+      let testID : string = "38008030232";	
+      let testAddr : string = "0x833898875a12a3d61ef18dc3d2b475c7ca3a4a72";	
+      let pendingBefore : number = this.sdk.getPendingTotal();
+	console.log("starting to test");
+            this.sdk.approveWithTest(testAddr,testID).then( 
+              (res : {ownerId?: string, transactionHash?: string} ) => {
+              console.log("id  returned: ",res.ownerId, " with hash ", res.transactionHash); 
+              let pendingAfter : number = this.sdk.getPendingTotal();
+	      if  (pendingBefore < pendingAfter) {
+	          this.escrow = true;
+	          this.escrowAmount = pendingAfter - pendingBefore;
+	      }
+              this.idNumber = res.ownerId;
+              this.processing = false;
+       	      this.sdk.storeEstonianIdCode(res.ownerId);
+       	      this.sdk.storePendingApproval(res.transactionHash,this.publicAddress);
+              this.tab = 'USE';
+              this.events.publish("tx:newPending");
+	      this.refreshApprovals();
+	      this.pendingPolling();
+            });
   }
 
   verifyMobileId() {
