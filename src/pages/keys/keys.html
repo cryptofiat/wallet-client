@@ -21,6 +21,10 @@
           <br>
           <div class="input-label">Plaintext key in hex</div>
           <textarea rows="4" style="width:100%;">{{addr.privKeyHex}}</textarea>
+	  <!-- TODO: move contract address to config/api -->
+	  <div>
+          <a class="etherscan" href="https://etherscan.io/token/0xaf71e622792f47119411ce019f4ca1b8d993496e?a={{addr.address}}" target="_new">History on blockchain</a>
+	  </div>
 	  <button ion-button [hidden]="addr.approved" outline class="button button-positive button-block button-outline" (click)="verify(addr.privKey)">Verify again</button>
         </div>
       </ion-item>

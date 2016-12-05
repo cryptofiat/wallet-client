@@ -30,6 +30,8 @@ export class SendPage {
   err:string;
   idRecipient : { firstName?: string, lastName? : string} = {};
 
+  escrowCreate: boolean;
+
   constructor(
      private sdk: SdkService, 
      private navCtrl: NavController, 
@@ -94,6 +96,13 @@ export class SendPage {
                });
   }
 
+  generateNewEscrow() {
+    this.sdk.generateEscrow(this.send.eId).then( (json) => {
+        console.log("creating escrow", json);
+	this.idCodeChecker();
+    });
+  }
+
   idCodeChecker() {
           if (this.send.eId.length != 11) {
              this.idCodeCheck="";
@@ -101,18 +110,28 @@ export class SendPage {
           }
           this.idCodeCheck = "loading";
 
-          this.sdk.getAddressForEstonianIdCode(this.send.eId).then( (addr) => {
-            if (addr) {
-              this.idRecipient = {};
-              this.idCodeCheck = "yes" 
-              this.sdk.nameFromIdAsync(this.send.eId).then( (nameJson) => {
+          this.sdk.nameFromIdAsync(this.send.eId).then( (nameJson) => {
                 console.log("json responded for "+this.send.eId+": ",nameJson)
-                this.idRecipient = nameJson;
-                console.log("converteded: ",this.idRecipient)
-              });
-            } else {
-              this.idCodeCheck = "no" 
-            }
-          })
+              	this.idRecipient = nameJson;
+		if (nameJson && this.idRecipient.lastName) {
+                  this.sdk.getAddressForEstonianIdCode(this.send.eId,false).then( (addr) => {
+                     if (addr) {
+                        this.idCodeCheck = "yes" 
+                     } else {
+			this.escrowCreate = false;
+                        this.idCodeCheck = "escrow"; 
+                        this.sdk.getAddressForEstonianIdCode(this.send.eId, true).then( (escrowAddr) => {
+                          if (!escrowAddr) {
+			    this.escrowCreate = true;
+                          }
+                        });
+                     }
+                   });
+                } else {
+                  this.idRecipient = {};
+                  this.idCodeCheck = "no" 
+                }
+          });
+
    }
 }

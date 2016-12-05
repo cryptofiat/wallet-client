@@ -115,8 +115,12 @@ export class SdkService {
     return this.sdk.contractDataAsync()
   }
 
-  getAddressForEstonianIdCode(idCode) : Promise<Object> {
-    return this.sdk.getAddressForEstonianIdCode(idCode)
+  getAddressForEstonianIdCode(idCode : string, escrow : boolean) : Promise<Object> {
+    return this.sdk.getAddressForEstonianIdCode(idCode, escrow)
+  }
+
+  generateEscrow(idCode :string) : Promise<Object> {
+    return this.sdk.generateEscrow(idCode);
   }
 
   transferStatusAsync(transactionHash : string) : Promise<string> {

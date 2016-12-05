@@ -29,13 +29,33 @@
 	</ion-input>
 	    <ion-icon color="positive" name="clock" 
                *ngIf="idCodeCheck == 'loading'" item-right></ion-icon>
-	    <ion-icon balanced name="checkmark"
+	    <ion-icon color="secondary" name="checkmark"
                *ngIf="idCodeCheck == 'yes'" item-right></ion-icon>
-	    <ion-icon color="assertive" name="close"
+	    <ion-icon color="danger" name="close"
                *ngIf="idCodeCheck == 'no'" item-right></ion-icon>
+	    <ion-icon color="{{ (escrowCreate) ? 'danger' : 'secondary'}}" name="bowtie"
+               *ngIf="idCodeCheck == 'escrow'" item-right></ion-icon>
       </ion-item>
-      <ion-item [hidden]="idCodeCheck != 'yes'" item-content>
+      <ion-item [hidden]="idCodeCheck != 'yes' && idCodeCheck != 'escrow'" item-content>
          {{ idRecipient.firstName }} {{ idRecipient.lastName }}
+      </ion-item>
+      <ion-item text-wrap [hidden]="idCodeCheck != 'escrow'" item-content>
+	 <div class="escrowText">
+         {{ idRecipient.firstName }} has not used Euro2.0 yet. Your money will be waiting for their first login.
+	 </div>
+         <button [hidden]="!escrowCreate" (click)="generateNewEscrow()" ion-button padding-top outline block>
+            Yes, create escrow
+         </button>
+      </ion-item>
+      <ion-item [hidden]="idCodeCheck != 'escrow'" item-content>
+	 <div text-wrap class="escrowText">
+         {{ idRecipient.firstName }} has not used Euro2.0 yet. Your money will be waiting for their first login.
+	 </div>
+	 <ion-label stacked>Notification (optional)</ion-label>
+	 <ion-input placeholder="{{ idRecipient.firstName}}.{{idRecipient.lastName}}@eesti.ee" text-lowercase type="email"></ion-input>
+         <button [hidden]="!escrowCreate" (click)="generateNewEscrow()" ion-button padding-top outline block>
+            Yes, create escrow
+         </button>
       </ion-item>
     </ion-list>
     <ion-list *ngSwitchCase="'IBAN'">
@@ -73,7 +93,7 @@
       </div>
 
     <button ion-button 
-      [disabled]="txState == 'submitting' || (destination == 'eId' && idCodeCheck != 'yes')"
+      [disabled]="txState == 'submitting' || (destination == 'eId' && !(idCodeCheck == 'yes' || idCodeCheck == 'escrow' && !escrowCreate))"
       (click)="sendEuro()"
       block>
         Send
