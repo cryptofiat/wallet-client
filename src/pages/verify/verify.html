@@ -9,7 +9,7 @@
 
 <ion-content>
   <div padding>
-        <div *ngIf="tab == 'ACCOUNT_CREATED'">
+        <div [hidden]="!(tab == 'ACCOUNT_CREATED')">
             <div>
                 <p>Account created. Your new address is:</p>
                 <p><b>{{publicAddress}}</b></p>
@@ -39,7 +39,7 @@
                 </button>
             </form>
         </div>
-        <div *ngIf="tab == 'VERIFY_MOBILE'">
+        <div [hidden]="!(tab == 'VERIFY_MOBILE')">
             <div id="createVerifyUse-container1">
                 <form id="createVerifyUse-verifyMobile" class="list">
                     <p>
@@ -71,7 +71,7 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="tab == 'VERIFY_CARD'">
+        <div [hidden]="!(tab == 'VERIFY_CARD')">
             <div id="createVerifyUse-container1">
                 <form id="createVerifyUse-verifyCard" class="list" >
                     <p>
@@ -93,7 +93,7 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="tab == 'VERIFY_BANK'">
+        <div [hidden]="!(tab == 'VERIFY_BANK')">
             <div id="createVerifyUse-markdown3" style="color:#000000;">
                 <div class="card">
                    <div class="item item-text-wrap">
