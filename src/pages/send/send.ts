@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Events, NavController,ToastController } from 'ionic-angular';
 import { SdkService } from "../../services/sdk-service";
 import { Transfer } from "../../providers/transfer-data";
@@ -26,8 +27,11 @@ export class SendPage {
 
   pendingCheck: any;
   pendingRefresh: boolean;
+  generateRefresh: boolean;
+  generating: boolean;
   checkAction: any;
   err:string;
+  escrowTx:string;
   idRecipient : { firstName?: string, lastName? : string} = {};
 
   escrowCreate: boolean;
@@ -97,10 +101,36 @@ export class SendPage {
   }
 
   generateNewEscrow() {
-    this.sdk.generateEscrow(this.send.eId).then( (json) => {
+    this.sdk.generateEscrow(this.send.eId).then( (json : {transactionHash?:string}) => {
         console.log("creating escrow", json);
+        this.generating = true;
+        this.escrowTx = json.transactionHash;
+        this.pendingPolling(this.escrowTx);
 	this.idCodeChecker();
     });
+  }
+
+  pendingPolling(txHash : string) {
+      let pendingCheck = Observable.interval(10000).take(25);
+      let checkAction = pendingCheck.subscribe( (x) => {
+        if (!this.generating) {
+		checkAction.unsubscribe();
+		pendingCheck = undefined;
+        }
+	console.log("pending refresh try: ", x);
+	this.generateRefresh = true;
+        this.sdk.transferStatusAsync(txHash).then( (txCheckStatus : string) => {
+
+		    console.log("got back tx status: ",txCheckStatus);
+
+		    if (txCheckStatus != "PENDING") {
+                        this.generating=false;
+		        this.toastCtrl.create({message: 'Confirmed ' + txHash, duration: 5000});
+		    } else {
+		    }
+		    this.generateRefresh = false;
+	});
+      });
   }
 
   idCodeChecker() {
