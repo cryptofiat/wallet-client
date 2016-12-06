@@ -59,10 +59,19 @@ export class VerifyPage {
 	      this.pendingPolling();
             });
   }
+  checkPendingEscrowTransfers(pendingBeforeAmount : number) {
+              let pendingAfter : number = this.sdk.getPendingTotal();
+	      if  (pendingBeforeAmount < pendingAfter) {
+	          this.escrow = true;
+	          this.escrowAmount = pendingAfter - pendingBeforeAmount;
+	      }
+              this.events.publish("tx:newPending");
+  }
 
   verifyMobileId() {
             if(this.mobileId.phoneNumber){
 		this.processing = true;
+                let pendingBefore : number = this.sdk.getPendingTotal();
                 this.sdk.approveWithEstonianMobileId(this.publicAddress ,this.mobileId.phoneNumber,
                     (data) => {
                        this.mobileIdChallengeCode = data.mobileIdChallengeCode;
@@ -74,8 +83,11 @@ export class VerifyPage {
                     console.log("approve estonia mobile id had a response: " + this.idNumber);
 		    this.sdk.storeEstonianIdCode(this.idNumber);
        	            this.sdk.storePendingApproval(res.transactionHash,this.publicAddress);
+		    this.checkPendingEscrowTransfers(pendingBefore);
                     this.processing = false;
                     this.tab = 'USE';
+	      	    this.refreshApprovals();
+	            this.pendingPolling();
                 },(err) => {
 		    console.log("error: ",err)
                     this.processing = false;
@@ -88,6 +100,7 @@ export class VerifyPage {
 
   verifyCard() {
             console.log('verify by card');
+            let pendingBefore : number = this.sdk.getPendingTotal();
             this.processing = true;
 	    //TODO: change account-identity server call to accept '0x' in hex
             this.sdk.approveWithEstonianIdCard(this.publicAddress).then( 
@@ -100,6 +113,7 @@ export class VerifyPage {
               this.tab = 'USE';
 	      this.refreshApprovals();
 	      this.pendingPolling();
+	      this.checkPendingEscrowTransfers(pendingBefore);
             });
   }
 
