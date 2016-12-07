@@ -32,6 +32,10 @@ export class SignupPage {
     }
   }
 
+  clearPass() {
+      this.wrongPassword = false;
+  }
+
   isPasswordSet() : Boolean {
       return this.sdk.initiated();
   };

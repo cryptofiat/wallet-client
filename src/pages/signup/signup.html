@@ -7,20 +7,20 @@
 	</ion-navbar>
 </ion-header>
 
-<ion-content class="login-page">
+<ion-content padding class="login-page">
 
 	<div class="logo">
 		<img src="assets/img/appicon.svg" alt="Ionic Logo">
 	</div>
 
-        <div padding *ngIf="isPasswordSet()">
-            <p padding>Please unlock your wallet!</p>
+        <div [hidden]="!isPasswordSet()">
+            <p padding >Please unlock your wallet!</p>
             <form #enterPasswordForm="ngForm" novalidate>
 	    <ion-item>
                 <ion-label class="item item-input" id="enterPasswordForm-password">
                     <span class="input-label">Password:</span>
                 </ion-label>
-                    <ion-input type="password" name="passwordEnter" (input)="wrongPassword = false" [(ngModel)]="unlock.password" placeholder="********">
+                    <ion-input type="password" name="passwordEnter" (input)="clearPass()" [(ngModel)]="unlock.password" placeholder="********">
 		    </ion-input>
 	    </ion-item>
                 <button ion-button type="submit" id="enterPasswordButton" (click)="tryPassword(unlock.password)" class="button button-positive  button-block">
@@ -30,7 +30,7 @@
             <p [hidden]="!wrongPassword">Wrong password. Try again.
             </p>
         </div>
-        <div padding *ngIf="!isPasswordSet() && !createNewClicked">
+        <div [hidden]="isPasswordSet() || createNewClicked">
             <div>
                 EURO 2.0 is BOMB!
             </div>
@@ -42,7 +42,7 @@
 			[disabled]="true"
 			(click)="syncFromServer()" outline>Sync from device</button>
         </div>
-        <div padding *ngIf="!isPasswordSet() && createNewClicked">
+        <div [hidden]="isPasswordSet() || !createNewClicked">
             <div>
                 Enter a password to secure the keys on your device.
             </div>
