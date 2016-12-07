@@ -45,6 +45,7 @@ export class TransfersPage {
         this.sdk.balanceTotalAsync().then((amount) => {
             this.totalBalance = amount;
         });
+	this.refreshPending();
 
         this.sdk.transfersCleanedAsync().then((tx) => {
 	    if (tx) {
@@ -70,6 +71,8 @@ export class TransfersPage {
   private refreshPending() {
       this.pendingTransfers = this.sdk.getPendingTransfers();
       this.totalPending = this.sdk.getPendingTotal();
+      if (!this.pendingTransfers) { return };
+      console.log("starting to refresh  pending for amount: ", this.totalPending);
 
       let pendingCheck = Observable.interval(10000).take(25);
       let checkAction = pendingCheck.subscribe(
@@ -78,7 +81,7 @@ export class TransfersPage {
 		checkAction.unsubscribe();
 		pendingCheck = undefined;
         }
-	console.log("pending refresh try: ", x);
+	console.log("Pending refresh TX try: ", x);
         this.pendingTransfers.map( (pendingTx) => {
 	        pendingTx.pendingRefresh = true;
 		this.sdk.transferStatusAsync(pendingTx.transactionHash).then( (txCheckStatus : string) => {
@@ -88,11 +91,11 @@ export class TransfersPage {
 		    if (txCheckStatus != "PENDING") {
                         this.sdk.removePendingTransfer(pendingTx.transactionHash);
 		        this.toastCtrl.create({message: 'Confirmed ' + pendingTx.transactionHash, duration: 5000});
-                        this.pendingTransfers = this.sdk.getPendingTransfers();
-                        this.totalPending = this.sdk.getPendingTotal();
                         this.loadData();
 		    } else {
 		    }
+                    this.pendingTransfers = this.sdk.getPendingTransfers();
+                    this.totalPending = this.sdk.getPendingTotal();
 		    pendingTx.pendingRefresh = false;
 		});
 	});

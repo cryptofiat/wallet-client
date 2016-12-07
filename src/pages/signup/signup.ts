@@ -19,6 +19,7 @@ export class SignupPage {
   unlock: {password?: string, submitted?: boolean} = {};
   initStorage: {password?: string, passwordCheck?: string} = {};
   createNewClicked : boolean = false;
+  wrongPassword : boolean = false;
 
   constructor(public events: Events, public navCtrl: NavController, public userData: UserData, public sdk: SdkService) {}
 
@@ -35,6 +36,10 @@ export class SignupPage {
       return this.sdk.initiated();
   };
 
+  isUnlocked() : Boolean {
+      return this.sdk.isUnlocked();
+  };
+
   tryPassword(password : String) : Boolean {
             if (password && this.sdk.unlock(password)) {
 		console.log("successfully tried password");
@@ -43,7 +48,10 @@ export class SignupPage {
                 //this.navCtrl.push(TransfersPage);
 		return true;
                 //$state.go('navBar.transactions');
-            } else {return false;}
+            } else {
+		this.wrongPassword=true;
+	        return false;
+	    }
   };
 
   createPassword(form) : Boolean {

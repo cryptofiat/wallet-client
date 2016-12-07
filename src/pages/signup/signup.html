@@ -20,13 +20,15 @@
                 <ion-label class="item item-input" id="enterPasswordForm-password">
                     <span class="input-label">Password:</span>
                 </ion-label>
-                    <ion-input type="password" name="passwordEnter" [(ngModel)]="unlock.password" placeholder="********">
+                    <ion-input type="password" name="passwordEnter" (input)="wrongPassword = false" [(ngModel)]="unlock.password" placeholder="********">
 		    </ion-input>
 	    </ion-item>
                 <button ion-button type="submit" id="enterPasswordButton" (click)="tryPassword(unlock.password)" class="button button-positive  button-block">
                     Enter Password
                 </button>
             </form>
+            <p [hidden]="!wrongPassword">Wrong password. Try again.
+            </p>
         </div>
         <div padding *ngIf="!isPasswordSet() && !createNewClicked">
             <div>

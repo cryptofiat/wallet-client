@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { Events, ToastController,NavController, NavParams } from 'ionic-angular';
 import { SdkService } from "../../services/sdk-service";
 import { TransfersPage } from "../transfers/transfers";
+import { Transfer } from "../../providers/transfer-data";
 
 @Component({
   selector: 'page-verify',

@@ -23,7 +23,7 @@
    </p>
   </ion-card-content></ion-card>
 <ion-list>
-  <ion-list-header [hidden]="pendingTransfers.length < 1">
+  <ion-list-header [hidden]="!pendingTransfers">
      Pending
   </ion-list-header>
 <ion-item *ngFor="let tx of pendingTransfers">
@@ -42,7 +42,7 @@
     </div>
     </a>
 </ion-item>
-  <ion-list-header [hidden]="pendingTransfers.length < 1">
+  <ion-list-header [hidden]="!pendingTransfers">
     Completed 
   </ion-list-header>
 <ion-item *ngFor="let tx of transfers">

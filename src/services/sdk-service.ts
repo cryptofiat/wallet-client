@@ -169,6 +169,8 @@ export class SdkService {
   }
 
   getPendingTotal() : number {
+      if(this.getPendingTransfers() == null ) return 0;
+      if(this.getPendingTransfers().length == 0 ) return 0;
       return this.sdk.pending.getPendingTotal();
   }
   // END Pending TX
