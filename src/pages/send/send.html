@@ -1,0 +1,129 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Send to</ion-title>
+  </ion-navbar>
+  <ion-toolbar>
+	<ion-segment [(ngModel)]="destination">
+	   <ion-segment-button value="eId">
+		Person
+	   </ion-segment-button>
+	   <ion-segment-button value="IBAN">
+		Bank account
+	   </ion-segment-button>
+	</ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div padding>
+      <div [ngSwitch]="destination">
+    <ion-list *ngSwitchCase="'eId'">
+      <ion-item>
+        <ion-label stacked>Estonian ID</ion-label>
+        <ion-input placeholder="38003029210"
+           (input)="idCodeChecker()"
+           [(ngModel)]="send.eId">
+	</ion-input>
+	    <ion-icon color="positive" name="clock" 
+               *ngIf="idCodeCheck == 'loading'" item-right></ion-icon>
+	    <ion-icon color="secondary" name="checkmark"
+               *ngIf="idCodeCheck == 'yes'" item-right></ion-icon>
+	    <ion-icon color="danger" name="close"
+               *ngIf="idCodeCheck == 'no'" item-right></ion-icon>
+	    <ion-icon color="{{ (escrowCreate) ? 'danger' : 'secondary'}}" name="bowtie"
+               *ngIf="idCodeCheck == 'escrow'" item-right></ion-icon>
+      </ion-item>
+      <ion-item [hidden]="idCodeCheck != 'yes' && idCodeCheck != 'escrow'" item-content>
+         {{ idRecipient.firstName }} {{ idRecipient.lastName }}
+      </ion-item>
+      <ion-item text-wrap [hidden]="idCodeCheck != 'escrow'" item-content>
+	 <div class="escrowText">
+         {{ idRecipient.firstName }} has not used Euro2.0 yet. Your money will be waiting for their first login.
+	 </div>
+         <button [hidden]="!escrowCreate || generating" (click)="generateNewEscrow()" ion-button padding-top outline block>
+            Yes, create escrow
+         </button>
+         <div [hidden]="!generating" class="escrowText">
+           <ion-icon name="clock" item-left color="{{(generateRefresh) ? 'secondary' : ''}}"></ion-icon>
+	   <p>Approving address. It will take a minute.
+             <span [hidden]="!generateRefresh">... refresh ...</span>
+	   </p> 
+	   <a href="https://etherscan.io/tx/{{escrowTx}}" target="_new">{{escrowTx}}</a>
+	 </div>
+      </ion-item>
+      <ion-item [hidden]="idCodeCheck != 'escrow'" item-content>
+	 <ion-label stacked>Notification (optional)</ion-label>
+	 <ion-input placeholder="{{ idRecipient.firstName}}.{{idRecipient.lastName}}@eesti.ee" text-lowercase type="email"></ion-input>
+      </ion-item>
+    </ion-list>
+    <ion-list *ngSwitchCase="'IBAN'">
+      <ion-item>
+        <ion-label stacked>Recipient name</ion-label>
+        <ion-input placeholder="Mari Männik"
+           [(ngModel)]="send.recipientName">
+	</ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Euro account</ion-label>
+        <ion-input placeholder="EE0328202002233"
+           [(ngModel)]="send.toIban">
+	</ion-input>
+      </ion-item>
+    </ion-list>
+    </div>
+    <ion-list>
+      <ion-item>
+        <ion-label stacked>Amount</ion-label>
+        <ion-input placeholder="5.50"
+           [(ngModel)]="send.euroAmount">
+	</ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Reference</ion-label>
+        <ion-input placeholder="for milk"
+           [(ngModel)]="send.reference">
+	</ion-input>
+      </ion-item>
+    </ion-list>
+      <div class="fees" [ngSwitch]="destination">
+                <span *ngSwitchCase="'IBAN'"> Fee: {{bankFee}} EUR</span>
+                <span *ngSwitchCase="'eId'"> Fee: {{fee}} EUR</span>
+      </div>
+
+    <button ion-button 
+      [disabled]="txState == 'submitting' || (destination == 'eId' && !(idCodeCheck == 'yes' || (idCodeCheck == 'escrow' && !escrowCreate && !generating)))"
+      (click)="sendEuro()"
+      block>
+        Send
+    </button>
+
+    <ion-list>
+          <ion-item  *ngIf="txState == 'error'">
+            <ion-icon name="close" color="assertive" item-right></ion-icon>
+            Error: {{err}}
+          </ion-item>
+          <ion-item  *ngIf="txState == 'submitting'" item-right>
+            <ion-icon name="upload" color="positive"></ion-icon>
+            Sending
+          </ion-item>
+          <ion-item *ngIf="txState == 'submitted'">
+             <a class="item item-icon-left item-text-wrap" href="https://etherscan.io/tx/{{txHash}}" target="_blank">
+             <ion-icon name="clock" color="energized" item-right></ion-icon>
+	     Submitted <span color="energized" *ngIf="pendingRefresh">refreshing ..</span>
+             <h6>{{txHash}}</h6>
+             </a>
+          </ion-item>
+          <ion-item  *ngIf="txState == 'confirmed'">
+            <a class="item item-icon-left item-text-wrap" href="https://etherscan.io/tx/{{txHash}}">
+            <ion-icon name="checkmark" color="balanced"></ion-icon>
+	    Confirmed 
+            <h6>{{txHash}}</h6>
+            </a>
+          </ion-item>
+         
+    </ion-list>
+  </div>
+</ion-content>

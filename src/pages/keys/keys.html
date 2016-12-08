@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Keys</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div padding>
+    <ion-list>
+      <ion-item *ngFor="let addr of addresses">
+        <div (click)="addr.showKey = !(addr.showKey)">
+          <ion-icon [hidden]="addr.approved" name="clock" item-left></ion-icon>
+          <ion-icon [hidden]="!(addr.approved)" name="checkmark" item-left></ion-icon>
+          <span class="">{{ (addr.balance / 100).toFixed(2) }} EUR</span> 
+          <span class="address">{{ addr.address }}</span>
+	</div>
+	<div padding [hidden]="!addr.showKey">
+          <br>
+          <div class="input-label">Plaintext key in hex</div>
+          <textarea rows="4" style="width:100%;">{{addr.privKeyHex}}</textarea>
+	  <!-- TODO: move contract address to config/api -->
+	  <div>
+          <a class="etherscan" href="https://etherscan.io/token/0xaf71e622792f47119411ce019f4ca1b8d993496e?a={{addr.address}}" target="_new">History on blockchain</a>
+	  </div>
+	  <button ion-button [hidden]="addr.approved" outline class="button button-positive button-block button-outline" (click)="verify(addr.privKey)">Verify again</button>
+        </div>
+      </ion-item>
+    </ion-list>
+    <button ion-button block (click)="verify(null)">Generate New Key</button>
+    <button ion-button block (click)="showImportKey()">Import Key</button>
+    <button ion-button block  outline (click)="syncKey()" [disabled]="true" outline>Sync with server</button>
+
+  </div>
+</ion-content>

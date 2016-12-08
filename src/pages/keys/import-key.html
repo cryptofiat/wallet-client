@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Import</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div padding>
+    <ion-list>
+      <ion-item>
+        <ion-label stacked>Plaintext key</ion-label>
+        <ion-textarea rows="4" [(ngModel)]="privKey" placeholder="0x3c688e...">
+        </ion-textarea>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Confirm password</ion-label>
+        <ion-input type="password" [(ngModel)]="password" (input)="wrongpwd = false" placeholder="******"></ion-input>
+      </ion-item>
+    </ion-list>
+    <span assertive [hidden]="!(wrongpwd)">wrong password</span>
+    <button ion-button block (click)="importKey()">Import</button>
+  </div>
+</ion-content>
