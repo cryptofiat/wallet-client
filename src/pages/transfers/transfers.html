@@ -8,6 +8,9 @@
 </ion-header>
 
 <ion-content>
+  <ion-refresher (ionRefresh)="loadData($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <ion-card><ion-card-content>
    <p>
    <span>{{ owner.firstName }} {{ owner.lastName }}</span>
@@ -62,7 +65,7 @@
 </ion-list>
   <ion-list-header>
 {{transfers.length.toFixed(0)}} transfers 
-<a href="#" *ngIf="!(refreshing)" (click)="loadData()">refresh</a>
+<a href="#" *ngIf="!(refreshing)" (click)="loadData(null)">refresh</a>
 <span *ngIf="refreshing"> ... refreshing ... </span>
   </ion-list-header>
 
