@@ -1,10 +1,10 @@
 {
-  "name": "Cryptofiat wallet",
-  "short_name": "Cryptofiat wallet",
+  "name": "Euro 2.0 wallet",
+  "short_name": "Euro 2.0",
   "start_url": "index.html",
   "display": "standalone",
   "icons": [{
-    "src": "assets/img/appicon.png",
+    "src": "assets/img/key.png",
     "sizes": "512x512",
     "type": "image/png"
   }],

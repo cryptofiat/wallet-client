@@ -33,14 +33,14 @@ export class TransfersPage {
     public sdk: SdkService
   ) {
         this.idCode = this.sdk.getEstonianIdCode();
-        this.loadData()
+        this.loadData(null)
         this.sdk.nameFromIdAsync(this.idCode).then( (nameJson) => {
           this.owner = nameJson;
         });
         events.subscribe('tx:newPending', () => this.refreshPending());
   }
 
-  loadData() {
+  loadData(refresher) {
         this.refreshing = true;
         this.sdk.balanceTotalAsync().then((amount) => {
             this.totalBalance = amount;
@@ -52,6 +52,7 @@ export class TransfersPage {
                 this.transfers = tx.sort(function(a,b) { return a.timestamp-b.timestamp; } ).reverse();
             }
             this.refreshing = false;
+	    if (refresher) { refresher.complete(); }
         })
   }
 
@@ -91,7 +92,7 @@ export class TransfersPage {
 		    if (txCheckStatus != "PENDING") {
                         this.sdk.removePendingTransfer(pendingTx.transactionHash);
 		        this.toastCtrl.create({message: 'Confirmed ' + pendingTx.transactionHash, duration: 5000});
-                        this.loadData();
+                        this.loadData(null);
 		    } else {
 		    }
                     this.pendingTransfers = this.sdk.getPendingTransfers();
