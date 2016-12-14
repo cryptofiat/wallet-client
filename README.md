@@ -16,9 +16,9 @@ npm run ionic:serve
 
 ```
 ionic run android --release
-cd /platforms/android/build/outputs/apk
-jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore platforms/android/android-release.keystore android-release-unsigned.apk beta_app # password shared in slack
-zipalign -v 4 android-release-unsigned.apk android-release-signed-aligned.apk
+cd platforms/android/build/outputs/apk
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore ../../../android-release.keystore android-release-unsigned.apk beta_app # password shared in slack
+$ANDROID_HOME/build-tools/25.0.1/zipalign -v 4 android-release-unsigned.apk android-release-signed-aligned.apk
 ```
 
-3. Publish in google play store
+Publish in google play store
