@@ -65,6 +65,7 @@ export class SendPage {
                     pendingTx.amount = 100 * this.send.euroAmount;
                     pendingTx.signedAmount = - pendingTx.amount;
                     pendingTx.transactionHash = transactionHash;
+                    pendingTx.timestamp = + new Date();
                     if (this.send.eId) pendingTx.counterPartyIdCode = this.send.eId;
                     this.sdk.storePendingTransfer(pendingTx);
                     this.events.publish("tx:newPending");

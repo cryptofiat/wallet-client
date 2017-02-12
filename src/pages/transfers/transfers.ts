@@ -22,6 +22,7 @@ export class TransfersPage {
   idCode: string;
   totalBalance: number;
   totalPending : number;
+  enableRemoveButtonTime : number = Date.now() - 600000; // allow stop watching after 10min
   transfers : Transfer[] = [];
   pendingTransfers : Transfer[] = [];
   refreshing : boolean = false;
@@ -70,6 +71,7 @@ export class TransfersPage {
   }
 
   private refreshPending() {
+      this.enableRemoveButtonTime = Date.now() - 600000;
       this.pendingTransfers = this.sdk.getPendingTransfers();
       this.totalPending = this.sdk.getPendingTotal();
       if (!this.pendingTransfers) { return };
@@ -102,6 +104,11 @@ export class TransfersPage {
 	});
       });
   };
+
+  removePending(txhash : string) : void {
+      this.sdk.removePendingTransfer(txhash);
+      this.refreshPending();
+  }
 
   testit() {
     var arr = [{amount: 32, transactionHash:'0x223'},{amount:33, transactionHash: '0x444'}];

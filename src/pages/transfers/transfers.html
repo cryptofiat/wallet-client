@@ -21,12 +21,12 @@
    <p>
    Balance: <span>{{ (totalBalance / 100).toFixed(2)}}</span> EUR 
    </p>
-   <p [hidden]="!(totalPending > 0)">
+   <p [hidden]="totalPending == 0">
    Pending: <span>{{ (totalPending / 100).toFixed(2)}}</span> EUR 
    </p>
   </ion-card-content></ion-card>
 <ion-list>
-  <ion-list-header [hidden]="!pendingTransfers">
+  <ion-list-header [hidden]="!pendingTransfers || pendingTransfers.length < 1">
      Pending
   </ion-list-header>
 <ion-item *ngFor="let tx of pendingTransfers">
@@ -44,8 +44,11 @@
        <div class="timeAgo">{{ getFormattedDate(tx)}}</div>
     </div>
     </a>
+    <div [hidden]="tx.timestamp > enableRemoveButtonTime">
+        <button ion-button block outline margin (click)="removePending(tx.transactionHash)" class="danger" color="danger">Stop watching</button>
+    </div>
 </ion-item>
-  <ion-list-header [hidden]="!pendingTransfers">
+  <ion-list-header [hidden]="!pendingTransfers || pendingTransfers.length < 1">
     Completed 
   </ion-list-header>
 <ion-item *ngFor="let tx of transfers">
