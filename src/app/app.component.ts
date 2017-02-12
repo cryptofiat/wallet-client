@@ -4,6 +4,7 @@ import {Events, MenuController, Nav, Platform} from 'ionic-angular';
 import {Splashscreen, StatusBar} from 'ionic-native';
 
 import {SignupPage} from '../pages/signup/signup';
+import {SendPage} from '../pages/send/send';
 import {TransfersPage} from '../pages/transfers/transfers';
 
 import {SdkService} from '../services/sdk-service';
@@ -20,9 +21,9 @@ import {TutorialPage} from '../pages/tutorial/tutorial';
 export class CryptofiatWallet {
   @ViewChild(Nav) nav: Nav;
 
-  private howToPages = [
-    {title: 'Tutorial', component: TutorialPage, icon: 'hammer'},
+  public howToPages = [
     {title: 'Add from bank', component: TopupPage, icon: 'add-circle'},
+    {title: 'Tutorial', component: TutorialPage, icon: 'hammer'},
     {title: 'About', component: AboutPage, icon: 'information-circle'},
   ];
 
@@ -33,7 +34,7 @@ export class CryptofiatWallet {
 
   public loginState : string = "PRE_INIT";
 
-  private rootPage: any;
+  public rootPage: any;
 
   constructor(events: Events, private userData: UserData, private menu: MenuController, platform: Platform, private sdk : SdkService) {
 
@@ -68,7 +69,6 @@ export class CryptofiatWallet {
 
   private refreshMenu() {
     this.loginState = this.sdk.initiated() ?  (this.sdk.isUnlocked()) ? "IN" : "OUT" : "PRE_INIT";
-    console.log('state of login: ',this.loginState);
     this.menu.enable(true, 'loggedOutMenu');
     //this.menu.enable(!loggedIn, 'loggedOutMenu');
   }
@@ -83,6 +83,10 @@ export class CryptofiatWallet {
 
   public openSignUp() {
     this.nav.setRoot(SignupPage);
+  }
+
+  public openSend() {
+    this.nav.setRoot(SendPage);
   }
 
   public openTransfers() {

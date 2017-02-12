@@ -5,6 +5,8 @@ import { Events, ToastController, NavController } from 'ionic-angular';
 import { SdkService } from '../../services/sdk-service';
 import { Transfer } from '../../providers/transfer-data';
 import { SendPage } from '../send/send';
+import { TopupPage } from '../topup/topup';
+import { SprayerPage } from '../sprayer/sprayer';
 
 /*
   To learn how to use third party libs in an
@@ -59,6 +61,14 @@ export class TransfersPage {
 
   getFormattedDate(tx : Transfer) : string {
         return moment(tx.timestamp).fromNow();
+  }
+
+  toBankUpload() {
+    this.navCtrl.push(TopupPage);
+  }
+
+  toSprayer() {
+    this.navCtrl.push(SprayerPage);
   }
 
   toSendPage() {

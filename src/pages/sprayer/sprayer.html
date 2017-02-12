@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Add from bank</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div padding class="about-info">
+  <p>
+    Hi, I'm a generous robot. I was built to show people how cryptocurrency works.
+    I was given some money by humans and asked to share €1.00 with anyone, who has 
+    linked their ID on Euro 2.0.
+  </p>
+    <ion-list>
+      <ion-list-header>
+        **NOT IMPLEMENTED**
+      </ion-list-header>
+      <ion-item>
+        <ion-label stacked>Your Estonian ID</ion-label>
+        <ion-note item-right>
+          {{idCode}}
+        </ion-note>
+      </ion-item>
+    </ion-list>
+    <button margin ion-button block (click)="requestSpray()" [disabled]="true">Request €1.00</button>
+  </div>
+</ion-content>

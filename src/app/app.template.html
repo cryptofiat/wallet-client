@@ -14,7 +14,7 @@
       <button [hidden]="loginState != 'IN'" 
            ion-item menuClose (click)="openTransfers()">
         <ion-icon item-left name="home"></ion-icon>
-        Home
+        Transfers
       </button>
       <button [hidden]="loginState != 'PRE_INIT'" 
            ion-item menuClose (click)="openSignUp()">
@@ -27,6 +27,11 @@
         Log in
       </button>
       <button [hidden]="loginState != 'IN'"  
+	   ion-item menuClose (click)="openSend()">
+        <ion-icon item-left name="send"></ion-icon>
+        Send
+      </button>
+      <button [hidden]="loginState != 'IN'"  
 	   ion-item menuClose (click)="openKeys()">
         <ion-icon item-left name="key"></ion-icon>
         Keys
@@ -35,45 +40,6 @@
 	   ion-item menuClose (click)="logout()">
         <ion-icon item-left name="log-out"></ion-icon>
         Log out
-      </button>
-    </ion-list>
-
-    <ion-list>
-      <ion-list-header>
-        How to
-      </ion-list-header>
-      <button ion-item menuClose *ngFor="let p of howToPages" (click)="pushPage(p.component)">
-        <ion-icon item-left [name]="p.icon"></ion-icon>
-        {{p.title}}
-      </button>
-    </ion-list>
-  </ion-content>
-
-</ion-menu>
-
-<!-- logged in menu -->
-<ion-menu id="loggedInMenu" [content]="content">
-
-  <ion-header>
-    <ion-toolbar>
-      <ion-title>EURO 2.0</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <ion-content class="outer-content">
-    <ion-list>
-      <ion-list-header>
-        Account
-      </ion-list-header>
-
-      <button ion-item menuClose (click)="openKeysManagement()">
-        <ion-icon item-left name="cloud-upload"></ion-icon>
-        Keys
-      </button>
-
-      <button ion-item menuClose (click)="logout()">
-        <ion-icon item-left name="log-out"></ion-icon>
-        Logout
       </button>
     </ion-list>
 

@@ -25,6 +25,15 @@
    Pending: <span>{{ (totalPending / 100).toFixed(2)}}</span> EUR 
    </p>
   </ion-card-content></ion-card>
+  <ion-card margin-vertical [hidden]="idCode == 'inactive' || totalBalance > 0 || totalPending > 0" >
+	<ion-card-header>
+		No money yet?
+ 	</ion-card-header>
+	<ion-card-content>
+    Ask some from a friend, from a
+	<a (click)="toSprayer()">generous robot</a>
+	or <a (click)="toBankUpload()">load from your bank</a>.
+  </ion-card-content></ion-card>
 <ion-list>
   <ion-list-header [hidden]="!pendingTransfers || pendingTransfers.length < 1">
      Pending
@@ -57,7 +66,7 @@
     <span *ngIf="tx.ref.senderIdCode">{{ tx.counterPartyFirstName }}</span>
     <span *ngIf="tx.ref.senderIdCode">{{ tx.counterPartyLastName }}</span>
     <span *ngIf="tx.ref.senderIdCode" class="idCode" >{{ tx.counterPartyIdCode }}</span>
-    <p class="hash">{{ tx.counterPartyAddress }}</p>
+    <p [hidden]="true" class="hash">{{ tx.counterPartyAddress }}</p>
     <p><span *ngIf="tx.ref.referenceText" class="referenceText item-text-wrap">{{ tx.ref.referenceText }}</span></p>
     <div>
        <div *ngIf="tx.fee" class="fee">fee: {{ (tx.fee / 100).toFixed(2) }}</div>
