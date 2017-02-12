@@ -8,6 +8,9 @@
 </ion-header>
 
 <ion-content>
+  <ion-refresher (ionRefresh)="refreshKeys($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <div padding>
     <ion-list>
       <ion-item *ngFor="let addr of addresses">
@@ -25,7 +28,8 @@
 	  <div>
           <a class="etherscan" href="https://etherscan.io/token/0xaf71e622792f47119411ce019f4ca1b8d993496e?a={{addr.address}}" target="_new">History on blockchain</a>
 	  </div>
-	  <button ion-button [hidden]="addr.approved" outline class="button button-positive button-block button-outline" (click)="verify(addr.privKey)">Verify again</button>
+	  <button padding-vertical ion-button [hidden]="addr.approved" outline class="button button-positive button-block button-outline" (click)="verify(addr.privKey)">Verify again</button>
+	  <button padding-vertical ion-button [hidden]="addr.approved || addr.balance > 0" outline class="button danger button-block button-outline" color="danger" (click)="removeKey(addr.privKeyHex)">Delete key</button>
         </div>
       </ion-item>
     </ion-list>

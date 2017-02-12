@@ -10,7 +10,7 @@
 <ion-content>
         <div padding [hidden]="false">
             <div>
-                Enter a password to secure the keys on your device.
+               Sync password encrypted keys with your other devices.
             </div>
             <br>
             <br>
@@ -32,10 +32,10 @@
 		    <ion-icon color="danger" name="close"
 		       *ngIf="idCodeCheck == 'no'" item-right></ion-icon>
 	      </ion-item>
-	      <ion-item [hidden]="idCodeCheck != 'yes' && idCodeCheck != 'new'" item-content>
+	      <ion-item text-wrap [hidden]="idCodeCheck != 'yes' && idCodeCheck != 'new'" item-content>
 		 {{ fullName.firstName }} {{ fullName.lastName }}
 		 <p text-wrap [hidden]="idCodeCheck != 'new'">
-			You don't have existing backup. Your new backup will be created.
+			You don't have an existing backup. A new backup will be created.
 		</p>
 	      </ion-item>
 	    <ion-item>
@@ -58,9 +58,9 @@
                 <ion-label id="createLocal">
                     use same password and ID for this device
                 </ion-label>
-                    <ion-checkbox name="createLocal"
+                    <ion-toggle name="createLocal"
 			[(ngModel)]="syncParams.createLocal">
-		    </ion-checkbox>
+		    </ion-toggle>
 	    </ion-item>
                 <button margin-top ion-button type="submit" id="startSync" 
 			(click)="startSync()" 

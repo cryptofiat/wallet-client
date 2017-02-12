@@ -63,6 +63,11 @@ export class SyncPage {
 			this.sdk.storeEstonianIdCode(this.syncParams.idCode);
 			this.createLocalStatus = true;
 		};
+		if (!this.sdk.isUnlocked()) {
+			this.syncStatus = "failure";
+			this.errorMsg = "Device password not set.";
+			return;
+		}
 		this.sdk.backupSyncAll(this.syncParams.password, this.syncParams.idCode).then( (retval) => {
 
 			Object.assign(this.syncLog,retval);

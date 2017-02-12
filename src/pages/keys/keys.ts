@@ -22,15 +22,27 @@ export class KeysPage {
       private navCtrl: NavController,
       private sdk: SdkService
   ) {
+      this.refreshKeys(null);
+  }
+
+  refreshKeys(refresher) {
+
       this.sdk.contractDataAsync().then( (response) => {
 	  this.addresses = response;
+	  if (refresher) { refresher.complete(); }
       })
 
+  }
+
+  removeKey(privKeyHex : string) {
+      this.sdk.removeKey(privKeyHex);
+      this.refreshKeys(null);
   }
 
   verify(privKey : string) {
       this.navCtrl.push(VerifyPage, {privKey:privKey});
   }
+
 
   generateNewKey() {
       this.navCtrl.push(VerifyPage);

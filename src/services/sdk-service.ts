@@ -38,6 +38,10 @@ export class SdkService {
     return this.sdk.storeNewKey(newKeyHex);
   }
 
+  removeKey(privKeyHex : string) : void {
+    return this.sdk.removeKey(privKeyHex);
+  }
+
   privateToPublic(privKey : string) : Uint8Array { 
     return wallet.privateToPublic(privKey);
   }
