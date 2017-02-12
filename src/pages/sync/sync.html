@@ -1,0 +1,108 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Sync</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+        <div padding [hidden]="false">
+            <div>
+                Enter a password to secure the keys on your device.
+            </div>
+            <br>
+            <br>
+            <form #createPasswordForm="ngForm" novalidate>
+	      <ion-item>
+		<ion-label stacked>Estonian ID</ion-label>
+		<ion-input placeholder="38003029210"
+		   (input)="idCodeChecker()"
+		   ngControl="eId"
+		   name="eId"
+		   [(ngModel)]="syncParams.idCode">
+		</ion-input>
+		    <ion-icon color="positive" name="clock" 
+		       *ngIf="idCodeCheck == 'loading'" item-right></ion-icon>
+		    <ion-icon color="secondary" name="checkmark"
+		       *ngIf="idCodeCheck == 'yes'" item-right></ion-icon>
+		    <ion-icon color="secondary" name="add"
+		       *ngIf="idCodeCheck == 'new'" item-right></ion-icon>
+		    <ion-icon color="danger" name="close"
+		       *ngIf="idCodeCheck == 'no'" item-right></ion-icon>
+	      </ion-item>
+	      <ion-item [hidden]="idCodeCheck != 'yes' && idCodeCheck != 'new'" item-content>
+		 {{ fullName.firstName }} {{ fullName.lastName }}
+		 <p text-wrap [hidden]="idCodeCheck != 'new'">
+			You don't have existing backup. Your new backup will be created.
+		</p>
+	      </ion-item>
+	    <ion-item>
+                <ion-label stacked class="item item-input" id="createPasswordForm-password">
+                    <span class="input-label">Password</span>
+                </ion-label>
+                    <ion-input type="password" name="password" 
+			[(ngModel)]="syncParams.password" placeholder="********" required>
+		    </ion-input>
+	    </ion-item>
+	    <ion-item [hidden]="idCodeCheck != 'new'">
+                <ion-label stacked class="item item-input" id="createPasswordForm-password">
+                    <span class="input-label">Confirm</span>
+                </ion-label>
+                    <ion-input type="password" name="passwordConfirm" 
+			[(ngModel)]="syncParams.passwordConfirm" placeholder="********" required>
+		    </ion-input>
+	    </ion-item>
+	    <ion-item text-wrap [hidden]="isPasswordSet()">
+                <ion-label id="createLocal">
+                    use same password and ID for this device
+                </ion-label>
+                    <ion-checkbox name="createLocal"
+			[(ngModel)]="syncParams.createLocal">
+		    </ion-checkbox>
+	    </ion-item>
+                <button margin-top ion-button type="submit" id="startSync" 
+			(click)="startSync()" 
+			class="button button-positive  button-block"
+			[disabled]="(idCodeCheck != 'yes' && idCodeCheck != 'new') || syncStatus == 'waiting'">
+                    Sync
+                </button>
+            </form>
+	    <div padding>
+	        <ion-list [hidden]="syncStatus==''">
+			<ion-item *ngIf="syncStatus == 'failure'" text-wrap>
+				<ion-icon color="danger" name="close" 
+					item-right></ion-icon>
+					{{errorMsg}}
+			</ion-item>
+			<ion-item *ngIf="createLocalStatus" text-wrap>
+				<ion-icon color="secondary" name="checkmark" 
+					item-right></ion-icon>
+					Local encryption password set
+			</ion-item>
+			<ion-item *ngIf="syncStatus == 'success'" text-wrap>
+				<ion-icon color="secondary" name="checkmark" 
+					item-right></ion-icon>
+					Synchronisation complete
+			</ion-item>
+			<ion-list-header>
+			<ion-icon color="positive" name="clock" 
+		       		*ngIf="syncStatus == 'progress'" item-right></ion-icon>
+				Downloaded {{syncLog.downloaded_addresses.length}}
+			</ion-list-header>
+			<ion-item *ngFor="let syncLogItem of syncLog.downloaded_addresses">
+				{{syncLogItem}}
+			</ion-item>
+			<ion-list-header>
+			<ion-icon color="positive" name="clock" 
+		       		*ngIf="syncStatus == 'progress'" item-right></ion-icon>
+				Uploaded {{syncLog.uploaded_addresses.length}}
+			</ion-list-header>
+			<ion-item *ngFor="let syncLogItem of syncLog.uploaded_addresses">
+				{{syncLogItem}}
+			</ion-item>
+		</ion-list>
+	    </div>
+        </div>
+</ion-content>

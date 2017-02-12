@@ -12,6 +12,7 @@ import { SignupPage } from '../pages/signup/signup';
 import { TopupPage } from '../pages/topup/topup';
 import { TutorialPage } from '../pages/tutorial/tutorial';
 import { VerifyPage } from '../pages/verify/verify';
+import { SyncPage } from '../pages/sync/sync';
 import { KeysPage,ImportKeyPage } from '../pages/keys/keys';
 
 import { UserData } from '../providers/user-data';
@@ -29,6 +30,7 @@ import { SdkService } from '../services/sdk-service.ts';
     VerifyPage,
     SendPage,
     KeysPage,
+    SyncPage,
     ImportKeyPage,
     TopupPage
   ],
@@ -45,6 +47,7 @@ import { SdkService } from '../services/sdk-service.ts';
     VerifyPage,
     SendPage,
     KeysPage,
+    SyncPage,
     ImportKeyPage,
     TopupPage
   ],

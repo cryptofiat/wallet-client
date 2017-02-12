@@ -83,6 +83,10 @@ export class SdkService {
     return this.sdk.getEstonianIdCode()
   }
 
+  getSecret() : string { //retrieve password from sessionStorage
+    return this.sdk.getSecret()
+  }
+
   addresses() : Array<string> {
     return this.sdk.addresses()
   }
@@ -201,4 +205,18 @@ export class SdkService {
   escrowToPending(str : any) : void {
       return this.sdk.escrowToPending(str);
   }
+
+  hasBackup(idCode : string) : Promise<boolean> {
+      return this.sdk.backup.hasBackup(idCode);
+  }
+  backupInit(password:string, idCode : string) : Promise<boolean> {
+      return this.sdk.backup.setFirstPassword(password,idCode);
+  }
+  backupVerifyPassword(password:string, idCode : string) : Promise<boolean> {
+      return this.sdk.backup.verifyPassword(password,idCode);
+  }
+  backupSyncAll(password:string, idCode : string) : Promise<Object> {
+      return this.sdk.syncAllKeys(password,idCode);
+  }
+
 }

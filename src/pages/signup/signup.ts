@@ -4,6 +4,7 @@ import { Events, NavController } from 'ionic-angular';
 
 import { TransfersPage } from '../transfers/transfers';
 import { VerifyPage } from '../verify/verify';
+import { SyncPage } from '../sync/sync';
 import { UserData } from '../../providers/user-data';
 
 import { SdkService } from "../../services/sdk-service";
@@ -68,6 +69,10 @@ export class SignupPage {
 	}
 	return false;
   };
+
+  syncFromServer() {
+	    this.navCtrl.push(SyncPage);
+  }
 
   createNew(email : String) {
             if (email) {

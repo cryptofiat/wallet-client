@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { SdkService } from "../../services/sdk-service";
 import { VerifyPage } from "../verify/verify";
+import { SyncPage } from "../sync/sync";
 import { NavController, ToastController } from 'ionic-angular';
 
 @Component({
@@ -40,6 +41,7 @@ export class KeysPage {
   }
 
   syncKey() {
+      this.navCtrl.push(SyncPage);
 
   }
 }

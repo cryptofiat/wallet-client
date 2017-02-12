@@ -39,8 +39,8 @@
                 <button ion-button id="createButton" class="button button-positive  button-block" (click)="createNew()">Sign up</button>
                 <button ion-button id="syncButton" 
 			class="button button-positive button-block" 
-			[disabled]="true"
-			(click)="syncFromServer()" outline>Sync from device</button>
+			[disabled]="false"
+			(click)="syncFromServer()" outline>Sync from server</button>
         </div>
         <div [hidden]="isPasswordSet() || !createNewClicked">
             <div>
