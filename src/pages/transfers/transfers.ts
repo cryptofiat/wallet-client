@@ -14,10 +14,7 @@ import { SprayerPage } from '../sprayer/sprayer';
 */
 import moment from 'moment';
 
-@Component({
-  selector: 'page-transfers',
-  templateUrl: 'transfers.html'
-})
+@Component({ selector: 'page-transfers', templateUrl: 'transfers.html' })
 export class TransfersPage {
 
   owner : { firstName?: string, lastName? : string} = {};

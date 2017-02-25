@@ -12,10 +12,7 @@ export interface Slide {
   image: string;
 }
 
-@Component({
-  selector: 'page-tutorial',
-  templateUrl: 'tutorial.html'
-})
+@Component({ selector: 'page-tutorial', templateUrl: 'tutorial.html' })
 export class TutorialPage {
   slides: Slide[];
   showSkip = true;

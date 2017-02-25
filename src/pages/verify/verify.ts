@@ -3,12 +3,8 @@ import { Observable } from 'rxjs';
 import { Events, ToastController,NavController, NavParams } from 'ionic-angular';
 import { SdkService } from "../../services/sdk-service";
 import { TransfersPage } from "../transfers/transfers";
-import { Transfer } from "../../providers/transfer-data";
 
-@Component({
-  selector: 'page-verify',
-  templateUrl: 'verify.html'
-})
+@Component({ selector: 'page-verify', templateUrl: 'verify.html' })
 export class VerifyPage {
   tab : string = "ACCOUNT_CREATED";
   mobileId: {phoneNumber?: string} = {};

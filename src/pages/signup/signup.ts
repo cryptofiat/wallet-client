@@ -9,10 +9,7 @@ import { UserData } from '../../providers/user-data';
 
 import { SdkService } from "../../services/sdk-service";
 
-@Component({
-  selector: 'page-user',
-  templateUrl: 'signup.html'
-})
+@Component({ selector: 'page-user', templateUrl: 'signup.html' })
 export class SignupPage {
   signup: {username?: string, password?: string} = {};
   submitted = false;

@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
 import { SdkService } from "../../services/sdk-service";
 
-@Component({
-  selector: 'page-sync',
-  templateUrl: 'sync.html'
-})
+@Component({ selector: 'page-sync', templateUrl: 'sync.html' })
 export class SyncPage {
   syncParams: {password?: string, idCode?: string, passwordConfirm?: string, createLocal? :boolean} = {createLocal:true};
   fullName : { firstName?: string, lastName? : string} = {};

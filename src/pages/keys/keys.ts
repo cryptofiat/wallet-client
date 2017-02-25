@@ -4,10 +4,7 @@ import { VerifyPage } from "../verify/verify";
 import { SyncPage } from "../sync/sync";
 import { NavController, ToastController } from 'ionic-angular';
 
-@Component({
-  selector: 'page-keys',
-  templateUrl: 'keys.html'
-})
+@Component({ selector: 'page-keys', templateUrl: 'keys.html' })
 export class KeysPage {
 
   addresses : {

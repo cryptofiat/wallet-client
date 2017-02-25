@@ -1,10 +1,7 @@
 import {Component} from '@angular/core';
 import { SdkService } from '../../services/sdk-service';
 
-@Component({
-  selector: 'page-sprayer',
-  templateUrl: 'sprayer.html'
-})
+@Component({ selector: 'page-sprayer', templateUrl: 'sprayer.html' })
 export class SprayerPage {
   idCode: string;
   constructor(

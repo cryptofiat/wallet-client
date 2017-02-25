@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
 import { SdkService } from "../../services/sdk-service";
 
-@Component({
-  selector: 'page-about',
-  templateUrl: 'about.html'
-})
+@Component({ selector: 'page-about', templateUrl: 'about.html' })
 export class AboutPage {
   //private sdk : SdkService;
 

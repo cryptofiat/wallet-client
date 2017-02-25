@@ -46,7 +46,7 @@
 	 <div class="escrowText">
          {{ idRecipient.firstName }} has not used Euro2.0 yet. Your money will be waiting for their first login.
 	 </div>
-         <button [hidden]="!escrowCreate || generating" (click)="generateNewEscrow()" ion-button padding-top outline block>
+         <button [hidden]="!escrowCreate || generating" (click)="generateNewEscrow()" ion-button margin-top outline block>
             Yes, create escrow
          </button>
          <div [hidden]="!generating" class="escrowText">

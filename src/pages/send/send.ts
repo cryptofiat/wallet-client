@@ -4,10 +4,7 @@ import { Events, NavController,ToastController } from 'ionic-angular';
 import { SdkService } from "../../services/sdk-service";
 import { Transfer } from "../../providers/transfer-data";
 
-@Component({
-  selector: 'page-send',
-  templateUrl: 'send.html'
-})
+@Component({ selector: 'page-send', templateUrl: 'send.html' })
 export class SendPage {
 
   //TODO: should read them from wallet-server/fees through sdk
