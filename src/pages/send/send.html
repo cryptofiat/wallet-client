@@ -6,7 +6,7 @@
     <ion-title>Send to</ion-title>
   </ion-navbar>
   <ion-toolbar>
-	<ion-segment [(ngModel)]="destination">
+	<ion-segment [ngModelOptions]="{standalone: true}" [(ngModel)]="destination" (ionChange)="setFeeInput()">
 	   <ion-segment-button value="eId">
 		Person
 	   </ion-segment-button>
@@ -17,17 +17,17 @@
   </ion-toolbar>
 </ion-header>
 
+
 <ion-content>
+<form [formGroup]="sendForm" (ngSubmit)="sendEuro(form)" novalidate>
   <div padding>
-  <form #form="ngForm" (ngSubmit)="sendEuro(form)" novalidate>
       <div [ngSwitch]="destination">
     <ion-list *ngSwitchCase="'eId'">
       <ion-item>
         <ion-label stacked>Estonian ID</ion-label>
         <ion-input placeholder="38003029210"
            (input)="idCodeChecker()"
-	   ngControl="eId"
-	   name="eId"
+	   formControlName="eId"
            [(ngModel)]="send.eId">
 	</ion-input>
 	    <ion-icon color="positive" name="clock" 
@@ -38,6 +38,10 @@
                *ngIf="idCodeCheck == 'no'" item-right></ion-icon>
 	    <ion-icon color="{{ (escrowCreate) ? 'danger' : 'secondary'}}" name="bowtie"
                *ngIf="idCodeCheck == 'escrow'" item-right></ion-icon>
+        <button ion-button item-right outline type="button" (click)="showSearch()">
+		<ion-icon name="search"></ion-icon>
+		 Search 
+	</button>
       </ion-item>
       <ion-item [hidden]="idCodeCheck != 'yes' && idCodeCheck != 'escrow'" item-content>
          {{ idRecipient.firstName }} {{ idRecipient.lastName }}
@@ -66,16 +70,14 @@
       <ion-item>
         <ion-label stacked>Recipient name</ion-label>
         <ion-input placeholder="Mari Männik"
-	   ngControl="recipientName"
-	   name="recipientName"
+	   formControlName="recipientName"
            [(ngModel)]="send.recipientName">
 	</ion-input>
       </ion-item>
       <ion-item>
         <ion-label stacked>Euro account</ion-label>
         <ion-input placeholder="EE0328202002233"
-	   ngControl="toIban"
-	   name="recipientName"
+	   formControlName="toIban"
            [(ngModel)]="send.toIban">
 	</ion-input>
       </ion-item>
@@ -85,16 +87,19 @@
       <ion-item>
         <ion-label stacked>Amount</ion-label>
         <ion-input placeholder="5.50"
-	   ngControl="euroAmount"
-	   name="euroAmount"
+           type="number"
+           step=".01"
+	   formControlName="euroAmount"
            [(ngModel)]="send.euroAmount">
 	</ion-input>
+      </ion-item>
+      <ion-item class="errortext" [hidden]="!sendForm.controls.euroAmount.value || sendForm.controls.euroAmount.valid || sendForm.controls.euroAmount.pristine">
+	You can send up to € {{availableToSend - getSelectedFee()}}
       </ion-item>
       <ion-item>
         <ion-label stacked>Reference</ion-label>
         <ion-input placeholder="for milk"
-	   ngControl="reference"
-	   name="reference"
+	   formControlName="reference"
            [(ngModel)]="send.reference">
 	</ion-input>
       </ion-item>
@@ -105,7 +110,7 @@
       </div>
 
     <button ion-button 
-      [disabled]="txState == 'submitting' || (destination == 'eId' && !(idCodeCheck == 'yes' || (idCodeCheck == 'escrow' && !escrowCreate && !generating)))"
+      [disabled]="!sendForm.valid || txState == 'submitting' || (destination == 'eId' && !(idCodeCheck == 'yes' || (idCodeCheck == 'escrow' && !escrowCreate && !generating)))"
       type="submit"
       block>
         Send
@@ -136,6 +141,6 @@
           </ion-item>
          
     </ion-list>
-  </form>
   </div>
+</form>
 </ion-content>

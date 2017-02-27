@@ -1,8 +1,21 @@
 import { Component } from '@angular/core';
+import { Validators,  FormControl, FormBuilder, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Events, NavController,ToastController } from 'ionic-angular';
 import { SdkService } from "../../services/sdk-service";
 import { Transfer } from "../../providers/transfer-data";
+import { RecipientSearchPage } from "../search/search";
+
+// Murky way to do validation, because Validator doesn't have access to instance scope and "this."
+
+export function amountValidator(availableSpend : Promise<number>, fg : FormGroup) {
+  return (c : FormControl) : {[key: string]: any} => {
+    return availableSpend.then( (avail) => {
+	    return ( c.value * 100 + fg.controls.fee.value * 100 > avail) ? {'amount': 'Not enough to spend.'} : null;
+    });
+  }
+} 
+
 
 @Component({ selector: 'page-send', templateUrl: 'send.html' })
 export class SendPage {
@@ -21,7 +34,9 @@ export class SendPage {
       reference? : string,
       euroAmount? : number
   } = {};
+  private sendForm : FormGroup;
 
+  availableToSend : number = 0;
   pendingCheck: any;
   pendingRefresh: boolean;
   generateRefresh: boolean;
@@ -29,20 +44,51 @@ export class SendPage {
   checkAction: any;
   err:string;
   escrowTx:string;
-  idRecipient : { firstName?: string, lastName? : string} = {};
-
   escrowCreate: boolean;
+  idRecipient : { firstName?: string, lastName? : string} = {};
+  recipientSearch : {name:string,id:number}[] = [{name: "Kristo", id: 38008030265},{name: "Kriss", id:48608260297}];
 
   constructor(
      private sdk: SdkService, 
      private navCtrl: NavController, 
      private toastCtrl: ToastController,
+     private formBuilder: FormBuilder,
      private events: Events
   ) {
+    sdk.availableBalanceToSend().then( (n) => this.availableToSend = n/100);
+
+    this.sendForm = formBuilder.group({
+      eId: ['', Validators.compose([Validators.minLength(11),Validators.maxLength(11)])],
+      euroAmount: ['', Validators.compose([
+		Validators.required,
+		Validators.pattern('[0-9\.]+'), 
+		]),
+		],
+      reference: [''],
+      recipientName: [''],
+      toIban: [''],
+    //  destination: ['eId'],
+      fee: [''],
+    });
+    this.sendForm.controls.euroAmount.setAsyncValidators(amountValidator(sdk.availableBalanceToSend(),this.sendForm));
+  }
+
+  getSelectedFee() : number {
+    return (this.destination == 'eId') ? this.fee : this.bankFee;
+  }
+  setFeeInput() {
+    // murky workaround because don't know how to reference other form element values in template
+    this.sendForm.controls.fee.setValue(this.getSelectedFee());
+  }
+
+  getAvailableToSpend() : number {
+    console.log("avail: ",this.availableToSend);
+    return this.availableToSend;
   }
 
   sendEuro() {
     console.log('sending: ', this.send);
+    console.log('sending sendForm: ', this.sendForm.value);
 
             this.txState = "submitting";
             let promise : Promise<string>;
@@ -68,29 +114,6 @@ export class SendPage {
                     this.events.publish("tx:newPending");
 		    this.toastCtrl.create({message: 'submitted ' + transactionHash, duration: 3000});
 		    this.navCtrl.pop();
-/*
-		    this.pendingCheck = Observable.interval(5000).take(15);
-                    this.checkAction = this.pendingCheck.subscribe(
-                      (x) => {
-			console.log("refresh try: ", x);
-			this.pendingRefresh = true;
-			this.sdk.transferStatusAsync(this.txHash).then( (txCheckStatus : string) => {
-
-			    console.log("got back tx status: ",txCheckStatus);
-
-			    if (txCheckStatus != "PENDING") {
-			        console.log("should NOT be pending: ",txCheckStatus);
-				this.txState = "confirmed";
-				this.checkAction.unsubscribe();
-				this.pendingCheck = undefined;
-			    } else {
-			        console.log("should be pending: ",txCheckStatus);
-			    }
-		            console.log("checked tx status: ", txCheckStatus)
-			    this.pendingRefresh = false;
-			});
-		    });
-*/
                   }
                }, (err) => {
                     this.err = err; 
@@ -131,9 +154,22 @@ export class SendPage {
       });
   }
 
+  searchCallback = (idCode : string) => {
+    return new Promise( (resolve,reject) => {
+      this.sendForm.controls.eId.setValue(idCode);
+      this.idCodeChecker();
+      resolve();
+    });
+  }
+
+  showSearch() {
+    this.navCtrl.push(RecipientSearchPage, { callback: this.searchCallback });
+  }
+
   idCodeChecker() {
-          if (this.send.eId.length != 11) {
+          if (String(this.send.eId).length != 11) {
              this.idCodeCheck="";
+             console.log("inside check: ", this.send.eId, " length ", this.send.eId.length);
              return;
           }
           this.idCodeCheck = "loading";

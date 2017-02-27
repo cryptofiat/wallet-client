@@ -86,7 +86,7 @@ export class CryptofiatWallet {
   }
 
   public openSend() {
-    this.nav.setRoot(SendPage);
+    this.nav.push(SendPage);
   }
 
   public openTransfers() {

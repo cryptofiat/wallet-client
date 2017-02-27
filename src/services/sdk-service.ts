@@ -123,6 +123,13 @@ export class SdkService {
     return this.sdk.contractDataAsync()
   }
 
+  //Highest balance of an account, until support multi-send
+  availableBalanceToSend() : Promise<number> {
+    return this.contractDataAsync().then( (contracts : { balance : number }[]) => {
+      return Math.max.apply(Math, contracts.map( (c) => {return c.balance;}));
+    }); 
+  }
+
   getAddressForEstonianIdCode(idCode : string, escrow : boolean) : Promise<Object> {
     return this.sdk.getAddressForEstonianIdCode(idCode, escrow)
   }

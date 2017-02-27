@@ -15,6 +15,7 @@ import { VerifyPage } from '../pages/verify/verify';
 import { SyncPage } from '../pages/sync/sync';
 import { SprayerPage } from '../pages/sprayer/sprayer';
 import { KeysPage,ImportKeyPage } from '../pages/keys/keys';
+import { RecipientSearchPage } from "../pages/search/search";
 
 import { UserData } from '../providers/user-data';
 import { Transfer, TransferReference } from '../providers/transfer-data';
@@ -32,6 +33,7 @@ import { SdkService } from '../services/sdk-service.ts';
     SendPage,
     KeysPage,
     SyncPage,
+    RecipientSearchPage,
     SprayerPage,
     ImportKeyPage,
     TopupPage
@@ -48,6 +50,7 @@ import { SdkService } from '../services/sdk-service.ts';
     TutorialPage,
     VerifyPage,
     SendPage,
+    RecipientSearchPage,
     KeysPage,
     SyncPage,
     SprayerPage,

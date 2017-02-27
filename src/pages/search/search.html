@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-searchbar placeholder="Name or Estonian ID" [(ngModel)]="searchInput" (ionInput)="getItems($event)">
+    </ion-searchbar>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div padding>
+    <ion-list>
+      <ion-list-header>
+        Search results
+      </ion-list-header>
+      <ion-item [hidden]="results.length">
+	 No results [NOT IMPLEMENTED]
+      </ion-item>
+      <ion-item (click)="returnIdCode(el.idCode)" *ngFor="let el of results">
+        <ion-label>
+          {{el.firstName}}
+          {{el.lastName}}
+        </ion-label>
+        <ion-note item-right>
+          {{el.idCode}}
+        </ion-note>
+      </ion-item>
+      <ion-list-header>
+        Recent
+      </ion-list-header>
+      <ion-item [hidden]="recentRecipients.length">
+	 No recent recipients [NOT IMPLEMENTED]
+      </ion-item>
+      <ion-item (click)="returnIdCode(el.idCode)" *ngFor="let el of recentRecipients">
+        <ion-label>
+          {{el.firstName}}
+          {{el.lastName}}
+        </ion-label>
+        <ion-note item-right>
+          {{el.idCode}}
+        </ion-note>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>
