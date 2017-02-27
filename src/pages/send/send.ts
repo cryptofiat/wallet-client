@@ -46,7 +46,6 @@ export class SendPage {
   escrowTx:string;
   escrowCreate: boolean;
   idRecipient : { firstName?: string, lastName? : string} = {};
-  recipientSearch : {name:string,id:number}[] = [{name: "Kristo", id: 38008030265},{name: "Kriss", id:48608260297}];
 
   constructor(
      private sdk: SdkService, 
@@ -173,7 +172,6 @@ export class SendPage {
           this.idCodeCheck = "loading";
 
           this.sdk.nameFromIdAsync(this.send.eId).then( (nameJson) => {
-                console.log("json responded for "+this.send.eId+": ",nameJson)
               	this.idRecipient = nameJson;
 		if (nameJson && this.idRecipient.lastName) {
                   this.sdk.getAddressForEstonianIdCode(this.send.eId,false).then( (addr) => {

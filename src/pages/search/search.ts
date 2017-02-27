@@ -26,9 +26,10 @@ export class RecipientSearchPage {
   }
 
   loadRecent() {
-    this.sdk.nameFromIdAsync(38008030265).then( (json : Recipient) => {
-      this.recentRecipients.push(json)
-    });
+    this.recentRecipients = this.sdk.getRecentRecipients();
+  //  this.sdk.getRecentRecipients().map( (rcpt : Recipient) => { 
+  //    this.recentRecipients.push(rcpt);
+  //  });
   }
 
   getItems(ev : any) {

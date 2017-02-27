@@ -230,4 +230,16 @@ export class SdkService {
       return this.sdk.syncAllKeys(password,idCode);
   }
 
+  getRecentRecipients() : Array<any> {
+      var rcpts = this.sdk.getRecentRecipients();
+      let returnArray = [];
+      for (var r in rcpts) {
+        returnArray.push(rcpts[r]);
+      }
+      returnArray.sort( function(a,b) {
+        return b.time - a.time;
+      });
+      return returnArray;
+  }
+
 }
