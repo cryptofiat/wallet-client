@@ -152,6 +152,10 @@ export class SdkService {
     return this.sdk.referenceAsync(transactionHash)
   }
 
+  searchLdapAsync(searchString : string) : Promise<Object> {
+    return this.sdk.searchLdapAsync(searchString)
+  }
+
   nameFromIdAsync(idCode) : Promise<Object> {
     return this.sdk.nameFromIdAsync(idCode)
   }

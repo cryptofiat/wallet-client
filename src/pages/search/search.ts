@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import { Events, NavParams, NavController } from 'ionic-angular';
 import { SdkService } from "../../services/sdk-service";
+import moment from 'moment';
 
 class Recipient {
   idCode : string; 
@@ -14,6 +15,7 @@ export class RecipientSearchPage {
   private searchInput : string = "";
   recentRecipients : Recipient[] = [];
   results : Recipient[] = [];
+  searching : boolean = false;
   callback : any;
 
   constructor(
@@ -25,15 +27,23 @@ export class RecipientSearchPage {
     this.loadRecent();
   }
 
+  getFromNow(timestamp : number) : string {
+    return moment(timestamp).fromNow();
+  }
+
   loadRecent() {
     this.recentRecipients = this.sdk.getRecentRecipients();
-  //  this.sdk.getRecentRecipients().map( (rcpt : Recipient) => { 
-  //    this.recentRecipients.push(rcpt);
-  //  });
   }
 
   getItems(ev : any) {
-  //  this.loadRecent();
+    this.results = [];
+    if (this.searchInput.length > 2) {
+      this.searching = true;
+      this.sdk.searchLdapAsync(this.searchInput).then( (response: Array<Recipient>) => {
+        this.results = response;
+        this.searching = false;
+      });
+    }
   }
 
   ionViewWillEnter() {

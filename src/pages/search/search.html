@@ -13,9 +13,11 @@
     <ion-list>
       <ion-list-header>
         Search results
+      <ion-spinner item-right [hidden]="!searching"></ion-spinner>
       </ion-list-header>
-      <ion-item [hidden]="results.length">
-	 No results [NOT IMPLEMENTED]
+      <ion-item class="search-noresults" [hidden]="results.length">
+	 No results.
+	 <span [hidden]="searchInput.length > 2"> Enter at least 3 letters. </span>
       </ion-item>
       <ion-item (click)="returnIdCode(el.idCode)" *ngFor="let el of results">
         <ion-label>
@@ -39,6 +41,7 @@
         </ion-label>
         <ion-note item-right>
           {{el.idCode}}
+        <div class="timeAgo">{{ getFromNow(el.time) }}</div>
         </ion-note>
       </ion-item>
     </ion-list>
