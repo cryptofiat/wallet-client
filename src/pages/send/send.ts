@@ -82,7 +82,6 @@ export class SendPage {
   }
 
   getAvailableToSpend() : number {
-    console.log("avail: ",this.availableToSend);
     return this.availableToSend;
   }
 
@@ -156,7 +155,7 @@ export class SendPage {
 
   searchCallback = (idCode : string) => {
     return new Promise( (resolve,reject) => {
-      this.sendForm.controls.eId.setValue(idCode);
+      this.sendForm.controls.eId.setValue(String(idCode));
       this.idCodeChecker();
       resolve();
     });
@@ -169,7 +168,6 @@ export class SendPage {
   idCodeChecker() {
           if (String(this.send.eId).length != 11) {
              this.idCodeCheck="";
-             console.log("inside check: ", this.send.eId, " length ", this.send.eId.length);
              return;
           }
           this.idCodeCheck = "loading";
