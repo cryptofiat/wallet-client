@@ -1,6 +1,8 @@
 import * as wallet from 'cryptofiat-wallet';
 import { Injectable } from '@angular/core';
 import { Transfer, TransferReference } from '../providers/transfer-data';
+import { EscrowNotification } from '../providers/escrow-data';
+import { ContractInfoResponse, SendResponse, LdapResponse } from '../providers/response-data';
 
 @Injectable()
 export class SdkService {
@@ -70,9 +72,9 @@ export class SdkService {
     return this.sdk.balanceTotalAsync();
   }
 
-  sendToEstonianIdCode(idCode : string, amount : number, ref : string) : Promise<string> {
+  sendToEstonianIdCode(idCode : string, amount : number, ref : string) : Promise<SendResponse> {
     return this.sdk.sendToEstonianIdCode(idCode, amount, ref).then((response) => {
-       return response.id;
+       return response;
     });
   }
 
@@ -156,13 +158,13 @@ export class SdkService {
     return this.sdk.searchLdapAsync(searchString)
   }
 
-  nameFromIdAsync(idCode) : Promise<Object> {
+  nameFromIdAsync(idCode) : Promise<LdapResponse> {
     return this.sdk.nameFromIdAsync(idCode)
   }
 
-  findAccountAndSendToBank(toIBAN, amount, ref, recipientName) : Promise<string> {
+  findAccountAndSendToBank(toIBAN, amount, ref, recipientName) : Promise<SendResponse> {
     return this.sdk.findAccountAndSendToBank(toIBAN, amount, ref, recipientName).then( (response) => {
-        return response.id;
+        return response;
     });
   }
 
@@ -246,4 +248,14 @@ export class SdkService {
       return returnArray;
   }
 
+  contractInfo() : Promise<ContractInfoResponse> {
+      return this.sdk.contractInfo();
+  }
+
+  notifyEscrow(notification : EscrowNotification) : Promise<Object> {
+      return this.sdk.notifyEscrow(notification);
+  }
+  totalSupplyEtherscan(contract : string) : Promise<number> {
+      return this.sdk.totalSupplyEtherscan(contract);
+  }
 }

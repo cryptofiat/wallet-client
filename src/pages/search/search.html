@@ -3,7 +3,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-searchbar placeholder="Name or Estonian ID" [(ngModel)]="searchInput" (ionInput)="getItems($event)">
+    <ion-searchbar #searchbar placeholder="Name or Estonian ID" [(ngModel)]="searchInput" (ionInput)="getItems($event)">
     </ion-searchbar>
   </ion-navbar>
 </ion-header>

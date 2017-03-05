@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import { Events, NavParams, NavController } from 'ionic-angular';
+import {Component, ViewChild} from '@angular/core';
+import { Searchbar, Events, NavParams, NavController } from 'ionic-angular';
 import { SdkService } from "../../services/sdk-service";
 import moment from 'moment';
 
@@ -12,11 +12,14 @@ class Recipient {
 @Component({ selector: 'page-search', templateUrl: 'search.html' })
 export class RecipientSearchPage {
 
+  @ViewChild('searchbar') searchbar:Searchbar;
+
   private searchInput : string = "";
   recentRecipients : Recipient[] = [];
   results : Recipient[] = [];
   searching : boolean = false;
   callback : any;
+
 
   constructor(
      private sdk: SdkService, 
@@ -48,6 +51,12 @@ export class RecipientSearchPage {
 
   ionViewWillEnter() {
     this.callback = this.navParams.get("callback");
+  }
+
+  ionViewDidLoad() {
+    setTimeout( () => {
+      this.searchbar.setFocus();
+    }, 500);
   }
 
   returnIdCode(idCode : string) {

@@ -10,15 +10,17 @@ npm run ionic:serve
 ```
 ## Publish Android Native
 
-1. Increase the version number in config.xml 
+1. Increase the version number in `config.xml`
 
-2. Build APK
+2. Ask the team for `android-release.keystore` and passwords, save to `platforms/android/`
+
+3. Build APK
 
 ```
-ionic run android --release
+ionic build android --release
 cd platforms/android/build/outputs/apk
 jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore ../../../android-release.keystore android-release-unsigned.apk beta_app # password shared in slack
 $ANDROID_HOME/build-tools/25.0.1/zipalign -v 4 android-release-unsigned.apk android-release-signed-aligned.apk
 ```
 
-Publish in google play store
+4. Publish in google play store

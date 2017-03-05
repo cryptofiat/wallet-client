@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { Events, NavController,ToastController } from 'ionic-angular';
 import { SdkService } from "../../services/sdk-service";
 import { Transfer } from "../../providers/transfer-data";
+import { EscrowNotification } from '../../providers/escrow-data';
+import { SendResponse } from '../../providers/response-data';
 import { RecipientSearchPage } from "../search/search";
 
 // Murky way to do validation, because Validator doesn't have access to instance scope and "this."
@@ -33,6 +35,7 @@ export class SendPage {
       recipientName? : string,
       reference? : string,
       euroAmount? : number
+      escrowEmail? : string,
   } = {};
   private sendForm : FormGroup;
 
@@ -46,6 +49,7 @@ export class SendPage {
   escrowTx:string;
   escrowCreate: boolean;
   idRecipient : { firstName?: string, lastName? : string} = {};
+
 
   constructor(
      private sdk: SdkService, 
@@ -66,6 +70,7 @@ export class SendPage {
       reference: [''],
       recipientName: [''],
       toIban: [''],
+      escrowEmail: [''],
     //  destination: ['eId'],
       fee: [''],
     });
@@ -89,28 +94,41 @@ export class SendPage {
     console.log('sending sendForm: ', this.sendForm.value);
 
             this.txState = "submitting";
-            let promise : Promise<string>;
+            let promise : Promise<SendResponse>;
             if (this.destination == 'eId') {
                 promise = this.sdk.sendToEstonianIdCode(this.send.eId, 100 * this.send.euroAmount, this.send.reference)
 	    } else {
                 promise = this.sdk.findAccountAndSendToBank(this.send.toIban, 100 * this.send.euroAmount, this.send.reference, this.send.recipientName)
 	    }
-	    console.log("promise now is: ", promise);
 	    if (!promise) {return};
-            promise.then( (transactionHash : string) => {
-		  if (transactionHash) {
-                    this.txHash = transactionHash;
+            promise.then( (sendResponse) => {
+		  if (sendResponse.id) {
+                    this.txHash = sendResponse.id;
                     this.txState = "submitted";
 
                     let pendingTx : Transfer = new Transfer();
                     pendingTx.amount = 100 * this.send.euroAmount;
                     pendingTx.signedAmount = - pendingTx.amount;
-                    pendingTx.transactionHash = transactionHash;
+                    pendingTx.transactionHash = this.txHash;
+		    pendingTx.targetAccount = sendResponse.toAddress;
+		    pendingTx.sourceAccount = sendResponse.fromAddress;
                     pendingTx.timestamp = + new Date();
                     if (this.send.eId) pendingTx.counterPartyIdCode = this.send.eId;
                     this.sdk.storePendingTransfer(pendingTx);
                     this.events.publish("tx:newPending");
-		    this.toastCtrl.create({message: 'submitted ' + transactionHash, duration: 3000});
+		    this.toastCtrl.create({message: 'submitted ' + this.txHash, duration: 3000});
+
+		    if (this.idCodeCheck == "escrow") {
+		    	let notification : EscrowNotification = new EscrowNotification(pendingTx, this.send.escrowEmail);
+			notification.recipientLastName = this.idRecipient.lastName;
+			notification.recipientFirstName = this.idRecipient.firstName;
+       			this.sdk.nameFromIdAsync(this.sdk.getEstonianIdCode()).then( (nameJson) => {
+			  notification.senderLastName = nameJson.lastName;
+			  notification.senderFirstName = nameJson.firstName;
+		    	  this.sdk.notifyEscrow(notification);
+        		});
+		    }
+
 		    this.navCtrl.pop();
                   }
                }, (err) => {
@@ -147,8 +165,8 @@ export class SendPage {
 		        this.toastCtrl.create({message: 'Confirmed ' + txHash, duration: 5000});
 		    } else {
 		    }
-		    this.generateRefresh = false;
-	});
+		    setTimeout( () => this.generateRefresh = false , 200);
+	}, () => this.generateRefresh = false);
       });
   }
 

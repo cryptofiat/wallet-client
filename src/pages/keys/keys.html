@@ -28,13 +28,13 @@
 	  <div>
           <a class="etherscan" href="https://etherscan.io/token/0xaf71e622792f47119411ce019f4ca1b8d993496e?a={{addr.address}}" target="_new">History on blockchain</a>
 	  </div>
-	  <button padding-vertical ion-button [hidden]="addr.approved" outline class="button button-positive button-block button-outline" (click)="verify(addr.privKey)">Verify again</button>
+	  <button padding-vertical ion-button [hidden]="addr.approved" outline class="button secondary button-positive button-block button-outline" (click)="verify(addr.privKey)">Verify again</button>
 	  <button padding-vertical ion-button [hidden]="addr.approved || addr.balance > 0" outline class="button danger button-block button-outline" color="danger" (click)="removeKey(addr.privKeyHex)">Delete key</button>
         </div>
       </ion-item>
     </ion-list>
-    <button ion-button block (click)="verify(null)">Generate New Key</button>
-    <button ion-button block (click)="showImportKey()">Import Key</button>
+    <button ion-button block outline (click)="verify(null)">Generate New Key</button>
+    <button ion-button block outline (click)="showImportKey()">Import Key</button>
     <button ion-button block  outline (click)="syncKey()" [disabled]="false" outline>Sync with server</button>
 
   </div>

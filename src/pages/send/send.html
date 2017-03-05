@@ -36,7 +36,7 @@
                *ngIf="idCodeCheck == 'yes'" item-right></ion-icon>
 	    <ion-icon color="danger" name="close"
                *ngIf="idCodeCheck == 'no'" item-right></ion-icon>
-	    <ion-icon color="{{ (escrowCreate) ? 'danger' : 'secondary'}}" name="bowtie"
+	    <ion-icon color="{{ (escrowCreate) ? 'danger' : 'secondary'}}" name="lock"
                *ngIf="idCodeCheck == 'escrow'" item-right></ion-icon>
         <button ion-button item-right outline type="button" (click)="showSearch()">
 		<ion-icon name="search"></ion-icon>
@@ -50,20 +50,21 @@
 	 <div class="escrowText">
          {{ idRecipient.firstName }} has not used Euro2.0 yet. Your money will be waiting for their first login.
 	 </div>
-         <button [hidden]="!escrowCreate || generating" (click)="generateNewEscrow()" ion-button margin-top outline block>
+         <button type="button" [hidden]="!escrowCreate || generating" (click)="generateNewEscrow()" ion-button margin-top outline block>
             Yes, create escrow
          </button>
-         <div [hidden]="!generating" class="escrowText">
+      </ion-item>
+      <a ion-item [hidden]="!generating" href="https://etherscan.io/tx/{{escrowTx}}" target="_new" class="escrowText">
            <ion-icon name="clock" item-left color="{{(generateRefresh) ? 'secondary' : ''}}"></ion-icon>
 	   <p>Approving address. It will take a minute.
              <span [hidden]="!generateRefresh">... refresh ...</span>
-	   </p> 
-	   <a href="https://etherscan.io/tx/{{escrowTx}}" target="_new">{{escrowTx}}</a>
-	 </div>
-      </ion-item>
-      <ion-item [hidden]="idCodeCheck != 'escrow'" item-content>
+	   </p>
+	   {{escrowTx}}
+      </a>
+      <ion-item [hidden]="idCodeCheck != 'escrow' || escrowCreate || generating" item-content>
 	 <ion-label stacked>Notification (optional)</ion-label>
-	 <ion-input placeholder="{{ idRecipient.firstName}}.{{idRecipient.lastName}}@eesti.ee" text-lowercase type="email"></ion-input>
+	 <ion-input placeholder="{{ idRecipient.firstName}}.{{idRecipient.lastName}}@eesti.ee" text-lowercase type="email" 
+		formControlName="escrowEmail" [(ngModel)]="send.escrowEmail"></ion-input>
       </ion-item>
     </ion-list>
     <ion-list *ngSwitchCase="'IBAN'">

@@ -11,7 +11,7 @@
   <div padding>
         <div [hidden]="!(tab == 'ACCOUNT_CREATED')">
             <div>
-                <p>Account created. Your new address is:</p>
+                <p>A new key has been generated on this device with the address:</p>
                 <p><b>{{publicAddress}}</b></p>
                 <p>You need to link your Estonian ID to start receiving money to this address.</p>
            </div>
@@ -33,6 +33,7 @@
 			ion-button
                         type="submit"
 			[disabled]="true"
+			[hidden]="true"
                         class="button button-positive button-block"
                         (click)="showTab('VERIFY_BANK')">
                     Bank Transfer
@@ -41,7 +42,7 @@
         </div>
         <div [hidden]="!(tab == 'VERIFY_MOBILE')">
             <div id="createVerifyUse-container1">
-                <form id="createVerifyUse-verifyMobile" class="list">
+                <form [formGroup]="mobiilIdForm" id="createVerifyUse-verifyMobile" class="list">
                     <p>
                         Verify with Mobiil-ID. 
                     </p>
@@ -49,12 +50,13 @@
                     <ion-label stacked class="item item-input" id="createVerifyUse-input3">
                         <span class="input-label">Phone</span>
                     </ion-label>
-                        <ion-input type="tel" name="phone" [(ngModel)]="mobileId.phoneNumber" placeholder="+372 123 4567">
+                        <ion-input type="tel" name="phone" formControlName="phoneNumber" [(ngModel)]="mobileId.phoneNumber" required placeholder="+372 5123 456">
 			</ion-input>
 		    </ion-item>
                     <button ion-button id="createVerifyUse-button6" 
+			margin-vertical
 			class="button button-positive  button-block" 
-			[disabled]="processing"
+			[disabled]="!mobiilIdForm.valid || processing"
 			(click)="verifyMobileId()">
 			Verify
 		    </button>
@@ -74,22 +76,27 @@
             <div id="createVerifyUse-container1">
                 <form id="createVerifyUse-verifyCard" class="list" >
                     <p>
-                        Verify with Estonian ID Card. Have the card ready in the reader.
-			Visit <a href="https://id.euro2.ee/auth/idCard" target="_new">https</a> to test the ID card.
+                        Verify with Estonian ID card. Have the card ready in the reader.
+			Visit <a href="https://www.sk.ee/id/index2.php" target="_new">sk.ee</a> to test the ID card setup.
                     </p>
                     <button id="createVerifyUse-button" 
 			ion-button
+			margin-vertical
 			[disabled]="processing" 
 			class="button button-positive  button-block"
 			(click)="verifyCard()">Verify</button>
                 </form>
                 <a id="createVerifyUse-button7" href="#" (click)="showTab('ACCOUNT_CREATED')">Other options</a>
-                <div class="card" *ngIf="processing">
-                   <div class="item item-icon-left item-text-wrap">
-                   <i class="icon ion-clock"></i>
-                    Sent request, waiting for response ...
-                   </div>
-                </div>
+                <ion-card margin-vertical *ngIf="processing">
+		   <ion-item text-wrap [hidden]="iderror">
+                     <ion-icon item-left name="clock"></ion-icon>
+                     Sent request, waiting for response ...
+                   </ion-item>
+		   <ion-item text-wrap [hidden]="!iderror">
+                     <ion-icon item-left name="close" color="danger"></ion-icon>
+			Error, check your card setup ... {{iderror?.status}} {{iderror?.exception}} {{iderror?.message}}
+		   </ion-item>
+                </ion-card>
             </div>
         </div>
         <div [hidden]="!(tab == 'VERIFY_BANK')">
@@ -113,20 +120,22 @@
             </div>
         </div>
         <div *ngIf="tab == 'USE'">
-            <p>Everything is good!</p>
+            <p>Everything is good, {{owner?.firstName}}!</p>
             <p *ngIf="idNumber">Your Estonian ID number is {{idNumber}}.<br></p>
             <p [hidden]="!escrow">You had <b>{{ (escrowAmount / 100).toFixed(2) }} EUR</b> already waiting for you. It is being transferred to your new address.</p>
             <p [hidden]="!(pendingApprovals.length > 0)">It may take up to 3 minutes to have your access approved on Euro 2.0 blockchain.</p>
 	    <ion-list>
-	      <ion-item *ngFor="let approve of pendingApprovals">
+	      <a href="https://etherscan.io/tx/{{getPendingApproval(approve)}}" target=_new 
+		 ion-item *ngFor="let approve of pendingApprovals">
 	        <ion-icon [hidden]="refreshing" name="clock" item-left> </ion-icon>
-	        <ion-icon [hidden]="!refreshing" name="refresh" item-left> </ion-icon>
-		<a href="https://etherscan.io/tx/{{getPendingApproval(approve)}}" target=_new>{{approve}}</a>
-	      </ion-item>
+	        <ion-icon [hidden]="!refreshing" name="refresh" color="secondary" item-left> </ion-icon>
+		{{approve}}
+	      </a>
 	    </ion-list>
             <form id="createVerifyUse-finish">
                 <button ion-button id="createVerifyUse-finishButton" 
 		   (click)="finish()"
+		   [disabled]="pendingApprovals.length"
 		   class="button button-positive  button-block">
 		   Start
   	        </button>

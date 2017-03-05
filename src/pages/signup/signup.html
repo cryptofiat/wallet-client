@@ -9,12 +9,12 @@
 
 <ion-content padding class="login-page">
 
-	<div class="logo">
+	<div margin-vertical class="logo">
 		<img src="assets/img/key.svg" alt="Euro 2.0 Logo">
 	</div>
 
         <div [hidden]="!isPasswordSet()">
-            <p padding >Please unlock your wallet!</p>
+            <p>Please unlock your wallet!</p>
             <form #enterPasswordForm="ngForm" novalidate>
 	    <ion-item>
                 <ion-label class="item item-input" id="enterPasswordForm-password">
@@ -23,16 +23,19 @@
                     <ion-input type="password" name="passwordEnter" (input)="clearPass()" [(ngModel)]="unlock.password" placeholder="********">
 		    </ion-input>
 	    </ion-item>
-                <button ion-button type="submit" id="enterPasswordButton" (click)="tryPassword(unlock.password)" class="button button-positive  button-block">
+                <button margin-vertical ion-button type="submit" id="enterPasswordButton" (click)="tryPassword(unlock.password)" class="button button-positive  button-block">
                     Enter Password
                 </button>
             </form>
-            <p [hidden]="!wrongPassword">Wrong password. Try again.
+            <p class="danger" [hidden]="!wrongPassword">Wrong password. Try again.
             </p>
         </div>
         <div [hidden]="isPasswordSet() || createNewClicked">
             <div padding-vertical>
-                EURO 2.0 is BOMB!
+		<p>
+                 Welcome.
+                </p>
+                 Create a new key if you have not used Euro 2.0 before, otherwise sync your keys from another device.
             </div>
             <br>
             <br>
@@ -44,16 +47,16 @@
         </div>
         <div [hidden]="isPasswordSet() || !createNewClicked">
             <div>
-                Enter a password to secure the keys on your device.
+                Enter a password to encrypt the private keys stored on your device.
             </div>
             <br>
             <br>
-            <form #createPasswordForm="ngForm" novalidate>
+            <form #createPasswordForm="ngForm" novalidate [formGroup]="newPassword" (ngSubmit)="createPassword(initStorage.password)">
 	    <ion-item>
                 <ion-label fixed class="item item-input" id="createPasswordForm-password">
                     <span class="input-label">Password</span>
                 </ion-label>
-                    <ion-input type="password" name="passwordEnter" 
+                    <ion-input type="password" name="passwordEnter" formControlName="passwordEnter"
 			[(ngModel)]="initStorage.password" placeholder="********" required>
 		    </ion-input>
 	    </ion-item>
@@ -61,11 +64,11 @@
                 <ion-label fixed class="item item-input" id="createPasswordForm-password">
                     <span class="input-label">Confirm password</span>
                 </ion-label>
-                    <ion-input type="password" name="passwordConfirm" 
+                    <ion-input type="password" name="passwordConfirm" formControlName="passwordConfirm"
 			[(ngModel)]="initStorage.passwordCheck" placeholder="********" required>
 		    </ion-input>
 	    </ion-item>
-                <button ion-button type="submit" id="enterPasswordButton" (click)="createPassword(initStorage.password)" class="button button-positive  button-block">
+                <button margin-vertical ion-button type="submit" [disabled]="!newPassword.valid" id="enterPasswordButton" class="button button-positive  button-block">
                     Create Password
                 </button>
             </form>

@@ -15,18 +15,18 @@
       <ion-list-header>
         Statistics
       </ion-list-header>
-      <ion-item>
+      <a ion-item href="https://etherscan.io/token/{{contractInfo.reserveBank}}" target="_new">
         <ion-label>Supply</ion-label>
         <ion-note item-right>
-          30 EUR
+          {{totalSupply / 100}} EUR
         </ion-note>
-      </ion-item>
-      <ion-item>
+      </a>
+      <a ion-item href="https://etherscan.io/txs?a={{contractInfo.delegation}}" target="_new">
         <ion-label>Transactions</ion-label>
         <ion-note item-right>
-          132
+          [tbc] 132
         </ion-note>
-      </ion-item>
+      </a>
       <ion-item>
         <ion-label>Fees within Euro 2.0</ion-label>
         <ion-note item-right>

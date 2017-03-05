@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Validators,  FormControl, FormBuilder, FormGroup } from '@angular/forms';
 
 import { Events, NavController } from 'ionic-angular';
 
@@ -18,8 +19,39 @@ export class SignupPage {
   initStorage: {password?: string, passwordCheck?: string} = {};
   createNewClicked : boolean = false;
   wrongPassword : boolean = false;
+  private newPassword : FormGroup;
 
-  constructor(public events: Events, public navCtrl: NavController, public userData: UserData, public sdk: SdkService) {}
+  constructor(
+	public events: Events, 
+	public navCtrl: NavController, 
+        private formBuilder: FormBuilder,
+	public userData: UserData, public sdk: SdkService) {
+
+    this.newPassword = formBuilder.group({
+      passwordEnter: ['', Validators.minLength(1)],
+      passwordConfirm: ['', Validators.minLength(1)],
+    }, {validator: this.areEqual} );
+  }
+
+  areEqual(group : FormGroup) {
+	  var valid = true;
+	  var previous = undefined;
+	  var cname;
+
+	  for (cname in group.controls) {
+	    if (previous === undefined ) { previous = group.controls[cname].value; };
+	    if (previous != group.controls[cname].value) { valid = false; };
+	  }
+
+	  if (valid) {
+	    return null;
+	  }
+
+	  return {
+	    areEqual: "Passwords are not equal."
+	  };
+
+  }
 
   onSignup(form) {
     this.submitted = true;
