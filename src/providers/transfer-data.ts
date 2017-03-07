@@ -33,6 +33,8 @@ export class TransferReference {
   public senderIdCode : string; //382008063492
   public receiverIdCode : string; //38008063492
   public referenceText : string; // e.g. for milk
+  public receiverIBAN : string; // EE9823213113122
+  public recipientName : string; // Marju Männik 
 
 
   constructor() {

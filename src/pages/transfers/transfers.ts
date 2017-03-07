@@ -96,8 +96,6 @@ export class TransfersPage {
 	        pendingTx.pendingRefresh = true;
 		this.sdk.transferStatusAsync(pendingTx.transactionHash).then( (txCheckStatus : string) => {
 
-		    console.log("got back tx status: ",txCheckStatus);
-
 		    if (txCheckStatus != "PENDING") {
                         this.sdk.removePendingTransfer(pendingTx.transactionHash);
 		        this.toastCtrl.create({message: 'Confirmed ' + pendingTx.transactionHash, duration: 5000});
@@ -106,7 +104,9 @@ export class TransfersPage {
 		    }
                     this.pendingTransfers = this.sdk.getPendingTransfers();
                     this.totalPending = this.sdk.getPendingTotal();
-		    pendingTx.pendingRefresh = false;
+		    setTimeout( () => {
+			pendingTx.pendingRefresh = false;
+		    }, 500);
 		});
 	});
       });

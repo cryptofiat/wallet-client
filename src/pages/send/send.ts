@@ -13,7 +13,7 @@ import { RecipientSearchPage } from "../search/search";
 export function amountValidator(availableSpend : Promise<number>, fg : FormGroup) {
   return (c : FormControl) : {[key: string]: any} => {
     return availableSpend.then( (avail) => {
-	    return ( c.value * 100 + fg.controls.fee.value * 100 > avail) ? {'amount': 'Not enough to spend.'} : null;
+	    return ( (c.value * 100 + fg.controls.fee.value * 100) > avail) ? {'amount': 'Not enough to spend.'} : null;
     });
   }
 } 
@@ -75,6 +75,7 @@ export class SendPage {
       fee: [''],
     });
     this.sendForm.controls.euroAmount.setAsyncValidators(amountValidator(sdk.availableBalanceToSend(),this.sendForm));
+    this.setFeeInput()
   }
 
   getSelectedFee() : number {
@@ -113,12 +114,21 @@ export class SendPage {
 		    pendingTx.targetAccount = sendResponse.toAddress;
 		    pendingTx.sourceAccount = sendResponse.fromAddress;
                     pendingTx.timestamp = + new Date();
-                    if (this.send.eId) pendingTx.counterPartyIdCode = this.send.eId;
+                    if (this.send.eId) {
+			pendingTx.ref.senderIdCode = this.send.eId;
+			pendingTx.counterPartyIdCode = this.send.eId;
+			pendingTx.counterPartyLastName = this.idRecipient.lastName;
+			pendingTx.counterPartyFirstName = this.idRecipient.firstName;
+		    } else {
+			pendingTx.ref.receiverIBAN = this.send.toIban;
+			pendingTx.ref.recipientName = this.send.recipientName;
+		    }
+                    pendingTx.ref.referenceText = this.send.reference;
                     this.sdk.storePendingTransfer(pendingTx);
                     this.events.publish("tx:newPending");
 		    this.toastCtrl.create({message: 'submitted ' + this.txHash, duration: 3000});
 
-		    if (this.idCodeCheck == "escrow") {
+		    if (this.idCodeCheck == "escrow" && this.send.escrowEmail) {
 		    	let notification : EscrowNotification = new EscrowNotification(pendingTx, this.send.escrowEmail);
 			notification.recipientLastName = this.idRecipient.lastName;
 			notification.recipientFirstName = this.idRecipient.firstName;

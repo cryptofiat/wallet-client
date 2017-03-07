@@ -18,6 +18,7 @@
       <ion-item class="search-noresults" [hidden]="results.length">
 	 No results.
 	 <span [hidden]="searchInput.length > 2"> Enter at least 3 letters. </span>
+	 <span [hidden]="searchInput.length <= 2 || searchInput.length ==11"> Try 11-digit ID code.</span>
       </ion-item>
       <ion-item (click)="returnIdCode(el.idCode)" *ngFor="let el of results">
         <ion-label>
