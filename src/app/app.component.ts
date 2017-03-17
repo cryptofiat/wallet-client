@@ -32,11 +32,11 @@ export class CryptofiatWallet {
   //public loginState : LoginState = LoginState.PRE_INIT;
 
 
-  public loginState : string = "PRE_INIT";
+  public loginState: string = "PRE_INIT";
 
   public rootPage: any;
 
-  constructor(events: Events, private userData: UserData, private menu: MenuController, platform: Platform, private sdk : SdkService) {
+  constructor(events: Events, private userData: UserData, private menu: MenuController, platform: Platform, private sdk: SdkService) {
 
     platform.ready().then(() => {
       StatusBar.styleDefault();
@@ -68,7 +68,7 @@ export class CryptofiatWallet {
   }
 
   private refreshMenu() {
-    this.loginState = this.sdk.initiated() ?  (this.sdk.isUnlocked()) ? "IN" : "OUT" : "PRE_INIT";
+    this.loginState = this.sdk.initiated() ? (this.sdk.isUnlocked()) ? "IN" : "OUT" : "PRE_INIT";
     this.menu.enable(true, 'loggedOutMenu');
     //this.menu.enable(!loggedIn, 'loggedOutMenu');
   }
