@@ -11,82 +11,89 @@
   <ion-refresher (ionRefresh)="loadData($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <ion-card><ion-card-content>
-   <p>
-   <span>{{ owner.firstName }} {{ owner.lastName }}</span>
-   </p>
-   <p>
-   Estonian ID: <span>{{idCode}}</span>
-   </p>
-   <p>
-   Balance: <span>{{ (totalBalance / 100).toFixed(2)}}</span> EUR
-   </p>
-   <p [hidden]="totalPending == 0">
-   Pending: <span>{{ (totalPending / 100).toFixed(2)}}</span> EUR
-   </p>
-  </ion-card-content></ion-card>
-  <ion-card margin-vertical [hidden]="idCode == 'inactive' || totalBalance > 0 || totalPending > 0" >
-	<ion-card-header>
-		No money yet?
- 	</ion-card-header>
-	<ion-card-content>
-    Ask some from a friend, from a
-	<a (click)="toSprayer()">generous robot</a>
-	or <a (click)="toBankUpload()">load from your bank</a>.
-  </ion-card-content></ion-card>
-<ion-list>
-  <ion-list-header [hidden]="!pendingTransfers || pendingTransfers.length < 1">
-     Pending
-  </ion-list-header>
-<ion-item *ngFor="let tx of pendingTransfers" item-text-wrap>
-    <ion-icon [hidden]="tx.pendingRefresh" name="clock" item-left></ion-icon>
-    <ion-icon [hidden]="!tx.pendingRefresh" color="secondary" name="refresh" item-left></ion-icon>
-    <a class="transactionItem" target="_blank" href="http://etherscan.io/tx/{{tx.transactionHash}}">
-    <span class="{{ tx.signedAmount > 0 ? 'inboundAmount' : 'outboundAmount'}}">{{ (tx.signedAmount / 100).toFixed(2)  }}</span>
-    <span *ngIf="tx.ref.senderIdCode">{{ tx.counterPartyFirstName }}</span>
-    <span *ngIf="tx.ref.senderIdCode">{{ tx.counterPartyLastName }}</span>
-    <span *ngIf="tx.ref.receiverIBAN">{{ tx.ref.recipientName }}</span>
-    <span *ngIf="tx.ref.receiverIBAN" class="idCode" >{{ tx.ref.receiverIBAN }}</span>
-    <span *ngIf="tx.counterPartyIdCode" class="idCode" >{{ tx.counterPartyIdCode }}</span>
-    <p>Transfer: {{ tx.transactionHash }}</p>
-    <p><span *ngIf="tx.ref.referenceText" class="item-text-wrap">{{ tx.ref.referenceText }}</span></p>
-    <div>
-       <div *ngIf="tx.fee" class="fee">fee: {{ (tx.fee / 100).toFixed(2) }}</div>
-       <div class="timeAgo">{{ getFormattedDate(tx)}}</div>
-    </div>
-    </a>
-    <div [hidden]="tx.timestamp > enableRemoveButtonTime">
-        <button type="button" ion-button block outline margin (click)="removePending(tx.transactionHash)" class="danger" color="danger">Stop watching</button>
-    </div>
-</ion-item>
-  <ion-list-header [hidden]="!pendingTransfers || pendingTransfers.length < 1">
-    Completed
-  </ion-list-header>
-<ion-item *ngFor="let tx of transfers">
-    <a class="transactionItem" target="_blank" href="http://etherscan.io/tx/{{tx.transactionHash}}">
-    <span class="{{ tx.signedAmount > 0 ? 'inboundAmount' : 'outboundAmount'}}">{{ (tx.signedAmount / 100).toFixed(2)  }}</span>
-    <span *ngIf="tx.ref.senderIdCode">{{ tx.counterPartyFirstName }}</span>
-    <span *ngIf="tx.ref.senderIdCode">{{ tx.counterPartyLastName }}</span>
-    <span *ngIf="tx.ref.receiverIBAN">{{ tx.ref.recipientName }}</span>
-    <span *ngIf="tx.ref.receiverIBAN" class="idCode" >{{ tx.ref.receiverIBAN }}</span>
-    <span *ngIf="tx.ref.senderIdCode" class="idCode" >{{ tx.counterPartyIdCode }}</span>
-    <p [hidden]="true" class="hash">{{ tx.counterPartyAddress }}</p>
-    <p><span *ngIf="tx.ref.referenceText" class="referenceText item-text-wrap">{{ tx.ref.referenceText }}</span></p>
-    <div>
-       <div *ngIf="tx.fee" class="fee">fee: {{ (tx.fee / 100).toFixed(2) }}</div>
-       <div class="timeAgo">{{ getFormattedDate(tx)}}</div>
-    </div>
-    </a>
+  <ion-card>
+    <ion-card-content>
+      <p>
+        <span>{{ owner.firstName }} {{ owner.lastName }}</span>
+      </p>
+      <p>
+        Estonian ID: <span>{{idCode}}</span>
+      </p>
+      <p [hidden]="!totalBalance">
+        Balance: <span>{{ (totalBalance / 100).toFixed(2)}}</span> EUR
+      </p>
+      <p [hidden]="totalPending == 0">
+        Pending: <span>{{ (totalPending / 100).toFixed(2)}}</span> EUR
+      </p>
+    </ion-card-content>
+  </ion-card>
+  <ion-card margin-vertical [hidden]="idCode == 'inactive' || totalBalance > 0 || totalPending > 0">
+    <ion-card-header>
+      No money yet?
+    </ion-card-header>
+    <ion-card-content>
+      Ask some from a friend, from a
+      <a (click)="toSprayer()">generous robot</a>
+      or <a (click)="toBankUpload()">load from your bank</a>.
+    </ion-card-content>
+  </ion-card>
+  <ion-list>
+    <ion-list-header [hidden]="!pendingTransfers || pendingTransfers.length < 1">
+      Pending
+    </ion-list-header>
+    <ion-item *ngFor="let tx of pendingTransfers" item-text-wrap>
+      <ion-icon [hidden]="tx.pendingRefresh" name="clock" item-left></ion-icon>
+      <ion-icon [hidden]="!tx.pendingRefresh" color="secondary" name="refresh" item-left></ion-icon>
+      <a class="transactionItem" target="_blank" href="http://etherscan.io/tx/{{tx.transactionHash}}">
+        <span class="{{ tx.signedAmount > 0 ? 'inboundAmount' : 'outboundAmount'}}">{{ (tx.signedAmount / 100).toFixed(2)  }}</span>
+        <span *ngIf="tx.ref.senderIdCode">{{ tx.counterPartyFirstName }}</span>
+        <span *ngIf="tx.ref.senderIdCode">{{ tx.counterPartyLastName }}</span>
+        <span *ngIf="tx.ref.receiverIBAN">{{ tx.ref.recipientName }}</span>
+        <span *ngIf="tx.ref.receiverIBAN" class="idCode">{{ tx.ref.receiverIBAN }}</span>
+        <span *ngIf="tx.counterPartyIdCode" class="idCode">{{ tx.counterPartyIdCode }}</span>
+        <p>Transfer: {{ tx.transactionHash }}</p>
+        <p><span *ngIf="tx.ref.referenceText" class="item-text-wrap">{{ tx.ref.referenceText }}</span></p>
+        <div>
+          <div *ngIf="tx.fee" class="fee">fee: {{ (tx.fee / 100).toFixed(2) }}</div>
+          <div class="timeAgo">{{ getFormattedDate(tx)}}</div>
+        </div>
+      </a>
+      <div [hidden]="tx.timestamp > enableRemoveButtonTime">
+        <button type="button" ion-button block outline margin (click)="removePending(tx.transactionHash)" class="danger"
+                color="danger">Stop watching
+        </button>
+      </div>
     </ion-item>
-</ion-list>
+    <ion-list-header [hidden]="!pendingTransfers || pendingTransfers.length < 1">
+      Completed
+    </ion-list-header>
+    <ion-item *ngFor="let tx of transfers">
+      <a class="transactionItem" target="_blank" href="http://etherscan.io/tx/{{tx.transactionHash}}">
+        <span class="{{ tx.signedAmount > 0 ? 'inboundAmount' : 'outboundAmount'}}">{{ (tx.signedAmount / 100).toFixed(2)  }}</span>
+        <span *ngIf="tx.ref.senderIdCode">{{ tx.counterPartyFirstName }}</span>
+        <span *ngIf="tx.ref.senderIdCode">{{ tx.counterPartyLastName }}</span>
+        <span *ngIf="tx.ref.receiverIBAN">{{ tx.ref.recipientName }}</span>
+        <span *ngIf="tx.ref.receiverIBAN" class="idCode">{{ tx.ref.receiverIBAN }}</span>
+        <span *ngIf="tx.ref.senderIdCode" class="idCode">{{ tx.counterPartyIdCode }}</span>
+        <p [hidden]="true" class="hash">{{ tx.counterPartyAddress }}</p>
+        <p><span *ngIf="tx.ref.referenceText" class="referenceText item-text-wrap">{{ tx.ref.referenceText }}</span></p>
+        <div>
+          <div *ngIf="tx.fee" class="fee">fee: {{ (tx.fee / 100).toFixed(2) }}</div>
+          <div class="timeAgo">{{ getFormattedDate(tx)}}</div>
+        </div>
+      </a>
+    </ion-item>
+  </ion-list>
   <ion-list-header>
-{{transfers.length.toFixed(0)}} transfers
-<a href="#" *ngIf="!(refreshing)" (click)="loadData(null)">refresh</a>
-<span *ngIf="refreshing"> ... refreshing ... </span>
+    {{transfers.length.toFixed(0)}} transfers
+    <a href="#" *ngIf="!(refreshing)" (click)="loadData(null)">refresh</a>
+    <span *ngIf="refreshing"> ... refreshing ... </span>
   </ion-list-header>
 
   <ion-fab bottom right>
-      <button ion-fab (click)="toSendPage()"><ion-icon name="send"></ion-icon></button>
+    <button ion-fab (click)="toSendPage()">
+      <ion-icon name="send"></ion-icon>
+    </button>
   </ion-fab>
 </ion-content>
 

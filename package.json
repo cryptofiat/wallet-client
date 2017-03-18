@@ -2,6 +2,7 @@
   "name": "cryptofiat-wallet-client",
   "scripts": {
     "ionic:build": "ionic-app-scripts build",
+    "ionic:uglifyjs": "uglifyjs --compress --mangle -o www/build/main.js -- www/build/main.js ",
     "ionic:serve": "ionic-app-scripts serve"
   },
   "dependencies": {
@@ -27,7 +28,8 @@
   "devDependencies": {
     "@ionic/app-scripts": "^1.1.4",
     "rx": "^4.1.0",
-    "typescript": "^2.2.1"
+    "typescript": "^2.2.1",
+    "uglifyjs": "git+https://github.com/mishoo/UglifyJS2.git#harmony"
   },
   "config": {
     "ionic_bundler": "webpack",

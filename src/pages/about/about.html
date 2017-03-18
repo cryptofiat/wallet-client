@@ -17,7 +17,7 @@
       </ion-list-header>
       <a ion-item href="https://etherscan.io/token/{{contractInfo.reserveBank}}" target="_new">
         <ion-label>Supply</ion-label>
-        <ion-note item-right>
+        <ion-note item-right *ngIf="totalSupply">
           {{totalSupply / 100}} EUR
         </ion-note>
       </a>
