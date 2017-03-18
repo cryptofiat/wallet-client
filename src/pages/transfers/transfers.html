@@ -42,9 +42,9 @@
       Pending
     </ion-list-header>
     <ion-item *ngFor="let tx of pendingTransfers" item-text-wrap>
-      <ion-icon [hidden]="tx.pendingRefresh" name="clock" item-left></ion-icon>
-      <ion-icon [hidden]="!tx.pendingRefresh" color="secondary" name="refresh" item-left></ion-icon>
-      <a class="transactionItem" target="_blank" href="http://etherscan.io/tx/{{tx.transactionHash}}">
+      <ion-spinner icon="spiral"></ion-spinner>
+
+      <a class="transactionItem" target="_blank" [href]="'http://etherscan.io/tx/'+tx.transactionHash" >
         <span class="{{ tx.signedAmount > 0 ? 'inboundAmount' : 'outboundAmount'}}">{{ (tx.signedAmount / 100).toFixed(2)  }}</span>
         <span *ngIf="tx.ref.senderIdCode">{{ tx.counterPartyFirstName }}</span>
         <span *ngIf="tx.ref.senderIdCode">{{ tx.counterPartyLastName }}</span>
@@ -84,11 +84,11 @@
       </a>
     </ion-item>
   </ion-list>
-  <ion-list-header>
+  <!--<ion-list-header>
     {{transfers.length.toFixed(0)}} transfers
     <a href="#" *ngIf="!(refreshing)" (click)="loadData(null)">refresh</a>
     <span *ngIf="refreshing"> ... refreshing ... </span>
-  </ion-list-header>
+  </ion-list-header>-->
 
   <ion-fab bottom right>
     <button ion-fab (click)="toSendPage()">
