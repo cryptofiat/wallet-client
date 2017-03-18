@@ -69,17 +69,19 @@ export class SignupPage {
   };
 
   tryPassword(password: String): Boolean {
-    if (password && this.sdk.unlock(password)) {
-      console.log("successfully tried password");
+    let passwordCorrect;
+    try {
+      passwordCorrect = password && this.sdk.unlock(password);
+    } catch (e) {
+    }
+
+    if (passwordCorrect) {
       this.events.publish('user:login');
       this.navCtrl.setRoot(TransfersPage);
-      //this.navCtrl.push(TransfersPage);
-      return true;
-      //$state.go('navBar.transactions');
     } else {
       this.wrongPassword = true;
-      return false;
     }
+    return passwordCorrect;
   };
 
   createPassword(form): Boolean {

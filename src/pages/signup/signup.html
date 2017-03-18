@@ -1,77 +1,82 @@
 <ion-header>
-	<ion-navbar>
-		<button ion-button menuToggle>
+  <ion-navbar>
+    <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-		<ion-title>EURO 2.0</ion-title>
-	</ion-navbar>
+    <ion-title>EURO 2.0</ion-title>
+  </ion-navbar>
 </ion-header>
 
 <ion-content padding class="login-page">
 
-	<div margin-vertical class="logo">
-		<img src="assets/img/key.svg" alt="Euro 2.0 Logo">
-	</div>
+  <div margin-vertical class="logo">
+    <img src="assets/img/key.svg" alt="Euro 2.0 Logo">
+  </div>
 
-        <div [hidden]="!isPasswordSet()">
-            <p>Please unlock your wallet!</p>
-            <form #enterPasswordForm="ngForm" novalidate>
-	    <ion-item>
-                <ion-label class="item item-input" id="enterPasswordForm-password">
-                    <span class="input-label">Password:</span>
-                </ion-label>
-                    <ion-input type="password" name="passwordEnter" (input)="clearPass()" [(ngModel)]="unlock.password" placeholder="********">
-		    </ion-input>
-	    </ion-item>
-                <button margin-vertical ion-button type="submit" id="enterPasswordButton" (click)="tryPassword(unlock.password)" class="button button-positive  button-block">
-                    Enter Password
-                </button>
-            </form>
-            <p class="danger" [hidden]="!wrongPassword">Wrong password. Try again.
-            </p>
-        </div>
-        <div [hidden]="isPasswordSet() || createNewClicked">
-            <div padding-vertical>
-		<p>
-                 Welcome.
-                </p>
-                 Create a new key if you have not used Euro 2.0 before, otherwise sync your keys from another device.
-            </div>
-            <br>
-            <br>
-                <button ion-button id="createButton" class="button button-positive  button-block" (click)="createNew()">Create a new key</button>
-                <button ion-button id="syncButton" 
-			class="button button-positive button-block" 
-			[disabled]="false"
-			(click)="syncFromServer()" outline>Sync from server</button>
-        </div>
-        <div [hidden]="isPasswordSet() || !createNewClicked">
-            <div>
-                Enter a password to encrypt the private keys stored on your device.
-            </div>
-            <br>
-            <br>
-            <form #createPasswordForm="ngForm" novalidate [formGroup]="newPassword" (ngSubmit)="createPassword(initStorage.password)">
-	    <ion-item>
-                <ion-label fixed class="item item-input" id="createPasswordForm-password">
-                    <span class="input-label">Password</span>
-                </ion-label>
-                    <ion-input type="password" name="passwordEnter" formControlName="passwordEnter"
-			[(ngModel)]="initStorage.password" placeholder="********" required>
-		    </ion-input>
-	    </ion-item>
-	    <ion-item>
-                <ion-label fixed class="item item-input" id="createPasswordForm-password">
-                    <span class="input-label">Confirm password</span>
-                </ion-label>
-                    <ion-input type="password" name="passwordConfirm" formControlName="passwordConfirm"
-			[(ngModel)]="initStorage.passwordCheck" placeholder="********" required>
-		    </ion-input>
-	    </ion-item>
-                <button margin-vertical ion-button type="submit" [disabled]="!newPassword.valid" id="enterPasswordButton" class="button button-positive  button-block">
-                    Create Password
-                </button>
-            </form>
-        </div>
+  <div [hidden]="!isPasswordSet()">
+    <p>Please unlock your wallet!</p>
+    <form #enterPasswordForm="ngForm" novalidate>
+      <ion-item>
+        <ion-label class="item item-input" id="enterPasswordForm-password">
+          <span class="input-label">Password:</span>
+        </ion-label>
+        <ion-input type="password" name="passwordEnter" (input)="clearPass()" [(ngModel)]="unlock.password" placeholder="********">
+        </ion-input>
+      </ion-item>
+      <button margin-vertical ion-button type="submit" (click)="tryPassword(unlock.password)"
+              class="button button-positive  button-block">
+        Enter Password
+      </button>
+    </form>
+    <p class="danger" [hidden]="!wrongPassword">Wrong password. Try again.
+    </p>
+  </div>
+  <div [hidden]="isPasswordSet() || createNewClicked">
+    <div padding-vertical>
+      <p>
+        Welcome.
+      </p>
+      Create a new key if you have not used Euro 2.0 before, otherwise sync your keys from another device.
+    </div>
+    <br>
+    <br>
+    <button ion-button id="createButton" class="button button-positive  button-block" (click)="createNew()">Create a new
+      key
+    </button>
+    <button ion-button id="syncButton"
+            class="button button-positive button-block"
+            [disabled]="false"
+            (click)="syncFromServer()" outline>Sync from server
+    </button>
+  </div>
+  <div [hidden]="isPasswordSet() || !createNewClicked">
+    <div>
+      Enter a password to encrypt the private keys stored on your device.
+    </div>
+    <br>
+    <br>
+    <form #createPasswordForm="ngForm" novalidate [formGroup]="newPassword"
+          (ngSubmit)="createPassword(initStorage.password)">
+      <ion-item>
+        <ion-label fixed class="item item-input" id="createPasswordForm-password">
+          <span class="input-label">Password</span>
+        </ion-label>
+        <ion-input type="password" name="passwordEnter" formControlName="passwordEnter"
+                   [(ngModel)]="initStorage.password" required>
+        </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label fixed class="item item-input" id="createPasswordForm-password">
+          <span class="input-label">Confirm password</span>
+        </ion-label>
+        <ion-input type="password" name="passwordConfirm" formControlName="passwordConfirm"
+                   [(ngModel)]="initStorage.passwordCheck" required>
+        </ion-input>
+      </ion-item>
+      <button margin-vertical ion-button type="submit" [disabled]="!newPassword.valid" class="button button-positive  button-block">
+        Create Password
+      </button>
+    </form>
+  </div>
 
 </ion-content>
