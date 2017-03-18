@@ -22,7 +22,7 @@ export class CryptofiatWallet {
   @ViewChild(Nav) nav: Nav;
 
   public howToPages = [
-    {title: 'Add from bank', component: TopupPage, icon: 'add-circle'},
+    {title: 'Topup', component: TopupPage, icon: 'add-circle'},
     {title: 'Tutorial', component: TutorialPage, icon: 'hammer'},
     {title: 'About', component: AboutPage, icon: 'information-circle'},
   ];
