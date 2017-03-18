@@ -19,10 +19,10 @@
    Estonian ID: <span>{{idCode}}</span>
    </p>
    <p>
-   Balance: <span>{{ (totalBalance / 100).toFixed(2)}}</span> EUR 
+   Balance: <span>{{ (totalBalance / 100).toFixed(2)}}</span> EUR
    </p>
    <p [hidden]="totalPending == 0">
-   Pending: <span>{{ (totalPending / 100).toFixed(2)}}</span> EUR 
+   Pending: <span>{{ (totalPending / 100).toFixed(2)}}</span> EUR
    </p>
   </ion-card-content></ion-card>
   <ion-card margin-vertical [hidden]="idCode == 'inactive' || totalBalance > 0 || totalPending > 0" >
@@ -60,7 +60,7 @@
     </div>
 </ion-item>
   <ion-list-header [hidden]="!pendingTransfers || pendingTransfers.length < 1">
-    Completed 
+    Completed
   </ion-list-header>
 <ion-item *ngFor="let tx of transfers">
     <a class="transactionItem" target="_blank" href="http://etherscan.io/tx/{{tx.transactionHash}}">
@@ -80,13 +80,13 @@
     </ion-item>
 </ion-list>
   <ion-list-header>
-{{transfers.length.toFixed(0)}} transfers 
+{{transfers.length.toFixed(0)}} transfers
 <a href="#" *ngIf="!(refreshing)" (click)="loadData(null)">refresh</a>
 <span *ngIf="refreshing"> ... refreshing ... </span>
   </ion-list-header>
 
   <ion-fab bottom right>
-      <button ion-fab (click)="toSendPage()"><ion-icon name="add"></ion-icon></button>
+      <button ion-fab (click)="toSendPage()"><ion-icon name="send"></ion-icon></button>
   </ion-fab>
 </ion-content>
 
