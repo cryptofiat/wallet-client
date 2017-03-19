@@ -1,7 +1,7 @@
 {
   "name": "cryptofiat-wallet-client",
   "scripts": {
-    "ionic:build": "ionic-app-scripts build",
+    "ionic:build": "ionic-app-scripts build --minify",
     "ionic:uglifyjs": "uglifyjs --compress --mangle -o www/build/main.js -- www/build/main.js ",
     "ionic:serve": "ionic-app-scripts serve"
   },

@@ -31,5 +31,5 @@ $ANDROID_HOME/build-tools/25.0.1/zipalign -v 4 android-release-unsigned.apk andr
 3. `ionic emulate ios` or `ionic run ios`
 
 # Web release
-1. `ionic build --minify`
+1. `npm run ionic:build`
 2. `npm run ionic:uglifyjs`
