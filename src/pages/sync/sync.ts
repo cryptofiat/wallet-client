@@ -8,6 +8,7 @@ export class SyncPage {
   idCodeCheck: string;
   syncStatus: string = "";
   createLocalStatus: boolean = false;
+  numKeys: number = 0;
   errorMsg: string = "";
   //loginStatus : string = "";
   syncLog: { downloaded_addresses: Array<string>, uploaded_addresses: Array<string> } = {
@@ -71,7 +72,10 @@ export class SyncPage {
         this.sdk.backupSyncAll(this.syncParams.password, this.syncParams.idCode).then((retval) => {
 
           Object.assign(this.syncLog, retval);
+	  var keysArray : Array<string> = this.sdk.addresses();
+	  this.numKeys =  this.sdk.addresses().length;
           this.syncStatus = "success";
+
         });
       }
     });

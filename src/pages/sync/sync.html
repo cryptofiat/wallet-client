@@ -20,7 +20,7 @@
 		<ion-input placeholder="38003029210"
 		   (input)="idCodeChecker()"
 		   ngControl="eId"
-		   name="eId"
+		   name="eId" type="number"
 		   [(ngModel)]="syncParams.idCode">
 		</ion-input>
 		    <ion-icon color="positive" name="clock" 
@@ -62,11 +62,11 @@
 			[(ngModel)]="syncParams.createLocal">
 		    </ion-toggle>
 	    </ion-item>
-                <button margin-top ion-button type="submit" id="startSync" 
+                <button margin-top ion-button type="submit" id="startSyncButton" 
 			(click)="startSync()" 
 			class="button button-positive  button-block"
-			[disabled]="(idCodeCheck != 'yes' && idCodeCheck != 'new') || syncStatus == 'waiting'">
-                    Sync
+			[disabled]="(idCodeCheck != 'yes' && idCodeCheck != 'new') || syncStatus == 'progress'">
+                    Sync <span [hidden]="syncStatus != 'success'">again</span>
                 </button>
             </form>
 	    <div padding>
@@ -84,7 +84,7 @@
 			<ion-item *ngIf="syncStatus == 'success'" text-wrap>
 				<ion-icon color="secondary" name="checkmark" 
 					item-right></ion-icon>
-					Synchronisation complete
+					Synchronisation complete, {{numKeys}} keys
 			</ion-item>
 			<ion-list-header>
 			<ion-icon color="positive" name="clock" 
