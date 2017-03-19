@@ -130,7 +130,8 @@ export class SendPage {
 
 		    // This maybe should be done within the SDK directly on SEND command
 		    // Somewhere should be wait added - perhaps server should wait until mined before forwarding
-		    this.sdk.pushNotifyTransfer(pendingTx);
+		    // TODO: enable below line when PUSH display implemented on clients
+		    //this.sdk.pushNotifyTransfer(pendingTx);
 
 		    if (this.idCodeCheck == "escrow" && this.send.escrowEmail) {
 		    	let notification : EscrowNotification = new EscrowNotification(pendingTx, this.send.escrowEmail);

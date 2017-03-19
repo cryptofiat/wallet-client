@@ -256,7 +256,7 @@ export class SdkService {
       return this.sdk.notifyEscrow(notification);
   }
   pushNotifyTransfer( tx : Transfer) : Promise<Object> {
-	return this.sdk.pushNotifyTransfer("0x" + tx.targetAccount, tx.transactionHash, tx.amount, tx.ref.receiverIdCode, tx.ref.referenceText);
+	return this.sdk.pushNotifyTransfer("0x" + tx.targetAccount, tx.transactionHash, tx.amount, tx.ref.senderIdCode, tx.ref.referenceText);
   }
   totalSupplyEtherscan(contract : string) : Promise<number> {
       return this.sdk.totalSupplyEtherscan(contract);
