@@ -52,7 +52,7 @@ export class SignupPage {
         this.events.publish('user:login');
         this.navCtrl.setRoot(TransfersPage);
       })
-      .catch((error) => alert(error));
+      .catch((error) => console.log(error));
   }
 
   private areEqual(group: FormGroup) {
