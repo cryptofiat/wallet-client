@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="ee.euro2.wallet" version="0.0.5" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="ee.euro2.wallet" version="0.0.7" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>Euro 2.0 Wallet</name>
   <description>
         A wallet client for the Estonian Euro 2.0 crypto-fiat scheme.
@@ -68,12 +68,12 @@
   <preference name="BackupWebStorage" value="none"/>
   <preference name="SplashScreen" value="screen"/>
   <preference name="orientation" value="portrait"/>
-  <preference name="SplashScreenDelay" value="10000"/>
+  <preference name="SplashScreenDelay" value="500"/>
   <preference name="FadeSplashScreen" value="true"/>
   <preference name="FadeSplashScreenDuration" value="750"/>
   <preference name="ShowSplashScreenSpinner" value="false"/>
   <preference name="CordovaWebViewEngine" value="CDVWKWebViewEngine"/>
-  <preference name="xwalkVersion" value="18+"/>
+  <preference name="xwalkVersion" value="22+"/>
   <preference name="xwalkCommandLine" value="--disable-pull-to-refresh-effect"/>
   <preference name="xwalkMode" value="embedded"/>
   <preference name="xwalkMultipleApk" value="true"/>
@@ -89,12 +89,6 @@
   <plugin name="cordova-plugin-wkwebview-engine" spec="https://github.com/driftyco/cordova-plugin-wkwebview-engine.git"/>
 
   <plugin name="cordova-plugin-statusbar" spec="~2.2.0"/>
-  <plugin name="cordova-plugin-googlemaps" spec="https://github.com/phonegap-googlemaps-plugin/cordova-plugin-googlemaps">
-    <variable name="API_KEY_FOR_ANDROID" value="AIzaSyDe2pnICTHVe7BUWwhlR94xgXsFDuLU5Qg"/>
-    <variable name="API_KEY_FOR_IOS" value="AIzaSyDe2pnICTHVe7BUWwhlR94xgXsFDuLU5Qg"/>
-    <variable name="NSLOCATIONWHENINUSEUSAGEDESCRIPTION" value="Show your location on the map"/>
-    <variable name="NSLOCATIONALWAYSUSAGEDESCRIPTION" value="Trace your location on the map"/>
-  </plugin>
   <plugin name="cordova-plugin-splashscreen" spec="https://github.com/apache/cordova-plugin-splashscreen.git"/>
   <plugin name="cordova-plugin-whitelist" spec="~1.0.0"/>
   <plugin name="cordova-plugin-device" spec="~1.1.3"/>
