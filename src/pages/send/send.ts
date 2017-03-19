@@ -128,6 +128,10 @@ export class SendPage {
                     this.events.publish("tx:newPending");
 		    this.toastCtrl.create({message: 'submitted ' + this.txHash, duration: 3000});
 
+		    // This maybe should be done within the SDK directly on SEND command
+		    // Somewhere should be wait added - perhaps server should wait until mined before forwarding
+		    this.sdk.pushNotifyTransfer(pendingTx);
+
 		    if (this.idCodeCheck == "escrow" && this.send.escrowEmail) {
 		    	let notification : EscrowNotification = new EscrowNotification(pendingTx, this.send.escrowEmail);
 			notification.recipientLastName = this.idRecipient.lastName;
