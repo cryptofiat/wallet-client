@@ -55,7 +55,7 @@ export class TransfersPage {
       firebase.database().ref('/push/' + address).on('child_added', (snapshot) => {
         let alert = this.alertCtrl.create({
           title: 'Notification',
-          subTitle: snapshot.val(),
+          subTitle: JSON.stringify(snapshot.val()),
           buttons: ['Ok']
         });
         alert.present();

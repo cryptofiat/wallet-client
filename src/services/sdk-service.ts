@@ -44,7 +44,7 @@ export class SdkService {
     return this.sdk.removeKey(privKeyHex);
   }
 
-  privateToPublic(privKey : string) : Uint8Array { 
+  privateToPublic(privKey : string) : Uint8Array {
     return wallet.privateToPublic(privKey);
   }
 
@@ -105,12 +105,12 @@ export class SdkService {
     let transferRef : TransferReference;
     return this.sdk.transfersCleanedAsync().then( (jsonTxs) => {
        jsonHolder = jsonTxs;
-       jsonHolder.forEach((jsonTx) => { 
+       jsonHolder.forEach((jsonTx) => {
 	   //This magic here expects that wallet-sdk uses exact same naming
 	   transfer = new Transfer();
 	   transferRef = new TransferReference();
 	   transferRef = Object.assign({},jsonTx.ref);
-	   transfer = Object.assign({},jsonTx, { 
+	   transfer = Object.assign({},jsonTx, {
 	        counterPartyAddress : jsonTx.otherAddress, // should change in sdk
 		ref:  null
 	   });
@@ -129,7 +129,7 @@ export class SdkService {
   availableBalanceToSend() : Promise<number> {
     return this.contractDataAsync().then( (contracts : { balance : number }[]) => {
       return Math.max.apply(Math, contracts.map( (c) => {return c.balance;}));
-    }); 
+    });
   }
 
   getAddressForEstonianIdCode(idCode : string, escrow : boolean) : Promise<Object> {
@@ -201,19 +201,19 @@ export class SdkService {
   // Should make a keys domain object key.private, key.public, key.approvalHash, key.pending ..
 
   storePendingApproval(txHash : string, addr : string) {
-     this.sdk._storage.setItem('pendingApproval:'+addr,txHash); 
+     this.sdk._storage.setItem('pendingApproval:'+addr,txHash);
   }
 
   removePendingApproval(addr : string) {
-     this.sdk._storage.removeItem('pendingApproval:'+addr); 
+     this.sdk._storage.removeItem('pendingApproval:'+addr);
   }
 
   getPendingApproval(addr : string) : string {
-     return this.sdk._storage.getItem('pendingApproval:'+addr); 
+     return this.sdk._storage.getItem('pendingApproval:'+addr);
   }
 
   pendingApprovalArray() : Array<string> {
-     return this.addresses().filter( (addr) => { 
+     return this.addresses().filter( (addr) => {
 		return (this.getPendingApproval(addr) != undefined)
 	} );
   }
