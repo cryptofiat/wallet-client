@@ -18,6 +18,7 @@ import {TutorialPage} from '../pages/tutorial/tutorial';
 @Component({
   templateUrl: 'app.template.html'
 })
+
 export class CryptofiatWallet {
   @ViewChild(Nav) nav: Nav;
 

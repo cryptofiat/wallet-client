@@ -7,7 +7,7 @@ import {Transfer} from '../../providers/transfer-data';
 import {SendPage} from '../send/send';
 import {TopupPage} from '../topup/topup';
 import {SprayerPage} from '../sprayer/sprayer';
-
+import {AlertController} from 'ionic-angular';
 /*
  To learn how to use third party libs in an
  Ionic app check out our docs here: http://ionicframework.com/docs/v2/resources/third-party-libs/
@@ -29,13 +29,39 @@ export class TransfersPage {
   constructor(public navCtrl: NavController,
               private toastCtrl: ToastController,
               public events: Events,
-              public sdk: SdkService) {
+              public sdk: SdkService,
+              private alertCtrl: AlertController) {
     this.idCode = this.sdk.getEstonianIdCode();
     this.loadData(null);
     this.sdk.nameFromIdAsync(this.idCode).then((nameJson) => {
       this.owner = nameJson;
     });
     events.subscribe('tx:newPending', () => this.refreshPending());
+
+    this.subscribeOnNotifications(this.sdk.addresses());
+
+  }
+
+  private subscribeOnNotifications(addresses) {
+    let config = {
+      apiKey: "AIzaSyBudVMsbc90ESr1cUHu_FoSmCt9VllrOeI",
+      authDomain: "euro2-f4201.firebaseapp.com",
+      databaseURL: "https://euro2-f4201.firebaseio.com",
+      messagingSenderId: "431246304717"
+    };
+    firebase.initializeApp(config);
+
+    addresses.forEach((address) => {
+      firebase.database().ref('/push/' + address).on('child_added', (snapshot) => {
+        let alert = this.alertCtrl.create({
+          title: 'Notification',
+          subTitle: snapshot.val(),
+          buttons: ['Ok']
+        });
+        alert.present();
+        snapshot.ref.remove();
+      });
+    });
   }
 
   loadData(refresher) {
