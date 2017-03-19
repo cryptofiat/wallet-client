@@ -9,6 +9,7 @@ import {SyncPage} from '../sync/sync';
 import {UserData} from '../../providers/user-data';
 
 import {SdkService} from "../../services/sdk-service";
+import {FingerprintAIO} from 'ionic-native';
 
 @Component({selector: 'page-user', templateUrl: 'signup.html'})
 export class SignupPage {
@@ -32,6 +33,26 @@ export class SignupPage {
       passwordConfirm: ['', Validators.minLength(1)],
     }, {validator: this.areEqual});
 
+    this.fingerprintAuth();
+  }
+
+  private fingerprintAuth() {
+    //let secret = sessionStorage.getItem("secret");
+
+    if (!this.isPasswordSet()) return;
+
+    FingerprintAIO.show({
+      clientId: "Fingerprint-Demo",
+      clientSecret: "password"
+    })
+      .then((result) => {
+        //alert(result);
+        this.sdk.unlock(this.sdk.getSecret());
+
+        this.events.publish('user:login');
+        this.navCtrl.setRoot(TransfersPage);
+      })
+      .catch((error) => alert(error));
   }
 
   private areEqual(group: FormGroup) {
