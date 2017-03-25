@@ -17,29 +17,45 @@ $categories: (
 
 page-transfers {
 
-a.transactionItem {
+.transactionItem {
   text-decoration:none;
   color:inherit;
 } 
 
-a.transactionItem .fee {
-  font-size: 70%;
-  float:left;
-} 
-
-a.transactionItem .idCode {
+.transactionItem .idCode {
   font-size: 85%;
   color: #999;
+  width: 100%;
 } 
 
-a.transactionItem .hash {
+.transactionItem a {
+  font-size: 70%;
+  text-decoration:none;
+}
+
+.transactionItem .referenceText {
   font-size: 90%;
-  color:#bbb;
+  color:#777;
 } 
 
-a.transactionItem .timeAgo {
+.transactionItem .fee {
+  font-size: 70%;
+  float:left;
+  width:25%;
+} 
+
+.transactionItem .timeAgo {
   font-size: 70%;
   float:right;
+  text-align:right;
+  width:25%;
+} 
+
+.transactionItem .timeLong {
+  font-size: 70%;
+  width:50%;
+  text-align:center;
+  float:left;
 } 
 
 .inboundAmount {

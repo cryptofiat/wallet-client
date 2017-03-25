@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Validators,  FormControl, FormBuilder, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { Events, NavController,ToastController } from 'ionic-angular';
+import { Events, NavParams, NavController,ToastController } from 'ionic-angular';
 import { SdkService } from "../../services/sdk-service";
 import { Transfer } from "../../providers/transfer-data";
 import { EscrowNotification } from '../../providers/escrow-data';
@@ -54,11 +54,16 @@ export class SendPage {
   constructor(
      private sdk: SdkService, 
      private navCtrl: NavController, 
+     private navParams: NavParams, 
      private toastCtrl: ToastController,
      private formBuilder: FormBuilder,
      private events: Events
   ) {
     sdk.availableBalanceToSend().then( (n) => this.availableToSend = n/100);
+    this.send.euroAmount = navParams.get("amount")/100;
+    this.send.eId = navParams.get("idCode");
+    this.send.reference = navParams.get("referenceText");
+    this.idCodeChecker();
 
     this.sendForm = formBuilder.group({
       eId: ['', Validators.compose([Validators.minLength(11),Validators.maxLength(11)])],

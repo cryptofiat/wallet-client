@@ -38,8 +38,9 @@ export class TransfersPage {
     });
     events.subscribe('tx:newPending', () => this.refreshPending());
 
-    this.subscribeOnNotifications(this.sdk.addresses());
-
+    if (!firebase.apps.length) {
+      this.subscribeOnNotifications(this.sdk.addresses());
+    }
   }
 
   private subscribeOnNotifications(addresses) {
@@ -49,6 +50,7 @@ export class TransfersPage {
       databaseURL: "https://euro2-f4201.firebaseio.com",
       messagingSenderId: "431246304717"
     };
+
     firebase.initializeApp(config);
 
     addresses.forEach((address) => {
@@ -85,6 +87,10 @@ export class TransfersPage {
     })
   }
 
+  getLongDate(tx: Transfer): string {
+    return moment(tx.timestamp).format("LT ll");
+  }
+
   getFormattedDate(tx: Transfer): string {
     return moment(tx.timestamp).fromNow();
   }
@@ -99,6 +105,14 @@ export class TransfersPage {
 
   toSendPage() {
     this.navCtrl.push(SendPage);
+  }
+
+  sendRepeatRefund(tx : Transfer) {
+    this.navCtrl.push(SendPage, { 
+	amount: tx.amount, 
+	referenceText: tx.ref.referenceText, 
+	idCode: tx.counterPartyIdCode 
+	});
   }
 
   ionViewCanEnter(): boolean {

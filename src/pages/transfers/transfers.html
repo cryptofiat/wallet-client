@@ -67,21 +67,34 @@
     <ion-list-header [hidden]="!pendingTransfers || pendingTransfers.length < 1">
       Completed
     </ion-list-header>
-    <ion-item *ngFor="let tx of transfers">
-      <a class="transactionItem" target="_blank" href="http://etherscan.io/tx/{{tx.transactionHash}}">
+    <ion-item *ngFor="let tx of transfers" class="transactionItem">
+	<div  (click)="tx.expanded = !tx.expanded" class="">
         <span class="{{ tx.signedAmount > 0 ? 'inboundAmount' : 'outboundAmount'}}">{{ (tx.signedAmount / 100).toFixed(2)  }}</span>
         <span *ngIf="tx.ref.senderIdCode">{{ tx.counterPartyFirstName }}</span>
         <span *ngIf="tx.ref.senderIdCode">{{ tx.counterPartyLastName }}</span>
         <span *ngIf="tx.ref.receiverIBAN">{{ tx.ref.recipientName }}</span>
-        <span *ngIf="tx.ref.receiverIBAN" class="idCode">{{ tx.ref.receiverIBAN }}</span>
-        <span *ngIf="tx.ref.senderIdCode" class="idCode">{{ tx.counterPartyIdCode }}</span>
         <p [hidden]="true" class="hash">{{ tx.counterPartyAddress }}</p>
-        <p><span *ngIf="tx.ref.referenceText" class="referenceText item-text-wrap">{{ tx.ref.referenceText }}</span></p>
-        <div>
-          <div *ngIf="tx.fee" class="fee">fee: {{ (tx.fee / 100).toFixed(2) }}</div>
+        <div style="position:relative;">
+	  <span *ngIf="tx.ref.referenceText" class="referenceText item-text-wrap">{{ tx.ref.referenceText }}</span>
+          <div class="timeAgo" style="position: absolute; bottom: 0; width:100%" [hidden]="tx.expanded">{{ getFormattedDate(tx) }}</div>
+	</div>
+	</div>
+	<div margin-vertical [hidden]="!tx.expanded">
+          <span *ngIf="tx.ref.receiverIBAN" class="idCode">{{ tx.ref.receiverIBAN }}</span>
+          <span *ngIf="tx.ref.senderIdCode" class="idCode">{{ tx.counterPartyIdCode }}</span>
+	  <br>
+          <a target="_blank" href="http://etherscan.io/tx/{{tx.transactionHash}}">
+	    On blockchain
+          </a>
+	  <br>
+	  <button (click)="sendRepeatRefund(tx)" [hidden]="tx.signedAmount > 0  || (!tx.counterPartyIdCode && !tx.ref.receiverIBAN)" ion-button outline> Repeat </button>
+	  <button (click)="sendRepeatRefund(tx)" [hidden]="tx.signedAmount < 0 || !tx.counterPartyIdCode" ion-button outline> Refund </button>
+	</div>
+        <div [hidden]="!tx.expanded">
+          <div class="fee">fee: {{ (tx.fee / 100).toFixed(2) }}</div>
+	  <div class="timeLong"> {{ getLongDate(tx) }} </div>
           <div class="timeAgo">{{ getFormattedDate(tx)}}</div>
         </div>
-      </a>
     </ion-item>
   </ion-list>
   <!--<ion-list-header>

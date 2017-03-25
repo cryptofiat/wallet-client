@@ -72,7 +72,6 @@ export class SyncPage {
         this.sdk.backupSyncAll(this.syncParams.password, this.syncParams.idCode).then((retval) => {
 
           Object.assign(this.syncLog, retval);
-	  var keysArray : Array<string> = this.sdk.addresses();
 	  this.numKeys =  this.sdk.addresses().length;
           this.syncStatus = "success";
 
