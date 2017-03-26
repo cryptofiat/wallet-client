@@ -11,6 +11,7 @@ export class SprayerPage {
   }
 
   requestSpray() {
+	// send request, when TxHash is returned  then register pending transfer  and return to transfers screen
   }
 
 }

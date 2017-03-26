@@ -17,6 +17,7 @@ import moment from 'moment';
 @Component({selector: 'page-transfers', templateUrl: 'transfers.html'})
 export class TransfersPage {
 
+  SPRAYER_ADDRESS = "0xa5f1eea6d0a14c8e37cad8019f67b9ca19768f55" // CHANGE ME
   owner: { firstName?: string, lastName?: string } = {};
   idCode: string;
   totalBalance: number;
@@ -25,6 +26,7 @@ export class TransfersPage {
   transfers: Transfer[] = [];
   pendingTransfers: Transfer[] = [];
   refreshing: boolean = false;
+  sprayer: {dismissed : boolean, hasOutgoing : boolean, hasIncome : boolean} = { dismissed : false, hasOutgoing : false, hasIncome : false}; 
 
   constructor(public navCtrl: NavController,
               private toastCtrl: ToastController,
@@ -32,6 +34,7 @@ export class TransfersPage {
               public sdk: SdkService,
               private alertCtrl: AlertController) {
     this.idCode = this.sdk.getEstonianIdCode();
+    this.sprayer.dismissed = this.sdk.loadSprayerDismissed();
     this.loadData(null);
     this.sdk.nameFromIdAsync(this.idCode).then((nameJson) => {
       this.owner = nameJson;
@@ -73,18 +76,36 @@ export class TransfersPage {
     });
     this.refreshPending();
 
+    this.transfers = [];
     this.sdk.transfersCleanedAsync().then((tx) => {
       if (tx) {
         this.transfers = tx.sort(function (a, b) {
           return a.timestamp - b.timestamp;
         }).reverse();
-
+	this.refreshSprayer();
       }
       this.refreshing = false;
       if (refresher) {
         refresher.complete();
       }
     })
+  }
+
+  refreshSprayer() {
+    if (!this.sprayer.dismissed) {
+      // check if hasIncome
+	if (this.transfers.filter( (tx) => 
+		tx.sourceAccount.toLowerCase().indexOf(this.SPRAYER_ADDRESS.toLowerCase()) > -1
+	).length) {
+		this.sprayer.hasIncome = true;
+	};
+      // check if any outgoing tx
+	if (this.transfers.filter( (tx) => 
+		tx.signedAmount < 0
+	).length) {
+		this.sprayer.hasOutgoing = true;
+	};
+    }
   }
 
   getLongDate(tx: Transfer): string {
@@ -101,6 +122,11 @@ export class TransfersPage {
 
   toSprayer() {
     this.navCtrl.push(SprayerPage);
+  }
+
+  sprayerDismiss() {
+    this.sprayer.dismissed = true;
+    this.sdk.saveSprayerDismissed();
   }
 
   toSendPage() {

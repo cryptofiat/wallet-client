@@ -261,4 +261,12 @@ export class SdkService {
   totalSupplyEtherscan(contract : string) : Promise<number> {
       return this.sdk.totalSupplyEtherscan(contract);
   }
+
+  saveSprayerDismissed() : void {
+    this.sdk._storage.setItem("sprayer-dismissed", 1);
+  }
+  loadSprayerDismissed() : boolean {
+    return (!!this.sdk._storage.getItem("sprayer-dismissed"));
+  }
+
 }
