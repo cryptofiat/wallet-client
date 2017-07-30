@@ -43,7 +43,7 @@ export class UserData {
   };
 
   //TODO: sdk implementation
-  hasInitialized() {
+  hasInitialized() : Promise<Boolean> {
     return Promise.resolve(!!(this.sdk.initiated()));
     //return this.storage.get(UserData.HAS_LOGGED_IN)
   };

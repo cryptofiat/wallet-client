@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Validators,  FormControl, FormBuilder, FormGroup } from '@angular/forms';
+import { Validators,  FormControl, FormBuilder, FormGroup, AsyncValidatorFn,ValidationErrors } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Events, NavParams, NavController,ToastController } from 'ionic-angular';
 import { SdkService } from "../../services/sdk-service";
@@ -10,8 +10,8 @@ import { RecipientSearchPage } from "../search/search";
 
 // Murky way to do validation, because Validator doesn't have access to instance scope and "this."
 
-export function amountValidator(availableSpend : Promise<number>, fg : FormGroup) {
-  return (c : FormControl) : {[key: string]: any} => {
+export function amountValidator(availableSpend : Promise<number>, fg : FormGroup) : AsyncValidatorFn {
+	return (c : FormControl) : Promise<ValidationErrors> => {
     return availableSpend.then( (avail) => {
 	    return ( (c.value * 100 + fg.controls.fee.value * 100) > avail) ? {'amount': 'Not enough to spend.'} : null;
     });

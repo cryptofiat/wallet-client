@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 
 import { IonicApp, IonicModule } from 'ionic-angular';
-import { Storage } from '@ionic/storage';
+import { BrowserModule } from '@angular/platform-browser';
+import { IonicStorageModule } from '@ionic/storage';
 
 import { CryptofiatWallet } from './app.component';
 
@@ -39,7 +40,9 @@ import { SdkService } from '../services/sdk-service.ts';
     TopupPage
   ],
   imports: [
-    IonicModule.forRoot(CryptofiatWallet)
+    BrowserModule,
+    IonicModule.forRoot(CryptofiatWallet),
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -57,6 +60,6 @@ import { SdkService } from '../services/sdk-service.ts';
     ImportKeyPage,
     TopupPage
   ],
-  providers: [UserData, Storage, SdkService, Transfer, TransferReference]
+  providers: [UserData, SdkService, Transfer, TransferReference]
 })
 export class AppModule { }

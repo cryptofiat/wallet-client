@@ -52,19 +52,22 @@ export class CryptofiatWallet {
       this.refreshMenu();
     });
     this.navigateToInitialPage();
+    //this.rootPage = TutorialPage;
   }
 
   private navigateToInitialPage() {
 
     this.userData.hasInitialized().then(hasInitialized => {
-      return hasInitialized ?
+      let page : any;
+      page = ( hasInitialized ) ?
         this.userData.hasLoggedIn().then(hasLoggedIn => hasLoggedIn ? TransfersPage : SignupPage) :
         this.userData.checkHasSeenTutorial().then(hasSeenTutorial => hasSeenTutorial ? SignupPage : TutorialPage);
-    }).then(page => {
-      this.rootPage = page;
       //this.enableMenu(page == LoggedInPage);
-      this.refreshMenu();
-    })
+      return page;
+      }).then( (page) => {
+		this.rootPage=page; 
+		this.refreshMenu();
+        });
 
   }
 
