@@ -15,7 +15,8 @@ import { TutorialPage } from '../pages/tutorial/tutorial';
 import { VerifyPage } from '../pages/verify/verify';
 import { SyncPage } from '../pages/sync/sync';
 import { SprayerPage } from '../pages/sprayer/sprayer';
-import { KeysPage,ImportKeyPage } from '../pages/keys/keys';
+import { KeysPage } from '../pages/keys/keys';
+import { ImportKeyPage } from '../pages/keys/import-key';
 import { RecipientSearchPage } from "../pages/search/search";
 
 import { UserData } from '../providers/user-data';
