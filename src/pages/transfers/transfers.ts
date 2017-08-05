@@ -1,13 +1,14 @@
 import {Component} from '@angular/core';
 import {Observable} from 'rxjs';
 
-import {Events, ToastController, NavController} from 'ionic-angular';
+import {Events, ToastController, NavController, Platform} from 'ionic-angular';
 import {SdkService} from '../../services/sdk-service';
 import {Transfer} from '../../providers/transfer-data';
 import {SendPage} from '../send/send';
 import {TopupPage} from '../topup/topup';
 import {SprayerPage} from '../sprayer/sprayer';
 import {AlertController} from 'ionic-angular';
+import { Push, PushToken } from '@ionic/cloud-angular';
 /*
  To learn how to use third party libs in an
  Ionic app check out our docs here: http://ionicframework.com/docs/v2/resources/third-party-libs/
@@ -32,6 +33,8 @@ export class TransfersPage {
               private toastCtrl: ToastController,
               public events: Events,
               public sdk: SdkService,
+	      public push: Push,
+	      public  plt: Platform,
               private alertCtrl: AlertController) {
     this.idCode = this.sdk.getEstonianIdCode();
     this.sprayer.dismissed = this.sdk.loadSprayerDismissed();
@@ -41,32 +44,35 @@ export class TransfersPage {
     });
     events.subscribe('tx:newPending', () => this.refreshPending());
 
-    if (!firebase.apps.length) {
-      this.subscribeOnNotifications(this.sdk.addresses());
+
+
+    // subscribe  to push notifications every time
+    if (plt.is('cordova')) {
+    	this.subscribeOnNotifications(this.sdk.addresses());
     }
-  }
+  };
 
   private subscribeOnNotifications(addresses) {
-    let config = {
-      apiKey: "AIzaSyBudVMsbc90ESr1cUHu_FoSmCt9VllrOeI",
-      authDomain: "euro2-f4201.firebaseapp.com",
-      databaseURL: "https://euro2-f4201.firebaseio.com",
-      messagingSenderId: "431246304717"
-    };
+  
+         this.push.register().then((t: PushToken) => {
+	      return this.push.saveToken(t);
+	      }).then((t: PushToken) => {
+	        this.sdk.registerToken(t.token, addresses);
+		});
 
-    firebase.initializeApp(config);
-
-    addresses.forEach((address) => {
-      firebase.database().ref('/push/' + address).on('child_added', (snapshot) => {
-        let alert = this.alertCtrl.create({
-          title: 'Notification',
-          subTitle: JSON.stringify(snapshot.val()),
-          buttons: ['Ok']
-        });
-        alert.present();
-        snapshot.ref.remove();
-      });
-    });
+	this.push.rx.notification()
+	  .subscribe((msg) => {
+	  	let tx = new Transfer();
+		tx = Object.assign(tx, msg.payload);
+	  	let alertx = this.alertCtrl.create({ 
+			title: msg.title,
+			subTitle: msg.text,
+			message: tx.ref.referenceText,
+			buttons: ['OK']
+			});
+		alertx.present();
+	      });
+  
   }
 
   loadData(refresher) {

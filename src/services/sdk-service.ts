@@ -255,8 +255,12 @@ export class SdkService {
   notifyEscrow(notification : EscrowNotification) : Promise<Object> {
       return this.sdk.notifyEscrow(notification);
   }
-  pushNotifyTransfer( tx : Transfer) : Promise<Object> {
-	return this.sdk.pushNotifyTransfer("0x" + tx.targetAccount, tx.transactionHash, tx.amount, tx.ref.senderIdCode, tx.ref.referenceText);
+  registerToken( token : string, addresses : Array<String>) : Promise<Object> {
+	return this.sdk.notifications.registerToken(token,  addresses);
+  }
+  notifyTransfer( tx : Transfer) : Promise<Object> {
+	console.log("inside service sdk", tx);
+	return this.sdk.notifications.notifyTransfer(tx);
   }
   totalSupplyEtherscan(contract : string) : Promise<number> {
       return this.sdk.totalSupplyEtherscan(contract);

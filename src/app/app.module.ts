@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { IonicApp, IonicModule } from 'ionic-angular';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicStorageModule } from '@ionic/storage';
+import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
 
 import { CryptofiatWallet } from './app.component';
 
@@ -23,6 +24,24 @@ import { UserData } from '../providers/user-data';
 import { Transfer, TransferReference } from '../providers/transfer-data';
 import { SdkService } from '../services/sdk-service.ts';
 
+const cloudSettings: CloudSettings = {
+	'core': {
+		'app_id': 'a5f0f656'
+	},
+	'push': {
+		'sender_id': '431246304717',
+		'pluginConfig': {
+			'ios': {
+				'badge': true,
+				'sound': true
+			},
+			'android': {
+				'iconColor': '#343434'
+			}
+		}
+	}
+
+};
 
 @NgModule({
   declarations: [
@@ -43,7 +62,8 @@ import { SdkService } from '../services/sdk-service.ts';
   imports: [
     BrowserModule,
     IonicModule.forRoot(CryptofiatWallet),
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    CloudModule.forRoot(cloudSettings)
   ],
   bootstrap: [IonicApp],
   entryComponents: [

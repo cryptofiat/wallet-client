@@ -81,6 +81,7 @@ export class SendPage {
     });
     this.sendForm.controls.euroAmount.setAsyncValidators(amountValidator(sdk.availableBalanceToSend(),this.sendForm));
     this.setFeeInput()
+
   }
 
   getSelectedFee() : number {
@@ -133,10 +134,21 @@ export class SendPage {
                     this.events.publish("tx:newPending");
 		    this.toastCtrl.create({message: 'submitted ' + this.txHash, duration: 3000});
 
+
+
 		    // This maybe should be done within the SDK directly on SEND command
 		    // Somewhere should be wait added - perhaps server should wait until mined before forwarding
 		    // TODO: enable below line when PUSH display implemented on clients
-		    //this.sdk.pushNotifyTransfer(pendingTx);
+
+		    console.log("starting to push notify");
+		    this.sdk.notifyTransfer(pendingTx);
+			//.then((res)=>{
+		    /*
+		      console.log("push success: ", res);
+		    }, (err) => {
+		      console.log("push err: ", err);
+		    });
+		    */
 
 		    if (this.idCodeCheck == "escrow" && this.send.escrowEmail) {
 		    	let notification : EscrowNotification = new EscrowNotification(pendingTx, this.send.escrowEmail);
