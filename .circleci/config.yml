@@ -40,4 +40,4 @@ jobs:
       # Run tests? :trollface:
 
       - deploy:
-          command: scp -R www/ ubuntu@wallet.euro2.ee:wallet-client-webbuild/
+          command: scp -r www/ ubuntu@wallet.euro2.ee:wallet-client-webbuild/
