@@ -39,5 +39,9 @@ jobs:
 
       # Run tests? :trollface:
 
+      - add_ssh_keys: 
+          fingerprints:
+            - "b5:55:0e:be:54:39:7c:8c:8e:8f:9b:8d:5a:a1:f0:75"
+
       - deploy:
-          command: scp -r www/ ubuntu@wallet.euro2.ee:wallet-client-webbuild/
+          command: scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -r www/ ubuntu@wallet.euro2.ee:wallet-client-webbuild/
