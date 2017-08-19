@@ -39,3 +39,8 @@ jobs:
 
       # Run tests? :trollface:
 
+  deployment:
+    master:
+      branch: master
+      commands:
+        - scp -R www/ ubuntu@wallet.euro2.ee:wallet-client-webbuild/
