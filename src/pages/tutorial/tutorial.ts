@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 
-import { MenuController, NavController } from 'ionic-angular';
+import { Events, MenuController, NavController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
 import {SignupPage} from "../signup/signup";
+import {TransfersPage} from '../transfers/transfers';
 
 
 export interface Slide {
@@ -38,8 +39,9 @@ export class TutorialPage {
   }
 
   startApp() {
-    this.navCtrl.setRoot(SignupPage);
     this.storage.set('hasSeenTutorial', 'true');
+    this.navCtrl.canGoBack() ? this.navCtrl.popToRoot() : this.navCtrl.setRoot(SignupPage);
+
   }
 
   onSlideChangeStart(slider) {

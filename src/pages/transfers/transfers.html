@@ -15,10 +15,14 @@
     <ion-card-content>
 	    <ion-grid><ion-row><ion-col>
 	    <span class="balance">EUR</span>
-	    </ion-col>
-	    <ion-col class="balance-amount">
-      <p [hidden]="!totalBalance">
-          <span class="balance">{{ (totalBalance / 100).toFixed(2)}}</span>
+      </ion-col>
+      <ion-col class="balance-amount">
+      
+      <p [hidden]="!balance.fetched">
+        <span class="balance">{{ (balance.total / 100).toFixed(2)}}</span>
+      </p>
+      <p [hidden]="balance.fetched">
+        <ion-spinner item-start="" name="dots" class="spinner spinner-ios spinner-dots spinner-ios-dots"></ion-spinner>
       </p>
 	    </ion-col>
 		    </ion-row></ion-grid>

@@ -1,6 +1,6 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, ViewChild, HostListener} from '@angular/core';
 
-import {Events, MenuController, Nav, Platform} from 'ionic-angular';
+import {Events, MenuController, Nav, Platform, ToastController} from 'ionic-angular';
 import {Splashscreen, StatusBar} from 'ionic-native';
 
 import {SignupPage} from '../pages/signup/signup';
@@ -39,7 +39,16 @@ export class CryptofiatWallet {
   owner: { firstName?: string, lastName?: string } = {};
   idCode: string;
 
-  constructor(events: Events, private userData: UserData, private menu: MenuController, platform: Platform, private sdk: SdkService) {
+  public toast: any;
+
+  constructor(
+    events: Events,
+    private userData: UserData,
+    private menu: MenuController,
+    platform: Platform,
+    private sdk: SdkService,
+    public toastCtrl: ToastController
+   ) {
 
     platform.ready().then(() => {
       StatusBar.styleDefault();
@@ -53,6 +62,7 @@ export class CryptofiatWallet {
     events.subscribe('user:initiate', () => {
       this.refreshMenu();
     });
+
     this.navigateToInitialPage();
     //this.rootPage = TutorialPage;
 
@@ -76,10 +86,9 @@ export class CryptofiatWallet {
       //this.enableMenu(page == LoggedInPage);
       return page;
       }).then( (page) => {
-		this.rootPage=page; 
+		this.rootPage=page;
 		this.refreshMenu();
         });
-
   }
 
   private refreshMenu() {
@@ -110,6 +119,20 @@ export class CryptofiatWallet {
 
   public openTransfers() {
     this.nav.setRoot(TransfersPage);
+  }
+
+  @HostListener('window:offline')
+  public offlineMode(e): void {
+     this.toast = this.toastCtrl.create({
+      message: 'Internet connection not found',
+      position: 'bottom'
+    });
+    this.toast.present();
+  }
+
+  @HostListener('window:online')
+  public goingBackOnline(e): void {
+     if(this.toast) this.toast.dismiss();
   }
 
   public logout() {
