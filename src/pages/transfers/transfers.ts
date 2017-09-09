@@ -19,7 +19,6 @@ import moment from 'moment';
 export class TransfersPage {
 
   SPRAYER_ADDRESS = "0xa5f1eea6d0a14c8e37cad8019f67b9ca19768f55" // CHANGE ME
-  owner: { firstName?: string, lastName?: string } = {};
   idCode: string;
   totalBalance: number;
   totalPending: number;
@@ -39,9 +38,6 @@ export class TransfersPage {
     this.idCode = this.sdk.getEstonianIdCode();
     this.sprayer.dismissed = this.sdk.loadSprayerDismissed();
     this.loadData(null);
-    this.sdk.nameFromIdAsync(this.idCode).then((nameJson) => {
-      this.owner = nameJson;
-    });
     events.subscribe('tx:newPending', () => this.refreshPending());
 
 

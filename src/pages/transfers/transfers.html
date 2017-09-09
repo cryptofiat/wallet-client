@@ -13,17 +13,17 @@
   </ion-refresher>
   <ion-card>
     <ion-card-content>
-      <p>
-        <span>{{ owner.firstName }} {{ owner.lastName }}</span>
-      </p>
-      <p>
-        Estonian ID: <span>{{idCode}}</span>
-      </p>
+	    <ion-grid><ion-row><ion-col>
+	    <span class="balance">EUR</span>
+	    </ion-col>
+	    <ion-col class="balance-amount">
       <p [hidden]="!totalBalance">
-        Balance: <span>{{ (totalBalance / 100).toFixed(2)}}</span> EUR
+          <span class="balance">{{ (totalBalance / 100).toFixed(2)}}</span>
       </p>
-      <p [hidden]="totalPending == 0">
-        Pending: <span>{{ (totalPending / 100).toFixed(2)}}</span> EUR
+	    </ion-col>
+		    </ion-row></ion-grid>
+      <p class="balance-amount" [hidden]="totalPending == 0">
+        (pending) <span>{{ (totalPending / 100).toFixed(2)}}</span>
       </p>
     </ion-card-content>
   </ion-card>

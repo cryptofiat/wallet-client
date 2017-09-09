@@ -8,6 +8,19 @@
 
   <ion-content class="outer-content">
     <ion-list>
+	    <ion-item no-lines padding-vertical>
+		    <ion-avatar item-left>
+			    <img src="https://s.ytimg.com/yts/img/avatar_720-vflYJnzBZ.png"/>
+		    </ion-avatar>
+		    <h2>
+		  	<span>{{ owner.firstName }} {{ owner.lastName }}</span>
+		    </h2>
+		    <p>
+		        <span>{{idCode}}</span>
+		    </p>
+		    <!--
+		    -->
+	    </ion-item>
       <ion-list-header>
         Account
       </ion-list-header>
@@ -35,6 +48,11 @@
 	   ion-item menuClose (click)="openKeys()">
         <ion-icon item-left name="key"></ion-icon>
         Keys
+      </button>
+      <button [hidden]="loginState != 'IN'"  
+	   ion-item menuClose (click)="pushTopupPage()">
+        <ion-icon item-left name="add-circle"></ion-icon>
+        Topup
       </button>
       <button [hidden]="loginState != 'IN'"  
 	   ion-item menuClose (click)="logout()">
