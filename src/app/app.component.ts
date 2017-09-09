@@ -23,7 +23,6 @@ export class CryptofiatWallet {
   @ViewChild(Nav) nav: Nav;
 
   public howToPages = [
-    {title: 'Topup', component: TopupPage, icon: 'add-circle'},
     {title: 'Tutorial', component: TutorialPage, icon: 'hammer'},
     {title: 'About', component: AboutPage, icon: 'information-circle'},
   ];
@@ -36,6 +35,9 @@ export class CryptofiatWallet {
   public loginState: string = "PRE_INIT";
 
   public rootPage: any;
+
+  owner: { firstName?: string, lastName?: string } = {};
+  idCode: string;
 
   constructor(events: Events, private userData: UserData, private menu: MenuController, platform: Platform, private sdk: SdkService) {
 
@@ -53,6 +55,15 @@ export class CryptofiatWallet {
     });
     this.navigateToInitialPage();
     //this.rootPage = TutorialPage;
+
+
+    this.idCode = this.sdk.getEstonianIdCode();
+
+    this.sdk.nameFromIdAsync(this.idCode).then((nameJson) => {
+      this.owner = nameJson;
+    });
+
+
   }
 
   private navigateToInitialPage() {
@@ -79,6 +90,10 @@ export class CryptofiatWallet {
 
   public pushPage(page) {
     this.nav.push(page);
+  }
+
+  public pushTopupPage() {
+    this.nav.setRoot(TopupPage);
   }
 
   public openKeys() {
