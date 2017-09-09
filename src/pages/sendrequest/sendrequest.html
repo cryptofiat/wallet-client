@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Send payment request</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+  <form [formGroup]="sendForm" (ngSubmit)="sendPaymentRequest(form)" novalidate>
+    <div padding>
+      <ion-list>
+        <ion-item>
+          <ion-label stacked>Amount</ion-label>
+          <ion-input placeholder="5.50"
+                     type="number"
+                     step=".01"
+                     formControlName="euroAmount"
+                     [(ngModel)]="send.euroAmount">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label stacked>Reference</ion-label>
+          <ion-input placeholder="for milk"
+                     formControlName="reference"
+                     [(ngModel)]="send.reference">
+          </ion-input>
+        </ion-item>
+      </ion-list>
+      
+      <button ion-button
+              [disabled]="!sendForm.valid || txState == 'submitting'"
+              type="submit"
+              block>
+        Send
+      </button>
+
+      <ion-list>
+        <ion-item *ngIf="txState == 'error'">
+          <ion-icon name="close" color="assertive" item-right></ion-icon>
+          Error: {{err}}
+        </ion-item>
+        <ion-item *ngIf="txState == 'submitting'" item-right>
+          <ion-icon name="upload" color="positive"></ion-icon>
+          Sending
+        </ion-item>
+        <ion-item *ngIf="txState == 'submitted'">
+          <a class="item item-icon-left item-text-wrap" href="https://etherscan.io/tx/{{txHash}}" target="_blank">
+            <ion-icon name="clock" color="energized" item-right></ion-icon>
+            Submitted <span color="energized" *ngIf="pendingRefresh">refreshing ..</span>
+            <h6>{{txHash}}</h6>
+          </a>
+        </ion-item>
+        <ion-item *ngIf="txState == 'confirmed'">
+          <a class="item item-icon-left item-text-wrap" href="https://etherscan.io/tx/{{txHash}}">
+            <ion-icon name="checkmark" color="balanced"></ion-icon>
+            Confirmed
+            <h6>{{txHash}}</h6>
+          </a>
+        </ion-item>
+
+      </ion-list>
+    </div>
+  </form>
+</ion-content>

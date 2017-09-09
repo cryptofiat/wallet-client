@@ -1,0 +1,69 @@
+$categories: (
+ ionic: color($colors, primary),
+ angular: #AC282B,
+ communication: #8E8D93,
+ tooling: #FE4C52,
+ services: #FD8B2D,
+ design: #FED035,
+ workshop: #69BB7B,
+ food: #3BC7C4,
+ documentation: #B16BE3,
+ navigation: #6600CC,
+);
+
+@function auxiliary-categories() {
+  @return map-remove($categories);
+}
+
+page-transfers {
+
+.transactionItem {
+  text-decoration:none;
+  color:inherit;
+} 
+
+.transactionItem .idCode {
+  font-size: 85%;
+  color: #999;
+  width: 100%;
+} 
+
+.transactionItem a {
+  font-size: 70%;
+  text-decoration:none;
+}
+
+.transactionItem .referenceText {
+  font-size: 90%;
+  color:#777;
+} 
+
+.transactionItem .fee {
+  font-size: 70%;
+  float:left;
+  width:25%;
+} 
+
+.transactionItem .timeAgo {
+  font-size: 70%;
+  float:right;
+  text-align:right;
+  width:25%;
+} 
+
+.transactionItem .timeLong {
+  font-size: 70%;
+  width:50%;
+  text-align:center;
+  float:left;
+} 
+
+.inboundAmount {
+  color: green;
+}
+
+.outboundAmount {
+  color: red;
+}
+
+}

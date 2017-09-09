@@ -78,6 +78,13 @@ export class SdkService {
     });
   }
 
+  sendPaymentRequest(amount : number, ref : string) : Promise<SendResponse> {
+    return this.sdk.sendPaymentRequest(amount, ref).then((response) => {
+       return response;
+    });  
+  }
+
+
   sendAsync(toAddress, amount, ref) : Promise<Object> {
     return this.sdk.sendAsync(toAddress, amount, ref, {})
   }

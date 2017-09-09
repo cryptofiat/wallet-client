@@ -19,6 +19,8 @@ import { SprayerPage } from '../pages/sprayer/sprayer';
 import { KeysPage } from '../pages/keys/keys';
 import { ImportKeyPage } from '../pages/keys/import-key';
 import { RecipientSearchPage } from "../pages/search/search";
+import { RequestsPage } from "../pages/requests/requests";
+import { SendRequestPage } from '../pages/sendrequest/sendrequest';
 
 import { UserData } from '../providers/user-data';
 import { Transfer, TransferReference } from '../providers/transfer-data';
@@ -57,7 +59,9 @@ const cloudSettings: CloudSettings = {
     RecipientSearchPage,
     SprayerPage,
     ImportKeyPage,
-    TopupPage
+    TopupPage,
+    RequestsPage,
+    SendRequestPage
   ],
   imports: [
     BrowserModule,
@@ -79,7 +83,9 @@ const cloudSettings: CloudSettings = {
     SyncPage,
     SprayerPage,
     ImportKeyPage,
-    TopupPage
+    TopupPage,
+    RequestsPage,
+    SendRequestPage
   ],
   providers: [UserData, SdkService, Transfer, TransferReference]
 })

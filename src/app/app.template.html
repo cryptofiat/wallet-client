@@ -49,6 +49,10 @@
         <ion-icon item-left name="key"></ion-icon>
         Keys
       </button>
+      <button [hidden]="loginState != 'IN'" ion-item menuClose (click)="openRequests()">
+	<ion-icon item-left name="send"></ion-icon>
+	Requests
+      </button>
       <button [hidden]="loginState != 'IN'"  
 	   ion-item menuClose (click)="pushTopupPage()">
         <ion-icon item-left name="add-circle"></ion-icon>
