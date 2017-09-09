@@ -93,7 +93,6 @@ export class TransfersPage {
     this.sdk.balanceTotalAsync().then((amount) => {
       this.balance.total = amount;
       this.balance.fetched = true;
-      if(!refresher) this.loader.dismiss();
     })
     this.refreshPending();
 
@@ -106,9 +105,7 @@ export class TransfersPage {
 	this.refreshSprayer();
       }
       this.refreshing = false;
-      if (refresher) {
-        refresher.complete();
-      }
+      refresher ? refresher.complete() : this.loader.dismiss();
     })
   }
 
