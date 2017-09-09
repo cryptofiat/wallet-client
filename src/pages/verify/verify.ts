@@ -24,6 +24,7 @@ export class VerifyPage {
   public escrow : boolean;
   public iderror : CommonError;
   private mobiilIdForm : FormGroup;
+  public hiddenAdvanced : boolean = true;
 
   constructor(private events : 
 		Events, private toastCtrl: ToastController, 
@@ -70,6 +71,9 @@ export class VerifyPage {
 	      this.refreshApprovals();
 	      this.pendingPolling();
             });
+  }
+  toggleAdvanced() {
+  	this.hiddenAdvanced = !this.hiddenAdvanced;
   }
   checkPendingEscrowTransfers(pendingBeforeAmount : number) {
               let pendingAfter : number = this.sdk.getPendingTotal();
