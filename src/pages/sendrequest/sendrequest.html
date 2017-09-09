@@ -13,6 +13,26 @@
     <div padding>
       <ion-list>
         <ion-item>
+          <ion-label stacked>Estonian ID</ion-label>
+          <ion-input placeholder="38003029210"
+                     (input)="idCodeChecker()"
+                     formControlName="eId"
+                     [(ngModel)]="send.eId">
+          </ion-input>
+          <ion-icon color="positive" name="clock"
+                    *ngIf="idCodeCheck == 'loading'" item-right></ion-icon>
+          <ion-icon color="secondary" name="checkmark"
+                    *ngIf="idCodeCheck == 'yes'" item-right></ion-icon>
+          <ion-icon color="danger" name="close"
+                    *ngIf="idCodeCheck == 'no'" item-right></ion-icon>
+          <ion-icon color="{{ (escrowCreate) ? 'danger' : 'secondary'}}" name="lock"
+                    *ngIf="idCodeCheck == 'escrow'" item-right></ion-icon>
+          <button ion-button item-right outline type="button" (click)="showSearch()">
+            <ion-icon name="search"></ion-icon>
+            Search
+          </button>
+        </ion-item>
+        <ion-item>
           <ion-label stacked>Amount</ion-label>
           <ion-input placeholder="5.50"
                      type="number"
