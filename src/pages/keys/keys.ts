@@ -3,11 +3,11 @@ import { SdkService } from "../../services/sdk-service";
 import { VerifyPage } from "../verify/verify";
 import { SyncPage } from "../sync/sync";
 import { ImportKeyPage } from "./import-key";
-import { NavController, ToastController } from 'ionic-angular';
+import { NavController, ToastController, LoadingController } from 'ionic-angular';
 
 @Component({ selector: 'page-keys', templateUrl: 'keys.html' })
 export class KeysPage {
-
+  loader: any;
   addresses : {
      address? : string,
      balance? : number,
@@ -18,17 +18,28 @@ export class KeysPage {
   
   constructor(
       private navCtrl: NavController,
-      private sdk: SdkService
+      private sdk: SdkService,
+      private loadingCtrl: LoadingController,
   ) {
+
       this.refreshKeys(null);
   }
 
-  refreshKeys(refresher) {
+  ionViewDidLoad () {
+    this.loader = this.loadingCtrl.create({
+      content: 'Loading keys...',
+    });
+    this.loader.present();
+  }
 
-      this.sdk.contractDataAsync().then( (response) => {
-	  this.addresses = response;
-	  if (refresher) { refresher.complete(); }
-      })
+  refreshKeys(refresher) {
+    this.sdk.contractDataAsync().then( (response) => {
+	    this.addresses = response;
+      console.log(response);
+      if (this.loader) this.loader.dismiss();
+      if (refresher) { refresher.complete(); }
+     
+     })
 
   }
 

@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 
-import { MenuController, NavController } from 'ionic-angular';
+import { Events, MenuController, NavController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
 import {SignupPage} from "../signup/signup";
+import {TransfersPage} from '../transfers/transfers';
 
 
 export interface Slide {
@@ -17,7 +18,7 @@ export class TutorialPage {
   slides: Slide[];
   showSkip = true;
 
-  constructor(public navCtrl: NavController, public menu: MenuController, public storage: Storage) {
+  constructor(public navCtrl: NavController, public menu: MenuController, public storage: Storage, public events: Events) {
     this.slides = [
       {
         title: 'Welcome to <b>EURO 2.0</b>',
@@ -38,8 +39,8 @@ export class TutorialPage {
   }
 
   startApp() {
-    this.navCtrl.setRoot(SignupPage);
-    this.storage.set('hasSeenTutorial', 'true');
+    this.storage.set('hasSeenTutorial', 'false');
+    this.events.publish('invalidateRoot');
   }
 
   onSlideChangeStart(slider) {
