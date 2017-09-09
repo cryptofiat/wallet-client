@@ -91,25 +91,30 @@
       Completed
     </ion-list-header>
     <ion-item *ngFor="let tx of transfers" class="transactionItem">
-	<div  (click)="tx.expanded = !tx.expanded" class="">
-        <span class="{{ tx.signedAmount > 0 ? 'inboundAmount' : 'outboundAmount'}}">{{ (tx.signedAmount / 100).toFixed(2)  }}</span>
-        <span *ngIf="tx.ref.senderIdCode">{{ tx.counterPartyFirstName }}</span>
-        <span *ngIf="tx.ref.senderIdCode">{{ tx.counterPartyLastName }}</span>
-        <span *ngIf="tx.ref.receiverIBAN">{{ tx.ref.recipientName }}</span>
-        <p [hidden]="true" class="hash">{{ tx.counterPartyAddress }}</p>
-        <div style="position:relative;">
+	    <div  (click)="tx.expanded = !tx.expanded" class="">
+		<div class="txline">
+			<span *ngIf="tx.ref.senderIdCode">{{ tx.counterPartyFirstName }}</span>
+			<span *ngIf="tx.ref.senderIdCode">{{ tx.counterPartyLastName }}</span>
+			<span *ngIf="tx.ref.receiverIBAN">{{ tx.ref.recipientName }}</span>
+			<div class="amount">
+				<span class="{{ tx.signedAmount > 0 ? 'inboundAmount' : 'outboundAmount'}}">{{ (tx.signedAmount / 100).toFixed(2)  }}</span>
+			</div>
+		</div>
+        <div class="txline">
 	  <span *ngIf="tx.ref.referenceText" class="referenceText item-text-wrap">{{ tx.ref.referenceText }}</span>
-          <div class="timeAgo" style="position: absolute; bottom: 0; width:100%" [hidden]="tx.expanded">{{ getFormattedDate(tx) }}</div>
+          <div class="timeAgo"  [hidden]="tx.expanded">{{ getFormattedDate(tx) }}</div>
 	</div>
 	</div>
-	<div margin-vertical [hidden]="!tx.expanded">
+	<div margin-vertical [hidden]="!tx.expanded" class="tx-expanded">
+	  <div>
           <span *ngIf="tx.ref.receiverIBAN" class="idCode">{{ tx.ref.receiverIBAN }}</span>
           <span *ngIf="tx.ref.senderIdCode" class="idCode">{{ tx.counterPartyIdCode }}</span>
-	  <br>
-          <a target="_blank" href="http://etherscan.io/tx/{{tx.transactionHash}}">
-	    On blockchain
+	  </div>
+	  <div>
+		  <a target="_blank" href="http://etherscan.io/tx/{{tx.transactionHash}}">
+	    on blockchain
           </a>
-	  <br>
+	  </div>
 	  <button (click)="sendRepeatRefund(tx)" [hidden]="tx.signedAmount > 0  || (!tx.counterPartyIdCode && !tx.ref.receiverIBAN)" ion-button outline> Repeat </button>
 	  <button (click)="sendRepeatRefund(tx)" [hidden]="tx.signedAmount < 0 || !tx.counterPartyIdCode" ion-button outline> Refund </button>
 	</div>
