@@ -87,6 +87,9 @@
         </button>
       </div>
     </ion-item>
+    <ion-item text-center [hidden]="!refreshing">
+        <ion-spinner name="dots" class="spinner spinner-ios spinner-dots spinner-ios-dots"></ion-spinner>
+    </ion-item>
     <ion-list-header [hidden]="!pendingTransfers || pendingTransfers.length < 1">
       Completed
     </ion-list-header>

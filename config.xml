@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="ee.euro2.wallet" version="0.0.17" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="ee.euro2.wallet" version="0.0.18" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Euro 2.0 Wallet</name>
     <description>
         A wallet client for the Estonian Euro 2.0 crypto-fiat scheme.
@@ -102,7 +102,7 @@
     <plugin name="cordova-plugin-splashscreen" spec="^4.0.3" />
     <plugin name="cordova-plugin-statusbar" spec="~2.2.0" />
     <plugin name="cordova-plugin-whitelist" spec="~1.0.0" />
-    <plugin name="cordova-plugin-wkwebview-engine" spec="https://github.com/driftyco/cordova-plugin-wkwebview-engine.git" />
+    <plugin name="cordova-plugin-wkwebview-engine" spec="git+https://github.com/driftyco/cordova-plugin-wkwebview-engine.git" />
     <plugin name="ionic-plugin-keyboard" spec="~2.2.1" />
     <plugin name="phonegap-plugin-push" spec="^2.0.0-rc5">
         <variable name="SENDER_ID" value="431246304717" />

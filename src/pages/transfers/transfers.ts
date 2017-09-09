@@ -81,10 +81,6 @@ export class TransfersPage {
   }
 
   ionViewDidLoad () {
-    this.loader = this.loadingCtrl.create({
-      content: 'Getting your balance...',
-    });
-    this.loader.present();
   }
 
   loadData(refresher) {
@@ -105,7 +101,7 @@ export class TransfersPage {
 	this.refreshSprayer();
       }
       this.refreshing = false;
-      refresher ? refresher.complete() : this.loader.dismiss();
+      refresher.complete();
     })
   }
 
