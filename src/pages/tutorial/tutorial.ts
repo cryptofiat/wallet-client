@@ -39,8 +39,9 @@ export class TutorialPage {
   }
 
   startApp() {
-    this.storage.set('hasSeenTutorial', 'false');
-    this.navCtrl.popToRoot();
+    this.storage.set('hasSeenTutorial', 'true');
+    this.navCtrl.canGoBack() ? this.navCtrl.popToRoot() : this.navCtrl.setRoot(SignupPage);
+
   }
 
   onSlideChangeStart(slider) {

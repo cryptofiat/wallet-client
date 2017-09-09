@@ -89,8 +89,6 @@ export class CryptofiatWallet {
 		this.rootPage=page;
 		this.refreshMenu();
         });
-    console.log(navigator.onLine);
-
   }
 
   private refreshMenu() {
