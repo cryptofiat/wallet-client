@@ -36,6 +36,10 @@
         <ion-icon item-left name="key"></ion-icon>
         Keys
       </button>
+      <button [hidden]="loginState != 'IN'" ion-item menuClose (click)="openRequests()">
+	<ion-icon item-left name="send"></ion-icon>
+	Requests
+      </button>
       <button [hidden]="loginState != 'IN'"  
 	   ion-item menuClose (click)="logout()">
         <ion-icon item-left name="log-out"></ion-icon>

@@ -13,7 +13,7 @@ import {KeysPage} from "../pages/keys/keys";
 import {AboutPage} from "../pages/about/about";
 import {TopupPage} from "../pages/topup/topup";
 import {TutorialPage} from '../pages/tutorial/tutorial';
-
+import {RequestsPage} from '../pages/requests/requests';
 
 @Component({
   templateUrl: 'app.template.html'
@@ -84,6 +84,10 @@ export class CryptofiatWallet {
   public openKeys() {
     this.nav.setRoot(KeysPage);
   }
+
+  public openRequests() {
+    this.nav.setRoot(RequestsPage);
+  } 
 
   public openSignUp() {
     this.nav.setRoot(SignupPage);
