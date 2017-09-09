@@ -37,7 +37,7 @@ export class KeysPage {
       this.addresses = response;
       refresher ? refresher.complete() : this.loader.dismiss()
      
-     })
+     }).catch(err => console.log(err));
 
   }
 
