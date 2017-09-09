@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {Observable} from 'rxjs';
 
-import {Events, ToastController, NavController, Platform} from 'ionic-angular';
+import {Events, ToastController, NavController, Platform, LoadingController} from 'ionic-angular';
 import {SdkService} from '../../services/sdk-service';
 import {Transfer} from '../../providers/transfer-data';
 import {SendPage} from '../send/send';
@@ -15,12 +15,20 @@ import { Push, PushToken } from '@ionic/cloud-angular';
  */
 import moment from 'moment';
 
+interface Balance  {
+  total: number,
+  fetched: boolean,
+}
+
 @Component({selector: 'page-transfers', templateUrl: 'transfers.html'})
 export class TransfersPage {
-
+  loader: any;
   SPRAYER_ADDRESS = "0xa5f1eea6d0a14c8e37cad8019f67b9ca19768f55" // CHANGE ME
   idCode: string;
-  totalBalance: number;
+  balance: Balance ={
+    total: 0,
+    fetched: false,
+  };
   totalPending: number;
   enableRemoveButtonTime: number = Date.now() - 600000; // allow stop watching after 10min
   transfers: Transfer[] = [];
@@ -34,7 +42,8 @@ export class TransfersPage {
               public sdk: SdkService,
 	      public push: Push,
 	      public  plt: Platform,
-              private alertCtrl: AlertController) {
+              private alertCtrl: AlertController,
+              private loadingCtrl: LoadingController) {
     this.idCode = this.sdk.getEstonianIdCode();
     this.sprayer.dismissed = this.sdk.loadSprayerDismissed();
     this.loadData(null);
@@ -71,11 +80,21 @@ export class TransfersPage {
   
   }
 
+  ionViewDidLoad () {
+    this.loader = this.loadingCtrl.create({
+      content: 'Getting your balance...',
+    });
+    this.loader.present();
+  }
+
   loadData(refresher) {
     this.refreshing = true;
+    this.balance.fetched = false;
     this.sdk.balanceTotalAsync().then((amount) => {
-      this.totalBalance = amount;
-    });
+      this.balance.total = amount;
+      this.balance.fetched = true;
+      if(!refresher) this.loader.dismiss();
+    })
     this.refreshPending();
 
     this.transfers = [];
