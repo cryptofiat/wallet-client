@@ -34,10 +34,8 @@ export class KeysPage {
 
   refreshKeys(refresher) {
     this.sdk.contractDataAsync().then( (response) => {
-	    this.addresses = response;
-      console.log(response);
-      if (this.loader) this.loader.dismiss();
-      if (refresher) { refresher.complete(); }
+      this.addresses = response;
+      refresher ? refresher.complete() : this.loader.dismiss()
      
      })
 

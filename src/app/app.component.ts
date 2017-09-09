@@ -55,7 +55,7 @@ export class CryptofiatWallet {
     //this.rootPage = TutorialPage;
   }
 
-  private navigateToInitialPage = () => {
+  private navigateToInitialPage() {
 
     this.userData.hasInitialized().then(hasInitialized => {
       let page : any;
@@ -65,9 +65,9 @@ export class CryptofiatWallet {
       //this.enableMenu(page == LoggedInPage);
       return page;
       }).then( (page) => {
-        this.nav.setRoot(page)
-		    this.refreshMenu();
-    });
+		this.rootPage=page;
+		this.refreshMenu();
+        });
 
   }
 

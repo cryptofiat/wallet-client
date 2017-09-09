@@ -18,7 +18,7 @@ export class TutorialPage {
   slides: Slide[];
   showSkip = true;
 
-  constructor(public navCtrl: NavController, public menu: MenuController, public storage: Storage, public events: Events) {
+  constructor(public navCtrl: NavController, public menu: MenuController, public storage: Storage) {
     this.slides = [
       {
         title: 'Welcome to <b>EURO 2.0</b>',
@@ -40,7 +40,7 @@ export class TutorialPage {
 
   startApp() {
     this.storage.set('hasSeenTutorial', 'false');
-    this.events.publish('invalidateRoot');
+    this.navCtrl.popToRoot();
   }
 
   onSlideChangeStart(slider) {
