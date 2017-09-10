@@ -25,6 +25,7 @@ import { SendRequestPage } from '../pages/sendrequest/sendrequest';
 import { UserData } from '../providers/user-data';
 import { Transfer, TransferReference } from '../providers/transfer-data';
 import { SdkService } from '../services/sdk-service.ts';
+import { InitialActionService } from '../services/initialAction-service.ts';
 
 import { QRCodeModule } from 'angular2-qrcode';
 
@@ -90,6 +91,6 @@ const cloudSettings: CloudSettings = {
     RequestsPage,
     SendRequestPage
   ],
-  providers: [UserData, SdkService, Transfer, TransferReference]
+  providers: [UserData, SdkService, Transfer, TransferReference, InitialActionService]
 })
 export class AppModule { }
