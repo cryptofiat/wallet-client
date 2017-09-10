@@ -107,4 +107,22 @@
     <plugin name="phonegap-plugin-push" spec="^2.0.0-rc5">
         <variable name="SENDER_ID" value="431246304717" />
     </plugin>
+    <plugin name="ionic-plugin-deeplinks" spec="^1.0.15">
+        <variable name="URL_SCHEME" value="euro2" />
+        <variable name="DEEPLINK_SCHEME" value="http" />
+        <variable name="DEEPLINK_HOST" value="wallet.euro2.ee" />
+        <variable name="ANDROID_PATH_PREFIX" value="/" />
+        <variable name="ANDROID_2_PATH_PREFIX" value="/" />
+        <variable name="ANDROID_3_PATH_PREFIX" value="/" />
+        <variable name="ANDROID_4_PATH_PREFIX" value="/" />
+        <variable name="ANDROID_5_PATH_PREFIX" value="/" />
+        <variable name="DEEPLINK_2_SCHEME" value=" " />
+        <variable name="DEEPLINK_2_HOST" value=" " />
+        <variable name="DEEPLINK_3_SCHEME" value=" " />
+        <variable name="DEEPLINK_3_HOST" value=" " />
+        <variable name="DEEPLINK_4_SCHEME" value=" " />
+        <variable name="DEEPLINK_4_HOST" value=" " />
+        <variable name="DEEPLINK_5_SCHEME" value=" " />
+        <variable name="DEEPLINK_5_HOST" value=" " />
+    </plugin>
 </widget>

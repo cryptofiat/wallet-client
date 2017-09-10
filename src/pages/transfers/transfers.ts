@@ -101,10 +101,10 @@ export class TransfersPage {
 	this.refreshSprayer();
       }
       this.refreshing = false;
-      refresher ? refresher.complete() : this.loader.dismiss();
+      refresher ? refresher.complete() : null;
     }).catch(err => {
       console.log(err);
-      refresher ? refresher.complete() : this.loader.dismiss();
+      refresher ? refresher.complete() : null;
     })
   }
 

@@ -2,6 +2,7 @@ import {Component, ViewChild, HostListener} from '@angular/core';
 
 import {Events, MenuController, Nav, Platform, ToastController} from 'ionic-angular';
 import {Splashscreen, StatusBar} from 'ionic-native';
+import { Deeplinks } from '@ionic-native/deeplinks';
 
 import {SignupPage} from '../pages/signup/signup';
 import {SendPage} from '../pages/send/send';
@@ -52,12 +53,20 @@ export class CryptofiatWallet {
     platform: Platform,
     private sdk: SdkService,
     public toastCtrl: ToastController,
-    public initialAction: InitialActionService
+    public deeplinks: Deeplinks,
    ) {
 
     platform.ready().then(() => {
       StatusBar.styleDefault();
       Splashscreen.hide();
+      deeplinks.routeWithNavController(this.nav, {
+        'about-us': AboutPage,
+	':idCode/payment': SendRequestPage
+	}).subscribe( (match) =>{
+	  console.log("deeplink match ", match);
+	}, (nomatch) => {
+	  console.log("no  deeplink match ", nomatch);
+	});
     });
 
     events.subscribe('invalidateRoot', this.navigateToInitialPage);
@@ -86,7 +95,6 @@ export class CryptofiatWallet {
 
 
   private navigateToInitialPage() {
-    this.requestedAction = this.initialAction.requestedAction;
 
     this.userData.hasInitialized().then(hasInitialized => {
       let page : any;
@@ -101,7 +109,7 @@ export class CryptofiatWallet {
         if (page === TransfersPage && this.requestedAction && this.requestedAction.action === 'payment') {
           const { amount, idCode, message } = this.requestedAction.query;
           this.nav.setRoot(SendPage, {
-            amount: Number(amount) * 100,
+            amount: Number(amount),
             idCode,
             referenceText: message
           })

@@ -98,7 +98,7 @@
           </ion-input>
         </ion-item>
         <ion-item class="errortext"
-                  [hidden]="!sendForm.controls.euroAmount.value || sendForm.controls.euroAmount.valid || sendForm.controls.euroAmount.pristine">
+                  [hidden]="!sendForm.controls.euroAmount.value || sendForm.controls.euroAmount.valid ">
           You can send up to € {{(availableToSend - getSelectedFee()).toFixed(2)}}
         </ion-item>
         <ion-item>
