@@ -28,6 +28,8 @@ jobs:
 
       - run: npm install
 
+      - run: npm update
+
       - save_cache:
           paths:
             - node_modules
