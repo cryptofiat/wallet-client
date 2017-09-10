@@ -23,7 +23,7 @@ interface Balance  {
 @Component({selector: 'page-transfers', templateUrl: 'transfers.html'})
 export class TransfersPage {
   loader: any;
-  SPRAYER_ADDRESS = "0xa5f1eea6d0a14c8e37cad8019f67b9ca19768f55" // CHANGE ME
+  SPRAYER_ADDRESS = "0x90d0e61c5846780a6608bacbd77633b067bb13fc"
   idCode: string;
   balance: Balance ={
     total: 0,
@@ -34,7 +34,7 @@ export class TransfersPage {
   transfers: Transfer[] = [];
   pendingTransfers: Transfer[] = [];
   refreshing: boolean = false;
-  sprayer: {dismissed : boolean, hasOutgoing : boolean, hasIncome : boolean} = { dismissed : false, hasOutgoing : false, hasIncome : false}; 
+  sprayer: {dismissed : boolean, hasOutgoing : boolean, hasIncome : boolean} = { dismissed : false, hasOutgoing : false, hasIncome : false};
 
   constructor(public navCtrl: NavController,
               private toastCtrl: ToastController,
@@ -58,7 +58,7 @@ export class TransfersPage {
   };
 
   private subscribeOnNotifications(addresses) {
-  
+
          this.push.register().then((t: PushToken) => {
 	      return this.push.saveToken(t);
 	      }).then((t: PushToken) => {
@@ -69,7 +69,7 @@ export class TransfersPage {
 	  .subscribe((msg) => {
 	  	let tx = new Transfer();
 		tx = Object.assign(tx, msg.payload);
-	  	let alertx = this.alertCtrl.create({ 
+	  	let alertx = this.alertCtrl.create({
 			title: msg.title,
 			subTitle: msg.text,
 			message: tx.ref.referenceText,
@@ -77,14 +77,10 @@ export class TransfersPage {
 			});
 		alertx.present();
 	      });
-  
+
   }
 
   ionViewDidLoad () {
-    this.loader = this.loadingCtrl.create({
-      content: 'Getting your balance...',
-    });
-    this.loader.present();
   }
 
   loadData(refresher) {
@@ -115,13 +111,13 @@ export class TransfersPage {
   refreshSprayer() {
     if (!this.sprayer.dismissed) {
       // check if hasIncome
-	if (this.transfers.filter( (tx) => 
+	if (this.transfers.filter( (tx) =>
 		tx.sourceAccount.toLowerCase().indexOf(this.SPRAYER_ADDRESS.toLowerCase()) > -1
 	).length) {
 		this.sprayer.hasIncome = true;
 	};
       // check if any outgoing tx
-	if (this.transfers.filter( (tx) => 
+	if (this.transfers.filter( (tx) =>
 		tx.signedAmount < 0
 	).length) {
 		this.sprayer.hasOutgoing = true;
@@ -155,10 +151,10 @@ export class TransfersPage {
   }
 
   sendRepeatRefund(tx : Transfer) {
-    this.navCtrl.push(SendPage, { 
-	amount: tx.amount, 
-	referenceText: tx.ref.referenceText, 
-	idCode: tx.counterPartyIdCode 
+    this.navCtrl.push(SendPage, {
+	amount: tx.amount,
+	referenceText: tx.ref.referenceText,
+	idCode: tx.counterPartyIdCode
 	});
   }
 

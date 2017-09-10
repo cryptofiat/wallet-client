@@ -10,23 +10,39 @@
 <ion-content>
   <div padding>
         <div [hidden]="!(tab == 'ACCOUNT_CREATED')">
-            <div>
-                <p>A new key has been generated on this device with the address:</p>
-                <p><b>{{publicAddress}}</b></p>
-                <p>You need to link your Estonian ID to start receiving money to this address.</p>
-           </div>
+	   <ion-list>
+            <ion-item text-wrap>
+                Euro 2.0 is only available to Estonian ID holders. 
+		You need to link your ID to start sending and receiving money.
+           </ion-item>
+		   <ion-item (click)="toggleAdvanced()">
+				   Advanced
+				   <ion-icon item-right
+		name="{{ (hiddenAdvanced) ? 'eye': 'eye-off'}}">
+				   </ion-icon>
+		   </ion-item>
+			   <ion-item item-content [hidden]="hiddenAdvanced">
+				<ion-label stacked>
+				      Address to be approved
+			   	</ion-label>
+				<ion-textarea value="{{publicAddress}}">
+				</ion-textarea>
+			   </ion-item>
+	   </ion-list>
             <form name="confirmDetailsForm">
-                <button ion-button id="verifyMobileButton"
+                <button ion-button icon-left margin-vertical id="verifyMobileButton"
                         type="submit"
                         class="button button-positive button-block"
                         (click)="showTab('VERIFY_MOBILE')">
+			<ion-icon name="phone-portrait"></ion-icon>
                     Mobiil-ID
                 </button>
                 <button id="verifyCardButton"
-			ion-button
+			ion-button icon-left
                         type="submit"
                         class="button button-positive button-block"
                         (click)="showTab('VERIFY_CARD')">
+			<ion-icon name="card"></ion-icon>
                     ID Card
                 </button>
                 <button id="verifyBankButton"

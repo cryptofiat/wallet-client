@@ -33,20 +33,18 @@
   </div>
   <div [hidden]="isPasswordSet() || createNewClicked">
     <div padding-vertical>
-      <p>
-        Welcome.
-      </p>
-      Create a new key if you have not used Euro 2.0 before, otherwise sync your keys from another device.
     </div>
     <br>
     <br>
-    <button ion-button id="createButton" class="button button-positive  button-block" (click)="createNew()">Create a new
-      key
+    <button ion-button id="createButton" class="button button-positive  button-block" (click)="createNew()">
+      I'm new, get started
     </button>
-    <button ion-button id="syncButton"
+
+    <button margin-top ion-button id="syncButton"
             class="button button-positive button-block"
             [disabled]="false"
-            (click)="syncFromServer()" outline>Sync from server
+            (click)="syncFromServer()" outline>
+	    	I have an account
     </button>
   </div>
   <div [hidden]="isPasswordSet() || !createNewClicked">

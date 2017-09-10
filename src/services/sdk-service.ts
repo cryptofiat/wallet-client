@@ -78,10 +78,8 @@ export class SdkService {
     });
   }
 
-  sendPaymentRequest(amount : number, ref : string) : Promise<SendResponse> {
-    return this.sdk.sendPaymentRequest(amount, ref).then((response) => {
-       return response;
-    });  
+  sendPaymentRequest(amount : number, ref : string) : any {
+    return this.sdk.sendPaymentRequest(amount, ref);
   }
 
 
@@ -280,4 +278,7 @@ export class SdkService {
     return (!!this.sdk._storage.getItem("sprayer-dismissed"));
   }
 
+  spray(idCode : string) : Promise<string> {
+    return this.sdk.spray(idCode)
+  }
 }
