@@ -23,7 +23,7 @@ interface Balance  {
 @Component({selector: 'page-transfers', templateUrl: 'transfers.html'})
 export class TransfersPage {
   loader: any;
-  SPRAYER_ADDRESS = "0x90d0e61c5846780a6608bacbd77633b067bb13fc"
+  SPRAYER_ADDRESS = "0x90d0e61c5846780a6608bacbd77633b067bb13fc";
   idCode: string;
   balance: Balance ={
     total: 0,
