@@ -49,6 +49,7 @@ page-transfers {
   float:right;
   text-align:right;
   width:25%;
+  margin-top:2px;
 } 
 
 .transactionItem .timeLong {
@@ -76,4 +77,24 @@ page-transfers {
   text-align: right;
 }
 
+div.txline {
+	margin-top: 3px;
+}
+
+div.txline:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+div.amount {
+	float: right;
+}
+
+
+div.tx-expanded {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
 }
