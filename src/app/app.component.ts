@@ -8,6 +8,7 @@ import {SendPage} from '../pages/send/send';
 import {TransfersPage} from '../pages/transfers/transfers';
 
 import {SdkService} from '../services/sdk-service';
+import {InitialActionService} from '../services/initialAction-service';
 import {UserData} from '../providers/user-data';
 import {KeysPage} from "../pages/keys/keys";
 import {AboutPage} from "../pages/about/about";
@@ -35,6 +36,7 @@ export class CryptofiatWallet {
   public loginState: string = "PRE_INIT";
 
   public rootPage: any;
+  public requestedAction : any;
 
   owner: { firstName?: string, lastName?: string } = {};
   idCode: string;
@@ -47,7 +49,8 @@ export class CryptofiatWallet {
     private menu: MenuController,
     platform: Platform,
     private sdk: SdkService,
-    public toastCtrl: ToastController
+    public toastCtrl: ToastController,
+    public initialAction: InitialActionService
    ) {
 
     platform.ready().then(() => {
@@ -57,6 +60,14 @@ export class CryptofiatWallet {
 
     events.subscribe('invalidateRoot', this.navigateToInitialPage);
     events.subscribe('user:login', () => {
+      if (this.requestedAction && this.requestedAction.action === 'payment') {
+        const { amount, idCode, message } = this.requestedAction.query;
+        this.nav.setRoot(SendPage, {
+          amount: Number(amount) * 100,
+          idCode,
+          referenceText: message
+        })
+      } 
       this.refreshMenu();
     });
     events.subscribe('user:initiate', () => {
@@ -76,19 +87,33 @@ export class CryptofiatWallet {
 
   }
 
+
+
   private navigateToInitialPage() {
+    this.requestedAction = this.initialAction.requestedAction;
 
     this.userData.hasInitialized().then(hasInitialized => {
       let page : any;
+      let options: any;
       page = ( hasInitialized ) ?
         this.userData.hasLoggedIn().then(hasLoggedIn => hasLoggedIn ? TransfersPage : SignupPage) :
         this.userData.checkHasSeenTutorial().then(hasSeenTutorial => hasSeenTutorial ? SignupPage : TutorialPage);
       //this.enableMenu(page == LoggedInPage);
       return page;
       }).then( (page) => {
-		this.rootPage=page;
-		this.refreshMenu();
-        });
+        // Please Fix me, result of one hour hackaton
+        if (page === TransfersPage && this.requestedAction && this.requestedAction.action === 'payment') {
+          const { amount, idCode, message } = this.requestedAction.query;
+          this.nav.setRoot(SendPage, {
+            amount: Number(amount) * 100,
+            idCode,
+            referenceText: message
+          })
+        } else {
+          this.rootPage = page;
+        }
+  	  	this.refreshMenu();
+      });
   }
 
   private refreshMenu() {

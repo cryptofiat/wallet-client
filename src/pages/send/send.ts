@@ -7,6 +7,7 @@ import { Transfer } from "../../providers/transfer-data";
 import { EscrowNotification } from '../../providers/escrow-data';
 import { SendResponse } from '../../providers/response-data';
 import { RecipientSearchPage } from "../search/search";
+import {InitialActionService} from '../../services/initialAction-service';
 
 // Murky way to do validation, because Validator doesn't have access to instance scope and "this."
 
@@ -57,7 +58,8 @@ export class SendPage {
      private navParams: NavParams, 
      private toastCtrl: ToastController,
      private formBuilder: FormBuilder,
-     private events: Events
+     private events: Events,
+     private initAction: InitialActionService
   ) {
     sdk.availableBalanceToSend().then( (n) => this.availableToSend = n/100);
     this.send.euroAmount = navParams.get("amount")/100;
