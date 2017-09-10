@@ -49,6 +49,7 @@ export class SendRequestPage {
   escrowTx:string;
   escrowCreate: boolean;
   idRecipient : { firstName?: string, lastName? : string} = {};
+  request : { paymentUri?: string } = {};
 
 
   constructor(
@@ -59,12 +60,11 @@ export class SendRequestPage {
      private formBuilder: FormBuilder,
      private events: Events
   ) {
-    sdk.availableBalanceToSend().then( (n) => this.availableToSend = n/100);
     this.send.euroAmount = navParams.get("amount")/100;
     this.send.eId = navParams.get("idCode");
     this.send.reference = navParams.get("referenceText");
     this.idCodeChecker();
-
+    /*
     this.sendForm = formBuilder.group({
       eId: ['', Validators.compose([Validators.minLength(11),Validators.maxLength(11)])],
       euroAmount: ['', Validators.compose([
@@ -80,73 +80,24 @@ export class SendRequestPage {
       fee: [''],
     });
     this.setFeeInput()
-
+	*/
   }
 
-  getSelectedFee() : number {
-    return (this.destination == 'eId') ? this.fee : this.bankFee;
-  }
-  setFeeInput() {
-    // murky workaround because don't know how to reference other form element values in template
-    this.sendForm.controls.fee.setValue(this.getSelectedFee());
-  }
-
-  getAvailableToSpend() : number {
-    return this.availableToSend;
-  }
 
   sendPaymentRequest() {
     console.log('sending: ', this.send);
-    console.log('sending sendForm: ', this.sendForm.value);
 
         this.txState = "submitting";
-        let promise: Promise<SendResponse> = this.sdk.sendPaymentRequest(100 * this.send.euroAmount, this.send.reference);
+	//let promise: Promise<SendResponse> = this.sdk.sendPaymentRequest(100 * this.send.euroAmount, this.send.reference);
+	let paymentUri : string = this.sdk.sendPaymentRequest(100 * this.send.euroAmount, this.send.reference).paymentUri;
+	console.log("paymentURI: ",paymentUri);
+	this.request.paymentUri = paymentUri;
 
-        promise.then( (sendResponse) => {
-          this.txState = "submitted";  
-
-  		    this.toastCtrl.create({message: 'submitted ' + this.txHash, duration: 3000});
-
-  		    this.navCtrl.pop();
-      });
-  }
-
-  generateNewEscrow() {
-    this.sdk.generateEscrow(this.send.eId).then( (json : {transactionHash?:string}) => {
-        console.log("creating escrow", json);
-        this.generating = true;
-        this.escrowTx = json.transactionHash;
-        this.pendingPolling(this.escrowTx);
-	this.idCodeChecker();
-    });
-  }
-
-  pendingPolling(txHash : string) {
-      let pendingCheck = Observable.interval(10000).take(25);
-      let checkAction = pendingCheck.subscribe( (x) => {
-        if (!this.generating) {
-		checkAction.unsubscribe();
-		pendingCheck = undefined;
-        }
-	console.log("pending refresh try: ", x);
-	this.generateRefresh = true;
-        this.sdk.transferStatusAsync(txHash).then( (txCheckStatus : string) => {
-
-		    console.log("got back tx status: ",txCheckStatus);
-
-		    if (txCheckStatus != "PENDING") {
-                        this.generating=false;
-		        this.toastCtrl.create({message: 'Confirmed ' + txHash, duration: 5000});
-		    } else {
-		    }
-		    setTimeout( () => this.generateRefresh = false , 200);
-	}, () => this.generateRefresh = false);
-      });
   }
 
   searchCallback = (idCode : string) => {
     return new Promise( (resolve,reject) => {
-      this.sendForm.controls.eId.setValue(String(idCode));
+      this.send.eId = String(idCode);
       this.idCodeChecker();
       resolve();
     });

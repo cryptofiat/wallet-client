@@ -9,14 +9,12 @@
 
 
 <ion-content>
-  <form [formGroup]="sendForm" (ngSubmit)="sendPaymentRequest(form)" novalidate>
     <div padding>
       <ion-list>
         <ion-item>
           <ion-label stacked>Estonian ID</ion-label>
           <ion-input placeholder="38003029210"
                      (input)="idCodeChecker()"
-                     formControlName="eId"
                      [(ngModel)]="send.eId">
           </ion-input>
           <ion-icon color="positive" name="clock"
@@ -37,51 +35,33 @@
           <ion-input placeholder="5.50"
                      type="number"
                      step=".01"
-                     formControlName="euroAmount"
                      [(ngModel)]="send.euroAmount">
           </ion-input>
         </ion-item>
         <ion-item>
           <ion-label stacked>Reference</ion-label>
           <ion-input placeholder="for milk"
-                     formControlName="reference"
                      [(ngModel)]="send.reference">
           </ion-input>
         </ion-item>
+        <ion-item margin-vertical>
+	  <ion-icon item-right name="copy"></ion-icon>
+          <ion-label stacked>URL</ion-label>
+          <ion-textarea 
+		     [disabled]="true"
+                     [(ngModel)]="request.paymentUri">
+          </ion-textarea>
+        </ion-item>
       </ion-list>
       
-      <button ion-button
-              [disabled]="!sendForm.valid || txState == 'submitting'"
-              type="submit"
+      <button margin-vertical ion-button
+              [disabled]="txState == 'submitting'"
+              (click)="sendPaymentRequest()"
               block>
         Send
       </button>
-
-      <ion-list>
-        <ion-item *ngIf="txState == 'error'">
-          <ion-icon name="close" color="assertive" item-right></ion-icon>
-          Error: {{err}}
-        </ion-item>
-        <ion-item *ngIf="txState == 'submitting'" item-right>
-          <ion-icon name="upload" color="positive"></ion-icon>
-          Sending
-        </ion-item>
-        <ion-item *ngIf="txState == 'submitted'">
-          <a class="item item-icon-left item-text-wrap" href="https://etherscan.io/tx/{{txHash}}" target="_blank">
-            <ion-icon name="clock" color="energized" item-right></ion-icon>
-            Submitted <span color="energized" *ngIf="pendingRefresh">refreshing ..</span>
-            <h6>{{txHash}}</h6>
-          </a>
-        </ion-item>
-        <ion-item *ngIf="txState == 'confirmed'">
-          <a class="item item-icon-left item-text-wrap" href="https://etherscan.io/tx/{{txHash}}">
-            <ion-icon name="checkmark" color="balanced"></ion-icon>
-            Confirmed
-            <h6>{{txHash}}</h6>
-          </a>
-        </ion-item>
-
-      </ion-list>
+      <div margin-vertical >
+	      <qr-code [value]="request.paymentUri" [size]="200"></qr-code>
+      </div>
     </div>
-  </form>
 </ion-content>

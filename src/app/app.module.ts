@@ -26,6 +26,8 @@ import { UserData } from '../providers/user-data';
 import { Transfer, TransferReference } from '../providers/transfer-data';
 import { SdkService } from '../services/sdk-service.ts';
 
+import { QRCodeModule } from 'angular2-qrcode';
+
 const cloudSettings: CloudSettings = {
 	'core': {
 		'app_id': 'a5f0f656'
@@ -65,6 +67,7 @@ const cloudSettings: CloudSettings = {
   ],
   imports: [
     BrowserModule,
+    QRCodeModule,
     IonicModule.forRoot(CryptofiatWallet),
     IonicStorageModule.forRoot(),
     CloudModule.forRoot(cloudSettings)
