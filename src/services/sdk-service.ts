@@ -78,8 +78,8 @@ export class SdkService {
     });
   }
 
-  sendPaymentRequest(amount : number, ref : string) : any {
-    return this.sdk.sendPaymentRequest(amount, ref);
+  requestUriJson(amount : number, ref : string) : any {
+    return this.sdk.requestUriJson(amount, ref);
   }
 
 

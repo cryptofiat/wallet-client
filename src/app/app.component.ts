@@ -14,6 +14,8 @@ import {AboutPage} from "../pages/about/about";
 import {TopupPage} from "../pages/topup/topup";
 import {TutorialPage} from '../pages/tutorial/tutorial';
 import {RequestsPage} from '../pages/requests/requests';
+import {SendRequestPage} from '../pages/sendrequest/sendrequest';
+
 
 @Component({
   templateUrl: 'app.template.html'
@@ -67,12 +69,6 @@ export class CryptofiatWallet {
     //this.rootPage = TutorialPage;
 
 
-    this.idCode = this.sdk.getEstonianIdCode();
-
-    this.sdk.nameFromIdAsync(this.idCode).then((nameJson) => {
-      this.owner = nameJson;
-    });
-
 
   }
 
@@ -92,6 +88,12 @@ export class CryptofiatWallet {
   }
 
   private refreshMenu() {
+    this.idCode = this.sdk.getEstonianIdCode();
+
+    this.sdk.nameFromIdAsync(this.idCode).then((nameJson) => {
+      this.owner = nameJson;
+    });
+
     this.loginState = this.sdk.initiated() ? (this.sdk.isUnlocked()) ? "IN" : "OUT" : "PRE_INIT";
     this.menu.enable(true, 'loggedOutMenu');
     //this.menu.enable(!loggedIn, 'loggedOutMenu');
@@ -111,6 +113,10 @@ export class CryptofiatWallet {
 
   public openRequests() {
     this.nav.setRoot(RequestsPage);
+  } 
+
+  public openRequest() {
+    this.nav.push(SendRequestPage);
   } 
 
   public openSignUp() {

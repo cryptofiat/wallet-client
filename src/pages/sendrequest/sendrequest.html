@@ -3,7 +3,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Send payment request</ion-title>
+    <ion-title>Request</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -12,56 +12,60 @@
     <div padding>
       <ion-list>
         <ion-item>
-          <ion-label stacked>Estonian ID</ion-label>
-          <ion-input placeholder="38003029210"
-                     (input)="idCodeChecker()"
-                     [(ngModel)]="send.eId">
+          <ion-label stacked>To me,
+	  {{idRecipient.firstName}} {{idRecipient.lastName}}
+	  </ion-label>
+          <ion-input [disabled]="true"
+                     [(ngModel)]="request.eId">
           </ion-input>
-          <ion-icon color="positive" name="clock"
-                    *ngIf="idCodeCheck == 'loading'" item-right></ion-icon>
-          <ion-icon color="secondary" name="checkmark"
-                    *ngIf="idCodeCheck == 'yes'" item-right></ion-icon>
-          <ion-icon color="danger" name="close"
-                    *ngIf="idCodeCheck == 'no'" item-right></ion-icon>
-          <ion-icon color="{{ (escrowCreate) ? 'danger' : 'secondary'}}" name="lock"
-                    *ngIf="idCodeCheck == 'escrow'" item-right></ion-icon>
-          <button ion-button item-right outline type="button" (click)="showSearch()">
-            <ion-icon name="search"></ion-icon>
-            Search
-          </button>
+	  <ion-note>
+	  </ion-note>
         </ion-item>
         <ion-item>
           <ion-label stacked>Amount</ion-label>
-          <ion-input placeholder="5.50"
+          <ion-input class="euroAmount"
+		     placeholder="5.50"
                      type="number"
                      step=".01"
-                     [(ngModel)]="send.euroAmount">
+		     [disabled]="confirmed"
+                     [(ngModel)]="request.euroAmount">
           </ion-input>
         </ion-item>
         <ion-item>
           <ion-label stacked>Reference</ion-label>
           <ion-input placeholder="for milk"
-                     [(ngModel)]="send.reference">
+		     [disabled]="confirmed"
+                     [(ngModel)]="request.reference">
           </ion-input>
-        </ion-item>
-        <ion-item margin-vertical>
-	  <ion-icon item-right name="copy"></ion-icon>
-          <ion-label stacked>URL</ion-label>
-          <ion-textarea 
-		     [disabled]="true"
-                     [(ngModel)]="request.paymentUri">
-          </ion-textarea>
         </ion-item>
       </ion-list>
       
       <button margin-vertical ion-button
-              [disabled]="txState == 'submitting'"
+              [disabled]="confirmed"
               (click)="sendPaymentRequest()"
               block>
-        Send
+        Confirm
       </button>
-      <div margin-vertical >
-	      <qr-code [value]="request.paymentUri" [size]="200"></qr-code>
-      </div>
+      <ion-list [hidden]="!confirmed">
+        <ion-item margin-vertical text-center>
+		      <qr-code [value]="requestUri.paymentUri" [size]="250"></qr-code>
+        </ion-item>
+        <ion-item margin-vertical>
+		<button item-right (click)="copyToClipboard()"> 
+		<ion-icon name="copy"></ion-icon>
+		</button>
+          <ion-label stacked>URL</ion-label>
+          <ion-textarea 
+		     [disabled]="true"
+                     [(ngModel)]="requestUri.paymentUrl">
+          </ion-textarea>
+        </ion-item>
+      <button margin-vertical ion-button
+              (click)="sharePaymentRequest()"
+              block>
+	<ion-icon name="share" margin-horizontal></ion-icon>
+        Share
+      </button>
+      </ion-list>
     </div>
 </ion-content>

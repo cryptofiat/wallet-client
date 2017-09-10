@@ -1,38 +1,6 @@
-.errortext {
-  font-size: 95%;
-  color: #f97072;
-}
-div.escrowText  {
-  font-size: 70%;
-  color: #697072;
-}
-div.fees  {
-  font-size: 70%;
-  color: #697072;
-}
-.about-header {
-  background-color: #434954;
-  padding: 16px;
-  width: 100%;
-  min-height: 150px;
-  text-align: center;
-}
-
-.about-header img {
-  max-width: 200px;
-  min-height: 115px;
-  margin-left: -15px;
-  padding: 25px 0 20px 0;
-}
-
-.about-info p {
-  color: #697072;
-  text-align: left;
-}
-
-.about-info ion-icon {
-  color: color($colors, primary);
-  width: 20px;
+ion-input.euroAmount {
+	font-size: 2em;
+	text-align: right;
 }
 
 .md,
