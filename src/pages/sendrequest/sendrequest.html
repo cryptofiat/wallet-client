@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Request</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+    <div padding>
+      <ion-list>
+        <ion-item>
+          <ion-label stacked>To me,
+	  {{idRecipient.firstName}} {{idRecipient.lastName}}
+	  </ion-label>
+          <ion-input [disabled]="true"
+                     [(ngModel)]="request.eId">
+          </ion-input>
+	  <ion-note>
+	  </ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label stacked>Amount</ion-label>
+          <ion-input class="euroAmount"
+		     placeholder="5.50"
+                     type="number"
+                     step=".01"
+		     [disabled]="confirmed"
+                     [(ngModel)]="request.euroAmount">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label stacked>Reference</ion-label>
+          <ion-input placeholder="for milk"
+		     [disabled]="confirmed"
+                     [(ngModel)]="request.reference">
+          </ion-input>
+        </ion-item>
+      </ion-list>
+      
+      <button margin-vertical ion-button
+              [disabled]="confirmed"
+              (click)="sendPaymentRequest()"
+              block>
+        Confirm
+      </button>
+      <ion-list [hidden]="!confirmed">
+        <ion-item margin-vertical text-center>
+		      <qr-code [value]="requestUri.paymentUri" [size]="250"></qr-code>
+        </ion-item>
+        <ion-item margin-vertical>
+		<button item-right (click)="copyToClipboard()"> 
+		<ion-icon name="copy"></ion-icon>
+		</button>
+          <ion-label stacked>URL</ion-label>
+          <ion-textarea 
+		     [disabled]="true"
+                     [(ngModel)]="requestUri.paymentUrl">
+          </ion-textarea>
+        </ion-item>
+      <button margin-vertical ion-button
+              (click)="sharePaymentRequest()"
+              block>
+	<ion-icon name="share" margin-horizontal></ion-icon>
+        Share
+      </button>
+      </ion-list>
+    </div>
+</ion-content>

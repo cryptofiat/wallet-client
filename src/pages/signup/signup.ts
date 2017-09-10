@@ -97,8 +97,8 @@ export class SignupPage {
     }
 
     if (passwordCorrect) {
-      this.events.publish('user:login');
       this.navCtrl.setRoot(TransfersPage);
+      this.events.publish('user:login');
     } else {
       this.wrongPassword = true;
     }
@@ -130,5 +130,4 @@ export class SignupPage {
     }
     this.createNewClicked = true;
   };
-
 }

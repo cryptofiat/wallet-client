@@ -19,10 +19,15 @@ import { SprayerPage } from '../pages/sprayer/sprayer';
 import { KeysPage } from '../pages/keys/keys';
 import { ImportKeyPage } from '../pages/keys/import-key';
 import { RecipientSearchPage } from "../pages/search/search";
+import { RequestsPage } from "../pages/requests/requests";
+import { SendRequestPage } from '../pages/sendrequest/sendrequest';
 
 import { UserData } from '../providers/user-data';
 import { Transfer, TransferReference } from '../providers/transfer-data';
 import { SdkService } from '../services/sdk-service.ts';
+
+import { QRCodeModule } from 'angular2-qrcode';
+import { Deeplinks } from '@ionic-native/deeplinks';
 
 const cloudSettings: CloudSettings = {
 	'core': {
@@ -57,11 +62,22 @@ const cloudSettings: CloudSettings = {
     RecipientSearchPage,
     SprayerPage,
     ImportKeyPage,
-    TopupPage
+    TopupPage,
+    RequestsPage,
+    SendRequestPage
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(CryptofiatWallet),
+    QRCodeModule,
+    IonicModule.forRoot(CryptofiatWallet, {
+    	  // 'path'  doesn't work on ionic serve
+	  locationStrategy: 'hash'
+	}, {
+	links: [
+	  {component: AboutPage, name: 'About', segment: 'about' },
+	  {component: SendPage, name: 'Send', segment: ':idCode/payment/:amount/:referenceText' }
+	]
+    }),
     IonicStorageModule.forRoot(),
     CloudModule.forRoot(cloudSettings)
   ],
@@ -79,8 +95,16 @@ const cloudSettings: CloudSettings = {
     SyncPage,
     SprayerPage,
     ImportKeyPage,
-    TopupPage
+    TopupPage,
+    RequestsPage,
+    SendRequestPage
   ],
-  providers: [UserData, SdkService, Transfer, TransferReference]
+  providers: [
+  	UserData, 
+	SdkService, 
+	Transfer, 
+    	Deeplinks,
+	TransferReference 
+	]
 })
 export class AppModule { }

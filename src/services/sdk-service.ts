@@ -78,6 +78,11 @@ export class SdkService {
     });
   }
 
+  requestUriJson(amount : number, ref : string) : any {
+    return this.sdk.requestUriJson(amount, ref);
+  }
+
+
   sendAsync(toAddress, amount, ref) : Promise<Object> {
     return this.sdk.sendAsync(toAddress, amount, ref, {})
   }

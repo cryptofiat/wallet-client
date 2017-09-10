@@ -1,0 +1,20 @@
+ion-input.euroAmount {
+	font-size: 2em;
+	text-align: right;
+}
+
+.md,
+.wp {
+  .about-info [text-right] {
+    margin-right: 0;
+  }
+}
+
+.ios .about-info {
+  text-align: center;
+}
+
+.ios .about-info ion-icon {
+  width: auto;
+  margin-right: 10px;
+}

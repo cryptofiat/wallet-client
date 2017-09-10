@@ -8,7 +8,7 @@
 
   <ion-content class="outer-content">
     <ion-list>
-	    <ion-item no-lines padding-vertical>
+	    <ion-item [hidden]="loginState != 'IN'" no-lines padding-vertical>
 		    <ion-avatar item-left>
 			    <img src="https://s.ytimg.com/yts/img/avatar_720-vflYJnzBZ.png"/>
 		    </ion-avatar>
@@ -43,6 +43,10 @@
 	   ion-item menuClose (click)="openSend()">
         <ion-icon item-left name="send"></ion-icon>
         Send
+      </button>
+      <button [hidden]="loginState != 'IN'" ion-item menuClose (click)="openRequest()">
+	       <ion-icon item-left name="download"></ion-icon>
+	       Request
       </button>
       <button [hidden]="loginState != 'IN'"  
 	   ion-item menuClose (click)="openKeys()">

@@ -101,7 +101,10 @@ export class TransfersPage {
 	this.refreshSprayer();
       }
       this.refreshing = false;
-      refresher.complete();
+      refresher ? refresher.complete() : null;
+    }).catch(err => {
+      console.log(err);
+      refresher ? refresher.complete() : null;
     })
   }
 
@@ -206,6 +209,10 @@ export class TransfersPage {
     var arr = [{amount: 32, transactionHash: '0x223'}, {amount: 33, transactionHash: '0x444'}];
     this.sdk.escrowToPending(arr);
     this.refreshPending()
+  }
 
+  
+  ionViewWillLeave() {
+    if(this.loader) this.loader.dismiss();
   }
 }

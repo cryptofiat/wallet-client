@@ -57,7 +57,8 @@ export class SendPage {
      private navParams: NavParams, 
      private toastCtrl: ToastController,
      private formBuilder: FormBuilder,
-     private events: Events
+     private events: Events,
+     //     private initAction: InitialActionService
   ) {
     sdk.availableBalanceToSend().then( (n) => this.availableToSend = n/100);
     this.send.euroAmount = navParams.get("amount")/100;
