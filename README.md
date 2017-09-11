@@ -33,14 +33,3 @@ $ANDROID_HOME/build-tools/26.0.1/zipalign -v 4 android-release-unsigned.apk andr
 # Web release
 1. `npm run ionic:build`
 2. `npm run ionic:uglifyjs`
-
-
-"{"encryptedChallenge":"U2FsdGVkX19rXnkvN+07/nEAkbN23c8WxHkYNpq+gWCQt0OPnXEUIjGbvPs7fDLEsK1/n8ATkTm3lokVWJnvvA==","ionic_insights_session":"\"2017-09-09T09:36:30.360Z\"","keys":"[\"U2FsdGVkX1+rTNqmmCUaxvCUL4zvLUH033OKUbwcJxokYXgfTokipGFApxZP/nNtai52IRi13Wwpe71LB+xjeujpJv5dWdAGBg/VELUv0W6lsTXb2DxUAEVYQQ5nvOhV\"]"}"
-
-"["U2FsdGVkX1+rTNqmmCUaxvCUL4zvLUH033OKUbwcJxokYXgfTokipGFApxZP/nNtai52IRi13Wwpe71LB+xjeujpJv5dWdAGBg/VELUv0W6lsTXb2DxUAEVYQQ5nvOhV"]"
-
-
-0x05bfcc7e747c687f8d19792ee1ff1c6cd467de420acdea6c4f091f922ef24711
-
-est id 37508082241
-
