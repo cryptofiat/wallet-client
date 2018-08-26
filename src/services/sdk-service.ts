@@ -278,7 +278,7 @@ export class SdkService {
     return (!!this.sdk._storage.getItem("sprayer-dismissed"));
   }
 
-  spray(idCode : string, amount : number) : Promise<string> {
+  spray(idCode : string, amount : number) : Promise<any> {
     return this.sdk.spray(idCode, amount)
   }
 }
