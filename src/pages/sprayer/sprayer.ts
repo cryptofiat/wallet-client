@@ -22,10 +22,9 @@ export class SprayerPage {
   }
 
   requestSpray() {
-    this.sdk.spray(this.idCode, this.amount).then((txHash : string) => {
-      this.txHash = txHash;
-    });
-    if (this.txHash) {
+    this.sdk.spray(this.idCode, this.amount).then((o :{txHash : string}) => {
+      this.txHash = o.txHash;
+
       let pendingTx: Transfer = new Transfer();
       pendingTx.amount = 100 * this.amount;
       pendingTx.signedAmount = pendingTx.amount;
@@ -48,7 +47,10 @@ export class SprayerPage {
       this.sdk.storePendingTransfer(pendingTx);
       this.events.publish("tx:newPending");
       this.toastCtrl.create({message: 'submitted ' + this.txHash, duration: 3000});
-    }
+    }, ( o : {message : string, status : number}) => {
+      console.log("Failed spray "+ o.message);
+      this.toastCtrl.create({message: 'Failed with ' + o.status + ' and ' + o.message, duration: 3000});
+    })
 
     //disable navigating to sprayer for current user
     this.navCtrl.popToRoot();
