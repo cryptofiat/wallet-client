@@ -39,7 +39,7 @@ jobs:
 
       - run: npm run ionic:uglifyjs
       
-      - run: npm run ionic cordova build android --prod --release
+      - run: cordova build android --prod --release
       
       - run: export APK_PATH=./platforms/android/app/build/outputs/apk/release/
       
