@@ -48,7 +48,7 @@ jobs:
       # - deploy:
       #     command: scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -r www/ wallet-server@wallet-client.euro2.ee:/opt/wallet-client-webbuild/
 
-      - run: ionic cordova build android --prod --release
+      - run: npm run ionic cordova build android --prod --release
       - run: export APK_PATH=./platforms/android/app/build/outputs/apk/release/
       - run: ls -la $APK_PATH
       - run: jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore ./android-release.keystore $APK_PATH/app-release-unsigned.apk beta_app
