@@ -28,7 +28,7 @@ jobs:
 
       - run: npm install
 
-      - run: npm update
+      #- run: npm update
 
       - save_cache:
           paths:
